@@ -35,5 +35,9 @@ const Drawer = () => {
   )
 }
 
-// Metals: Gold, Silver, Platinum, Copper. Energy: Petroleum, Natural Gas, Gasoline, Heating Fuel. //Cattle Raising: Beef Cattle, Pig Cattle, Chicken Cattle. Agriculture: Soybeans, Sugar, Corn, Rice, Coffe
+// Agriculture: Coffe, Corn, Rice, Soybeans, Sugar
+// Energy: Gasoline, Heating Fuel, Natural Gas, Petroleum
+// Livestock: Beef Cattle, Chicken Cattle, Pig Cattle
+// Metals: Copper, Gold, Platinum, Silver 
+
 export default Drawer
