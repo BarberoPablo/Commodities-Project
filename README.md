@@ -25,7 +25,7 @@ the parts.
 - Cesar Herbert Jelvez                  || GitHub:
 - Juan Diego Mas                        || GitHub: https://github.com/intelligentdnb
 - Leandro Benjanmin Quiroga             || GitHub: https://github.com/lbenjaminq
-- Marcos Gabriel Servezynski Gómez      || GitHub:
+- Marcos Gabriel Servezynski Gómez      || GitHub: https://github.com/ServezynskiMarcos
 - Maximiliano Marolda                   || GitHub: https://github.com/MaxiMarolda
-- Nicolás Martin Sánchez Long           || GitHub:
+- Nicolás Martin Sánchez Long           || GitHub: 
 - Pablo Barbero                         || GitHub: https://github.com/BarberoPablo
