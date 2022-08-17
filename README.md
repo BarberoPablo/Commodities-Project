@@ -6,17 +6,6 @@
   <img height="200" src="./client/src/Img/LogoB2B.png" />
 </p>
 
-## Students in the project
-
-- Cesar Herbert Jelvez
-- Juan Diego Mas
-- Leandro Benjanmin Quiroga
-- Marcos Gabriel Servezynski Gómez
-- Maximiliano Marolda
-- Nicolás Martin Sánchez Long
-- Pablo Barbero
-
-
 ## Idea of the project
 
 Online B2B forum (Business to Business) for importers/exporters
@@ -31,3 +20,12 @@ International trade is handled between contracts through
 intermediaries, where the page is reserved solely for providing information on
 the parts.
 
+## Students in the project
+
+- Cesar Herbert Jelvez                  || GitHub:
+- Juan Diego Mas                        || GitHub: https://github.com/intelligentdnb
+- Leandro Benjanmin Quiroga             || GitHub: https://github.com/lbenjaminq
+- Marcos Gabriel Servezynski Gómez      || GitHub:
+- Maximiliano Marolda                   || GitHub: https://github.com/MaxiMarolda
+- Nicolás Martin Sánchez Long           || GitHub:
+- Pablo Barbero                         || GitHub: https://github.com/BarberoPablo
