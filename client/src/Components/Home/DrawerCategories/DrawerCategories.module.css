@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    
+}
+
+.containercard {
+    display: flex;
+    min-width: 15%;
+    background-color: rgb(120, 156, 158);
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.text {
+    margin-bottom: -60px;
+    text-align: center;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 15px;
+    gap: 7rem;
+}
+select {
+    background-color: rgb(38, 5, 255);
+    color: rgb(251, 245, 236);
+    padding: 7px;
+    border-radius: 10px;
+}
