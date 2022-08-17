@@ -3,7 +3,7 @@
 # Grupal Project - B2B Commodities
 
 <p align="center">
-  <img height="200" src="./LogoB2B.png" />
+  <img height="200" src="./client/src/Img/LogoB2B.png" />
 </p>
 
 ## Students in the project
