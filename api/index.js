@@ -40,7 +40,9 @@ server.get('/', (req, res) => {
 });
 
 server.get('/profile', requiresAuth(), (req, res) => {  //This route reauieres to be authenticated to be able to get it
+  console.log(req.oidc.user);
   res.send(JSON.stringify(req.oidc.user));
+  
 });
 
 // Syncing all the models at once.
