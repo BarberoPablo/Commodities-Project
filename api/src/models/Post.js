@@ -28,11 +28,20 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-   
+    shipping: {
+      type: DataTypes.ENUM('CIF','FOB'),
+      allowNull: false,
+    },
+    payment: {
+      type: DataTypes.ENUM('LC', 'DLC', 'SBLC'),
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.BLOB('long'),
+    },
     display: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      defaultValue: true,
     }
-  }
-  );
+  });
 };
