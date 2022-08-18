@@ -8,5 +8,44 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    isSeller: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    contactsId: {
+      type: DataTypes.ARRAY(DataTypes.STRING), //se guardan los id de los match
+    },
+    remainingContacts: {
+      type: DataTypes.INTEGER,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    isBanned: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    image: {
+      type: DataTypes.BLOB('long'),
+      defaultValue: false,
+    },
+
   });
 };
