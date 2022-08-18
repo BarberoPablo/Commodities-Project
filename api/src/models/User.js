@@ -8,31 +8,30 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    isSeller: { //isBuyer no lo puse
+    isSeller: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
     phone: {
-      type: DataTypes.STRING, //STRING
-      allowNull: true, //true
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,//true
+      allowNull: false,
     },
     verified: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false, //nuevo 
+      defaultValue: false,
     },
     country: {
-      type: DataTypes.STRING, //ENUM ??
+      type: DataTypes.STRING,
       allowNull: false,
     },
     shipping: {
-      type: DataTypes.BOOLEAN,//ENUM con CIF y FOB
+      type: DataTypes.ENUM('CIF', 'FOB'),
       allowNull: false,
     },
-    //idPlan foreign key
     contactsId: {
       type: DataTypes.ARRAY(DataTypes.STRING), //se guardan los id de los match
     },
