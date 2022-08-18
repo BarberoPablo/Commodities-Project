@@ -28,10 +28,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    shipping: {
-      type: DataTypes.ENUM('CIF', 'FOB'),
-      allowNull: false,
-    },
     contactsId: {
       type: DataTypes.ARRAY(DataTypes.STRING), //se guardan los id de los match
     },
@@ -44,6 +40,10 @@ module.exports = (sequelize) => {
     },
     isBanned: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    image: {
+      type: DataTypes.BLOB('long'),
       defaultValue: false,
     },
 
