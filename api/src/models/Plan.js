@@ -22,9 +22,11 @@ module.exports = (sequelize) => {
     },
     posts: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
     reviews: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   });
 };
