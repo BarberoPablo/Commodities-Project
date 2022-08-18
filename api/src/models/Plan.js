@@ -13,18 +13,18 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     cost: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     contacts: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     posts: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
     },
     reviews: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
     },
   });
 };
