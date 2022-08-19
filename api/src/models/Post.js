@@ -29,15 +29,15 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     shipping: {
-      type: DataTypes.ENUM('CIF','FOB'),
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     payment: {
-      type: DataTypes.ENUM('LC', 'DLC', 'SBLC'),
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     image: {
-      type: DataTypes.BLOB('long'),
+      type: DataTypes.STRING,
     },
     display: {
       type: DataTypes.BOOLEAN,
