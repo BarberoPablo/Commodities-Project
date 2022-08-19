@@ -35,5 +35,19 @@ const getCategory = async (req , res) => {
   }
 }
 
-module.exports = {getUserDetails , getCategory, getReview}
+const getSubCategory = async (req , res) => {
+  try {
+    const { id } = req.params
 
+    let subCategory = await SubCategory.findAll({
+      where : {idCategory: id},
+    });
+      
+    res.status(200).json(subCategory)
+    
+  } catch (error) {
+    res.status(404).send(subCategory)
+  }
+}
+
+module.exports = {getUserDetails , getCategory, getReview , getSubCategory}
