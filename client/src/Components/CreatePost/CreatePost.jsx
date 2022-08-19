@@ -1,16 +1,14 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { postPost } from "../actions/index";  //importar acciones
+//import { postPost } from "../redux/Actions/Actions.js";  //importar acciones
 //import { useDispatch, useSelector } from "react-redux";
 
 export default function CreatePost() {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const [errors, setErrors] = useState({})    //validaciones front
   const [checkBS, setCheckBS] = useState(0) 
 
   //actions necesarias
-  //post post(dispatch)
   //get category y sub category
 
 const [input, setInput] = useState({ //acomadar a modelo
@@ -26,7 +24,7 @@ const [input, setInput] = useState({ //acomadar a modelo
   idUser:"",
   image:"",
 });
-.
+
 //handles
 function handleChange(e){
   setInput({
@@ -54,7 +52,7 @@ function handleSubmit(e){
   e.preventDefault();
   let val = validacion(input);
   setErrors(val)
-  dispatch(postPost(input))
+  //dispatch(postPost(input))
   if(Object.keys(val).length >0 ){
     alert("Fix errors");
     val = {}
@@ -94,7 +92,7 @@ function validacion(input){
 
   return (
 <div>
-  <Link to="/home">
+  <Link to="/">
     <button className="boton" id="btna">Go Back</button>
   </Link>
   <h1>Create new post</h1>
@@ -107,6 +105,7 @@ function validacion(input){
     <option hidden value="">Shipping method</option>
     <option value="CIF">CIF</option>
     <option value="FOB">FOB</option>
+    <option value="CIF or FOB">CIF or FOB</option>
   </select>
   {errors.shipping &&<p className="err">{errors.shipping}</p>}
 
@@ -115,6 +114,7 @@ function validacion(input){
     <option value="LC">LC</option>
     <option value="DLC">DLC</option>
     <option value="SBLC">SBLC</option>
+    <option value="Any">Any</option>
   </select><br/>
   {errors.payment &&<p className="err">{errors.payment}</p>}
 
