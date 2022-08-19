@@ -22,10 +22,10 @@ the parts.
 
 ## Students in the project
 
-- Cesar Herbert Jelvez                  || GitHub: https://github.com/CesarJelvez
+- Cesar Herbert Jelvez                  || GitHub:
 - Juan Diego Mas                        || GitHub: https://github.com/intelligentdnb
 - Leandro Benjanmin Quiroga             || GitHub: https://github.com/lbenjaminq
 - Marcos Gabriel Servezynski Gómez      || GitHub: https://github.com/ServezynskiMarcos
 - Maximiliano Marolda                   || GitHub: https://github.com/MaxiMarolda
-- Nicolás Martin Sánchez Long           || GitHub: https://github.com/NicoMSL
+- Nicolás Martin Sánchez Long           || GitHub: 
 - Pablo Barbero                         || GitHub: https://github.com/BarberoPablo
