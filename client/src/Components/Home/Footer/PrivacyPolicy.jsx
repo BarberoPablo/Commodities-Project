@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
             <div>
                 <h1> Privacy Policy - Please read</h1>
                 <p>
-                    This <b> Privacy Policy </b> describes the terms of commitment of
+                    This <b>Privacy Policy</b> describes the terms of commitment of
                     the site <b> B2B Commodities </b> to your privacy.
                     Acceptance of the terms of this Privacy Policy is a pre-requisite to visit this website.
                     If you visit this site, it means you have accepted the terms of this Privacy Policy.
