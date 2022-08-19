@@ -18,6 +18,7 @@ function App() {
       <Route path={'/contact-us'} component={ContactUs}/>
       <Route path={'/privacy-policy'} component={PrivacyPolicy}/>
       <Route path={'/terms-of-use'} component={TermsOfUse}/>
+      <Route path="/create-post" component={CreatePost}/>
       <Route path={'/'} component={Footer}/>
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
