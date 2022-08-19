@@ -7,6 +7,9 @@ const ContactUs = () => {
       <a href="/feedback">📧Click here to email us.</a>
       <p>📞Call us at +54 9 3764 410695</p>
       <h5>Send us a quick email and we will be glad to help you. You can contact us at the following address:</h5>
+      <div>
+        
+      </div>
     </div>
   )
 }
