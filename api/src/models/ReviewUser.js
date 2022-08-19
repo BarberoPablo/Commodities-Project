@@ -7,8 +7,8 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    idReview: {
-      type: DataTypes.INTEGER,
+    reviews: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
       allowNull: false
     },
     display: {
