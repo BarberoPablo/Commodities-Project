@@ -154,11 +154,6 @@ const createPost = async(req, res)=>{
   }
 }
 
-const getReview = async(req, res)=>{
-  try {
-   const {id} = req.params;
-   let review = await b2b.findOne({
-
 // GET review devuelve la review que se le consulta por el id
 const getReviews = async(req, res)=>{
   try {
