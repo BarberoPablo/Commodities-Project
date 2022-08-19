@@ -6,14 +6,19 @@ export const postSlice = createSlice({
     allPosts:[],
   },
   reducers:{
+    //trae todos los posteos
     getAllPosts: (state,action)=>{
+      state.allPosts=action.payload
+    },
+    //traerme los posteos que se busca en el search
+    getPosts: (state,action)=>{
       state.allPosts=action.payload
     }
     //more actions
   }
 })
 
-export const {getAllPosts} = postSlice.actions
+export const {getAllPosts, getPosts} = postSlice.actions
 export default postSlice.reducer
 
 

@@ -1,23 +1,33 @@
-import React from 'react'
-import { useState } from 'react'
+import React from 'react';
+import { useState } from 'react';
+//import { useDispatch } from 'react-redux';
+//import { searchPosts } from '../../../Redux/Actions/Actions';
 
 const Search = () => {
-
+  //const dispatch = useDispatch();
   const [input,setInput] = useState('')
 
   const handleChange = (e) =>{
-    setInput('')
+    setInput(e.target.value);
   }
 
-    const handleSubmit = () =>{
+    const handleClick = (e) =>{
+      if(e.target.innerHTML === 'Buyers'){
+        console.log('Buyers', input)
+  
+      }
+      if(e.target.innerHTML === 'Sellers'){
+        console.log('Sellers', input)
+        
+      }
     }
 
   return (
-      <form onSubmit={handleSubmit} >
+      <div>
         <input onChange={handleChange} type='text' value={input} />
-      <button type='submit' >Buyers</button>
-      <button type='submit' >Suppliers</button>
-      </form>
+        <button onClick={handleClick}>Buyers</button>
+        <button onClick={handleClick}>Sellers</button>
+      </div>
   )
 }
 
