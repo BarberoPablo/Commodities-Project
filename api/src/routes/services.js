@@ -23,4 +23,19 @@ const getUserDetails = async(req, res)=>{
   }
 }
 
-module.exports = {getUserDetails}
+const getCategory = async (req , res) => {
+  try {
+    let category = await Category.findAll({
+      include: SubCategory
+     });
+     
+     res.status(200).send(category)
+
+  } catch (error) {
+    res.status(404).send(error)
+  }
+}
+
+
+
+module.exports = {getUserDetails , getCategory}
