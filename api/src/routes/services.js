@@ -1,19 +1,5 @@
 const { Category, Feedback, Plan, Post, Review, ReviewUser, SubCategory, User } = require("../db");
 
-/* const getDbInfo = async () => {
-  // quiero incluir el modelo Genre con el atributo: name
-  // el through es una comprobacion que pongo siempre
-  // me trae Videogame con sus generos
-  return await Videogame.findAll({
-    include: {
-      model: Genre,
-      attributes: ["name"], //el id lo trae solo
-      through: {
-        attributes: [],
-      },
-    },
-  });
-}; */
 
 const getUserDetails = async(req, res)=>{
   try {
@@ -22,6 +8,19 @@ const getUserDetails = async(req, res)=>{
     
   }
 }
+
+
+const getReview = async(req, res)=>{
+  try {
+   const {id} = req.params;
+   let review = await b2b.find({
+    id: id
+   });
+   return review;
+  } catch (error) {
+    console.log (error)
+  }
+};
 
 const getCategory = async (req , res) => {
   try {
@@ -36,6 +35,5 @@ const getCategory = async (req , res) => {
   }
 }
 
+module.exports = {getUserDetails , getCategory, getReview}
 
-
-module.exports = {getUserDetails , getCategory}
