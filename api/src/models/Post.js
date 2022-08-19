@@ -16,28 +16,18 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    idCategory: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    idSubcategory: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    idUser: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     shipping: {
-      type: DataTypes.ENUM('CIF','FOB'),
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+      defaultValue: [],
     },
     payment: {
-      type: DataTypes.ENUM('LC', 'DLC', 'SBLC'),
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+      defaultValue: [],
     },
     image: {
-      type: DataTypes.BLOB('long'),
+      type: DataTypes.STRING,
     },
     display: {
       type: DataTypes.BOOLEAN,
