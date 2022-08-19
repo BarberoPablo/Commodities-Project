@@ -13,8 +13,8 @@ const getUserDetails = async(req, res)=>{
 const getReview = async(req, res)=>{
   try {
    const {id} = req.params;
-   let review = await b2b.find({
-    id: id
+   let review = await b2b.findOne({
+    where: {id: id}
    });
    return review;
   } catch (error) {
