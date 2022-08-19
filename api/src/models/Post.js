@@ -16,25 +16,15 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
-    idCategory: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    idSubcategory: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    idUser: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     shipping: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+      defaultValue: [],
     },
     payment: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
+      defaultValue: [],
     },
     image: {
       type: DataTypes.STRING,
