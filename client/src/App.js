@@ -7,7 +7,7 @@ import AboutUs from "./Components/Home/Footer/AboutUs.jsx"
 import ContactUs from "./Components/Home/Footer/ContactUs.jsx"
 import PrivacyPolicy from "./Components/Home/Footer/PrivacyPolicy.jsx"
 import TermsOfUse from "./Components/Home/Footer/TermsOfUse.jsx"
-
+import CreatePost from "./Components/CreatePost/CreatePost.jsx"
 
 function App() {
 
