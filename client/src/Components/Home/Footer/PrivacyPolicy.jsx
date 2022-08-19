@@ -7,41 +7,33 @@ const PrivacyPolicy = () => {
                 <h1> Privacy Policy - Please read</h1>
                 <p>
                     This <b> Privacy Policy </b> describes the terms of commitment of
-                    the site <b> go4WorldBusiness.com </b> to your privacy.
+                    the site <b> B2B Commodities </b> to your privacy.
                     Acceptance of the terms of this Privacy Policy is a pre-requisite to visit this website.
                     If you visit this site, it means you have accepted the terms of this Privacy Policy.
                 </p>
                 <p>
-                    Here at go4WorldBusiness.com we take your privacy seriously and will only use your
+                    Here at <b>B2B Commodities</b> we take your privacy seriously and will only use your
                     personal information to administer your account and to provide the products and services
                     you have requested from us. These services include but are not limited to providing you with
                     B2B trade related connections with international wholesale buyers, suppliers, manufacturers
                     and intermediaries.
                 </p>
                 <p>
-                    However, from time to time we would like to contact you with details of our promotions,
-                    updates and offers we run. These communications may be through Post, Email, Telephone,
-                    Text Messages and/or Automated Calls.
-                </p>
-                <p>
-                    Since go4WorldBusiness.com is a Business Advertising and Promotion service,
+                    Since <b>B2B Commodities</b> is a Business Advertising and Promotion service,
                     we would also like to pass your details onto other businesses and individuals
-                    who may be interested in doing business with you or your organization. While your
-                    contact related information is never shared with users who are not registered members,
-                    such users can at times send you inquiry messages through our website.
+                    who may be interested in doing business with you or your organization. Your
+                    contact related information is never shared with users who are not registered members.
                 </p>
                 <ol>
                     <li>
-                        <b> Information We Collect </b>
+                        <b> Information we collect </b>
                         <ol>
                             <li>
                                 <b> Business Information: </b> We collect information that relate to your business.
                                 This includes, but is not limited to, your contact details, company profile information,
                                 trade leads, buy leads, catalogs and inquiries.
                                 All such data is collected when you voluntarily submit your information to
-                                this site for your registration and subsequent use of our site or as a result
-                                of signing up for some newsletter, sending us email, feedback or filling some
-                                customer survey on our site.
+                                this site for your registration and subsequent use of our site.
                             </li>
                             <li>
                                 <b> Payment Information: </b> This includes any information relating to any
@@ -51,7 +43,7 @@ const PrivacyPolicy = () => {
                                 credit card number, CVV number, bank details, cheque number, etc.
                             </li>
                             <li>
-                                <b> Statistical Information: </b> This includes Visitor's IP Address, browser software, operating system, 
+                                <b> Statistical Information: </b> This includes Visitor's IP Address, browser software, operating system,
                                 and pages viewed and so forth.
                             </li>
                             <li>
@@ -59,9 +51,8 @@ const PrivacyPolicy = () => {
                             </li>
                         </ol>
                     </li>
-
                     <li>
-                        <b> How We Use and Share Information </b>
+                        <b> How we use and share information </b>
                         <ol>
                             <li>
                                 <b> Business Information: </b> Since we are in the business of collecting and
@@ -84,17 +75,8 @@ const PrivacyPolicy = () => {
                                 With specific regards to credit card information while ordering online,
                                 all such data is directly submitted at our payment gateways and no data is stored with the site.
                             </li>
-                            <li>
-                                <b> Statistical Information: </b> We collect and aggregate statistical information to sell and market
-                                our services better, manage and diagnose our problems. We use third party software and services
-                                to collect and manage the statistical information like Google Analytics, click-tracking software,
-                                log analysis, etc. so this data will be available to them as well. Sharing of Statistical Information
-                                with any other parties is on aggregate basis without any personal information
-                            </li>
                         </ol>
                     </li>
-
-
                     <li>
                         <b> Disclosure of Information </b>
                         <ol>
@@ -112,13 +94,16 @@ const PrivacyPolicy = () => {
                                 You can modify your business information at any time by logging into your account and visiting your private profile area.
                             </li>
                             <li>
-                                You can also request us to delete your business information by raising a request to "terminate membership", also found in your private profile area.
+                                You can also request us to delete your business information by raising a request to "terminate membership",
+                                also found in your private profile area.
                             </li>
                             <li>
-                                You can always <a href="/feedback">send us a request</a> to delete your information if none of the above works by sending us a link to your information  you want removed.
+                                You can always <a href="/feedback">send us a request</a> to delete your information if none of the above works
+                                by sending us a link to your information  you want removed.
                             </li>
                             <li>
-                                Once you make a request for removal of your information, we will act on your request typically within 48-72 business hours within receiving your request.
+                                Once you make a request for removal of your information, we will act on your request typically within
+                                48-72 business hours within receiving your request.
                             </li>
                         </ol>
                     </li>
@@ -126,7 +111,7 @@ const PrivacyPolicy = () => {
                         <b>Duration of storage of your Business Information</b>
                         <ol>
                             <li>
-                                Since go4WorldBusiness.com is a Business Advertising service, your public profile stays online till
+                                Since B2B Commodities is a Business Advertising service, your public profile stays online till
                                 perpetuity or till such times you make an explicit request to remove your information.
                             </li>
                         </ol>
@@ -175,24 +160,10 @@ const PrivacyPolicy = () => {
                                 You will receive no notification of changes to this Privacy Policy nor, under any circumstances,
                                 does this site promise notification. Your continued use of this site always evidences your acceptance
                                 of the terms this Privacy Policy or any modifications. This Privacy Policy was last
-                                updated on <b>15-May-2018</b>.
+                                updated on <b>18-August-2022</b>.
                             </li>
                         </ol>
                     </li>
-
-                    <li>
-                        <b> Jurisdiction and Applicable Law </b>
-                        <ol>
-                            <li>
-                                If any matter concerning this Privacy Policy shall be brought before a court of law,
-                                visitor agrees to that the sole and proper jurisdiction to be the state of New Delhi,
-                                India. Visitor agrees that the applicable law to be applied shall, in all cases, be that
-                                of the state New Delhi, India.
-                            </li>
-                        </ol>
-                    </li>
-
-
                 </ol>
             </div>
         </div>
