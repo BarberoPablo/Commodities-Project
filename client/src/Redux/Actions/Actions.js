@@ -1,10 +1,16 @@
-import { getAllPosts } from "../Slices/postsSlice";
+import { getAllPosts, getPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import axios from 'axios'
 
 export const getPost = ()=>(dispatch)=>{
   axios('https://restcountries.com/v3.1/all') // end-point del back /posts
   .then(data => dispatch(getAllPosts(data.data)))
+  .catch(e=>console.log(e))
+}
+
+export const searchPosts = () =>(dispatch)=>{
+  axios('https://restcountries.com/v3.1/all') // end-point del back /posts
+  .then(data => dispatch(getPosts(data.data)))
   .catch(e=>console.log(e))
 }
 

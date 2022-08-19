@@ -9,11 +9,11 @@ export const postSlice = createSlice({
     getAllUsers: (state,action)=>{
       console.log(action.payload)
       state.allUsers=action.payload
-    }
+    },
+    
     //more actions
   }
 })
 
 export const {getAllUsers} = postSlice.actions
-// export * as action from postSlice.action
 export default postSlice.reducer
