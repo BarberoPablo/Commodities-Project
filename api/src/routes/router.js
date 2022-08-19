@@ -5,6 +5,7 @@ const { getUserDetails, createPost, getCategory, getSubCategory } = require("./s
 
 router.get("/userDetails/:id", getUserDetails);
 
+router.get("/review/:id", getReviews);
 router.post("/post/:id", createPost);
 
 router.get("/category", getCategory);
