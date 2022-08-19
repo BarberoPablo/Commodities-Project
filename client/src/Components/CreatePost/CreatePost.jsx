@@ -1,4 +1,4 @@
-//<Route path="/create-post" component={CreatePost}/>
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import { postPost } from "../actions/index";  //importar acciones
