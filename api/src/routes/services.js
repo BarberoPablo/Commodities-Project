@@ -37,6 +37,7 @@ const getPosts = async(req, res)=>{
     
     //Si solo me pasan el id del user y no del post, devuelvo todos los posts del user
     if(!idPost && idUser){
+      //Chequear que funcione atributes: "" o atributes: []
       const posts = await Post.findAll({
         where: {idUser: idUser},
         include: {
@@ -59,6 +60,7 @@ const getPosts = async(req, res)=>{
     
     //Si me pasan id de usuario y post, solo devuelve ese post del usuario en particular
     if(idPost && idUser){
+      //Chequear que funcione atributes: "" o atributes: []
       const post = await Post.findOne({
         where: {
           idUser: idUser,
@@ -146,7 +148,7 @@ const createPost = async(req, res)=>{
       image,
     })
     res.status(201).json(newPost);
-    
+
   } catch (error) {
     res.status(error.status).send(error.msg)
   }
