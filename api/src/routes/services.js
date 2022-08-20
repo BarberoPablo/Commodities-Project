@@ -21,7 +21,7 @@ const createPost = async(req, res)=>{
     if(!id){
       throw { status: 400, message: "id required"};
     }
-    const user = User.findOne({
+    const user = await User.findOne({
       where: {id:id}
     })  
     //Si no existe un usuario con ese id ocurre un error
