@@ -303,5 +303,32 @@ const createUser = async (req, res) => {
 
 }
 
+const getPlans = async (req, res) => {
+  try {
+    const plans= await Plan.findAll() 
+    
+    res.status(200).send(plans)
+  } catch (error) {
+    res.status(404).send(error)
+  }
+}
+
+const getPlanDetail = async(req, res)=>{
+  const {name} = req.params;
+
+  try {
+    let planDetail = await Plan.findOne({
+      where: {name:name}
+    });
+    if (planDetail === null) {
+      res.status(400).send(error)
+    }
+    else
+      res.status(200).json(planDetail)
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
 module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, 
-  getSubCategory, createReview , postCategory, createPlan, createUser}
+  getSubCategory, createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail}
