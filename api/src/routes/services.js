@@ -83,10 +83,10 @@ const getPosts = async(req, res)=>{
       })
       return res.status(200).json(post)
     }
-    throw { status: 400, msg: `Error`}
+    throw { status: 400, message: `Error`}
 
   } catch (error) {
-    res.status(error.status).send(error.msg)
+    res.status(error.status).send(error.message)
   }
 }
 
@@ -99,7 +99,7 @@ const createPost = async(req, res)=>{
     
 
     if(!id){
-      throw { status: 400, msg: "id required"}
+      throw { status: 400, message: "id required"}
     }
     /*
     const user = User.findOne({
@@ -107,11 +107,11 @@ const createPost = async(req, res)=>{
     })  
     //Si no existe un usuario con ese id ocurre un error
     if(!user){
-      throw { status: 400, msg: `User with id: ${id}, does not exists`}
+      throw { status: 400, message: `User with id: ${id}, does not exists`}
     }
 
     if(!id || !description || !shipping || !payment || !category || !subCategory){
-      throw { status: 400, msg: "Parameters error"}
+      throw { status: 400, message: "Parameters error"}
     }
     //Buscar al user con el id "id" recibido por params y a ese agregarle el post
     
@@ -121,7 +121,7 @@ const createPost = async(req, res)=>{
     });
     //Si no encontro a la categoría ocurre un error:
     if(!categoryInDb){
-      throw { status: 400, msg: "Category id not found"} 
+      throw { status: 400, message: "Category id not found"} 
     }
     const idCategoryInDb = categoryInDb.id;
     
@@ -130,7 +130,7 @@ const createPost = async(req, res)=>{
       where: {id:subCategory},
     }); 
     if(!subCategoryInDb){
-      throw { status: 400, msg: "Sub-category id not found"} 
+      throw { status: 400, message: "Sub-category id not found"} 
     }
     const idSubCategoryInDb = subCategoryInDb.id;
     */
@@ -150,7 +150,7 @@ const createPost = async(req, res)=>{
     res.status(201).json(newPost);
 
   } catch (error) {
-    res.status(error.status).send(error.msg)
+    res.status(error.status).send(error.message)
   }
 }
 
@@ -240,8 +240,8 @@ const createPlan = async(req, res)=>{
       res.status(201).json(newPlan);
 
   } catch (error) {
-    console.log(error.msg);
-    res.status(error.status).send(error.msg)
+    console.log(error.message);
+    res.status(error.status).send(error.message)
   }
 };
 
@@ -270,4 +270,39 @@ const postCategory = async (req , res) => {
   }
 }
 
-module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory, createReview , postCategory, createPlan}}
+const createUser = async (req, res) => {
+  //Propiedades de un User: name, phone, email, verified, country, contactsId, remainingContacts, isadmin, isbanned, image
+  try {
+    const {name, phone, email, country, image} = req.body;
+    if(!name || !email || !country){
+      throw {status: 400, message: "Parameters error, check name, email and country"}
+    }
+    //Si ya existe el email en la base de datos, para no romper todo mejor le damos un warning al usuario
+    const emailAlreadyExists = await User.findOne({
+      where: { email: email },
+    });
+    
+    if(emailAlreadyExists){
+      throw {status: 400, message: "Email already exists, please Log-in"}
+    }
+    /*Si la informacion esta correcta, creo el usuario
+      El usuario al ser creado, como no tiene un plan, contactsId y remainingContacts no son seteados al igual que sus FK:
+        planId, feedbackId, reviewUserId, postId
+    */
+    const newUser = await User.create({
+      name,
+      phone,
+      email,
+      country,
+      image
+    })
+    res.status(201).json(newUser);
+
+  } catch (error) {
+    res.status(error.status).send(error.message)
+  }
+
+}
+
+module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, 
+  getSubCategory, createReview , postCategory, createPlan, createUser}
