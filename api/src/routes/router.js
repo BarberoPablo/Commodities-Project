@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { getUserDetails, getPosts, createPost, getCategory, getSubCategory, 
-  getReviews, createReview , postCategory, createPlan, createUser } = require("./services");
+  getReviews, createReview , postCategory, createPlan, createUser, getPlans, getPlanDetail } = require("./services");
 
 router.get("/userDetails/:id", getUserDetails);
 
@@ -23,5 +23,9 @@ router.post("/category", postCategory)
 router.post("/plan/", createPlan);
 
 router.post("/user", createUser);
+
+router.get("/plan", getPlans);
+
+router.get("/plan/:name", getPlanDetail);
 
 module.exports = { router };
