@@ -245,5 +245,29 @@ const createPlan = async(req, res)=>{
   }
 };
 
+const postCategory = async (req , res) => {
+// ES necesario añadir subcategories en esta ruta? 
+  const { name , display , subcateogories } = req.body
 
-module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory, createReview, createPlan}
+  const newCategory = {name , display , subcateogories}
+
+  if (!name || !display) {
+    return res.status(400).send('Incomplete data')
+  }
+  try {
+      const cat = await Category.create(newCategory)
+      let subCat = await SubCategory.findAll({
+        where: {
+          //PUEDE ROMPERSE EN ESTA LINEA POR LA FK
+          idCategory: subcateogories
+        }
+      })
+      await cat.addSubcategories(subCat)
+      res.status(201).json(cat)
+    
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
+
+module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory, createReview , postCategory, createPlan}}
