@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { getUserDetails, getPosts, createPost, getCategory, getSubCategory, getReviews, createReview , postCategory, createPlan } = require("./services");
+const { getUserDetails, getPosts, createPost, getCategory, getSubCategory, getReviews, 
+    createReview , postCategory, createPlan, postSubCategory } = require("./services");
 
 router.get("/userDetails/:id", getUserDetails);
 
@@ -20,5 +21,7 @@ router.get("/subCategory/:id", getSubCategory);
 router.post("/category", postCategory)
 
 router.post("/plan/", createPlan);
+
+router.post("/subCategory", postSubCategory)
 
 module.exports = { router };

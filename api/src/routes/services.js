@@ -270,4 +270,29 @@ const postCategory = async (req , res) => {
   }
 }
 
-module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory, createReview , postCategory, createPlan}}
+const postSubCategory = async (req , res) => {
+  const { name , display , category } = req.body
+
+  const newSubCategory = {name , display , category}
+
+  if (!name || !display) {
+    return res.status(400).send('Incomplete data')
+  }
+  try {
+      const subCat = await SubCategory.create(newSubCategory)
+      let catAdd = await Category.findAll({
+        where: {
+          name: category
+        }
+      })
+      await subCat.addSubcategories(catAdd)
+      res.status(201).json(subCat)
+
+  } catch (error) {
+    res.status(500).send(error)
+  }
+
+}
+
+module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory,
+                 createReview , postCategory, createPlan , postSubCategory }
