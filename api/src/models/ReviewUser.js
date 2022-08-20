@@ -5,11 +5,15 @@ module.exports = (sequelize) => {
   sequelize.define('reviewUser', {
     average: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      defaultValue: 0,
     },
     reviews: {
       type: DataTypes.ARRAY(DataTypes.JSON),
-      allowNull: false
+      defaultValue: []
+    },
+    scoreSum: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     display: {
       type: DataTypes.BOOLEAN,

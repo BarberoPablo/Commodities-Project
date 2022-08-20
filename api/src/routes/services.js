@@ -177,14 +177,17 @@ const createReview = async(req, res)=>{
    if (comment.length < 255) {
     let newReview = await ReviewUser.findOrCreate({
       where: {userId : userId}
-    },
-    {
-      reviews: this.reviews.concat({"comment":comment, "score":score, "idReviewer":idReviewer}),
-      scoreSum: scoreSum+score,
-      average: scoreSum/reviews.length,//si falla agregar el this.
-      display: true
+    },{
+      reviews:[],
+      scoreSum: 0,
+      average: 0,
+      userId,
     })
-    return res.status(201).json(newReview)
+    newReview.reviews.push({"comment":comment, "score":score, "idReviewer":idReviewer});
+    newReview.scoreSum = newReview.scoreSum+score;
+    newReview.average = newReview.scoreSum/newReview.reviews.length,//si falla agregar el this.
+    console.log(newReview);
+    return res.status(201).json(newReview);
    };
    
   } catch (error) {
@@ -289,6 +292,7 @@ const createUser = async (req, res) => {
       El usuario al ser creado, como no tiene un plan, contactsId y remainingContacts no son seteados al igual que sus FK:
         planId, feedbackId, reviewUserId, postId
     */
+   console.log(name);
     const newUser = await User.create({
       name,
       phone,
