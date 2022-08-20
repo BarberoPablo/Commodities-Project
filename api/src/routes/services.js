@@ -204,9 +204,7 @@ idReviewer
 
 const getCategory = async (req , res) => {
   try {
-    let category = await Category.findAll({
-      include: SubCategory
-     });
+    let category = await Category.findAll();
 
      res.status(200).send(category)
 
@@ -249,24 +247,17 @@ const createPlan = async(req, res)=>{
 };
 
 const postCategory = async (req , res) => {
-// ES necesario añadir subcategories en esta ruta? 
-  const { name , display , subcateogories } = req.body
+  const { name , display , subcategories } = req.body
 
-  const newCategory = {name , display , subcateogories}
+  const newCategory = {name , display , subcategories}
 
-  if (!name || !display) {
+  if (!name) {
     return res.status(400).send('Incomplete data')
   }
   try {
       const cat = await Category.create(newCategory)
-      let subCat = await SubCategory.findAll({
-        where: {
-          //PUEDE ROMPERSE EN ESTA LINEA POR LA FK
-          idCategory: subcateogories
-        }
-      })
-      await cat.addSubcategories(subCat)
-      res.status(201).json(cat)
+      
+      res.status(201).send(cat)
     
   } catch (error) {
     res.status(500).send(error)

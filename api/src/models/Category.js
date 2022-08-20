@@ -6,10 +6,15 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     display: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      defaultValue: true,
     },
-  })
+    subcategories: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
+      defaultValue: []
+    }  })
 }
