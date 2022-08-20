@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    email: {//poner que sea unico, no puede haber otro igual
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -25,18 +25,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    contactsid: {
+    contactsIds: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: [],
     },
-    remainingcontacts: {
+    remainingContacts: {
       type: DataTypes.INTEGER,
     },
-    isadmin: {
+    isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    isbanned: {
+    isBanned: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
