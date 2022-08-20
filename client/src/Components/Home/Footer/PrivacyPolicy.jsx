@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
                                 also found in your private profile area.
                             </li>
                             <li>
-                                You can always <a href="/feedback">send us a request</a> to delete your information if none of the above works
+                                You can always <a href="/contact-us">send us a request</a> to delete your information if none of the above works
                                 by sending us a link to your information  you want removed.
                             </li>
                             <li>
