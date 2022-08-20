@@ -172,13 +172,14 @@ const getReviews = async(req, res)=>{
 //estadísticas de los reviews de quien la recibe en la tabla ReviewUser
 const createReview = async(req, res)=>{
   const {comment, score, userId, idReviewer} = req.body
+  console.log(comment);
   try {
    if (comment.length < 255) {
     let newReview = await ReviewUser.findOrCreate({
       where: {userId : userId}
     },
     {
-      reviews: reviews.concat({"comment":comment, "score":score, "idReviewer":idReviewer}),
+      reviews: this.reviews.concat({"comment":comment, "score":score, "idReviewer":idReviewer}),
       scoreSum: scoreSum+score,
       average: scoreSum/reviews.length,//si falla agregar el this.
       display: true
@@ -209,7 +210,7 @@ const getCategory = async (req , res) => {
   } catch (error) {
     res.status(404).send(error)
   }
-}
+};
 
 const getSubCategory = async (req , res) => {
   try {
@@ -224,7 +225,25 @@ const getSubCategory = async (req , res) => {
   } catch (error) {
     res.status(404).send(subCategory)
   }
-}
+};
+const createPlan = async(req, res)=>{
+    try {
+      const {name, cost, contacts, posts, reviews } = req.body;
+
+      const newPlan = await Plan.create({
+        name,
+        cost,
+        contacts,
+        posts,
+        reviews
+      })
+      res.status(201).json(newPlan);
+
+  } catch (error) {
+    console.log(error.msg);
+    res.status(error.status).send(error.msg)
+  }
+};
 
 const postCategory = async (req , res) => {
 // ES necesario añadir subcategories en esta ruta? 
@@ -251,5 +270,4 @@ const postCategory = async (req , res) => {
   }
 }
 
-module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory, createReview , postCategory}
-
+module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, getSubCategory, createReview , postCategory, createPlan}}

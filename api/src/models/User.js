@@ -25,18 +25,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    contactsId: {
+    contactsid: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: [],
     },
-    remainingContacts: {
+    remainingcontacts: {
       type: DataTypes.INTEGER,
     },
-    isAdmin: {
+    isadmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    isBanned: {
+    isbanned: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
@@ -44,5 +44,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       defaultValue: false,
     },
-  });
+  }
+  );
 };
