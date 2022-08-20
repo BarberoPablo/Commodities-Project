@@ -168,39 +168,37 @@ const getReviews = async(req, res)=>{
   }
 };
 
-//Create review debe crear el review correspondiente y a su vez debe actualizar las 
+//Create review  debe actualizar las 
 //estadísticas de los reviews de quien la recibe en la tabla ReviewUser
 const createReview = async(req, res)=>{
-  const {comment, score, userId, idReviewer} = req.body
-  console.log(comment);
+  const {comment, score, userId, idReviewer} = req.body;
   try {
    if (comment.length < 255) {
-    let newReview = await ReviewUser.findOrCreate({
-      where: {userId : userId}
-    },{
-      reviews:[],
-      scoreSum: 0,
-      average: 0,
-      userId,
-    })
-    newReview.reviews.push({"comment":comment, "score":score, "idReviewer":idReviewer});
-    newReview.scoreSum = newReview.scoreSum+score;
-    newReview.average = newReview.scoreSum/newReview.reviews.length,//si falla agregar el this.
-    console.log(newReview);
-    return res.status(201).json(newReview);
+    const userAlreadyExists = await ReviewUser.findOne({
+      where: { userId : userId },
+    });
+    if(userAlreadyExists){
+      const newReview = userAlreadyExists.toJSON();
+      let scoreSum = newReview.scoreSum + score;
+      newReview.reviews.push({"comment":comment, "score":score, "idReviewer":idReviewer});
+      let reviews = newReview.reviews;
+      let average = scoreSum/reviews.length;
+      await userAlreadyExists.update({
+        scoreSum,
+        reviews,
+        average,
+      }) 
+    } else {
+      return res.status(404).send("The User selected doesn't exists");
+    };
+        return res.status(201).json(userAlreadyExists);
    };
    
   } catch (error) {
     console.log (error);
-    return res.status(404).send("The review selected is no longer available");
+    return res.status(400).send("The review was not created");
   }
 };
-/*hace un find or create para buscar el userId del personale con el review
-hacer una array de tres campos,
-comentario:""
-score:0-5
-idReviewer
-*/
 
 const getCategory = async (req , res) => {
   try {
@@ -290,6 +288,12 @@ const createUser = async (req, res) => {
       email,
       country,
       image
+    });
+    let newReview = await ReviewUser.create({
+      reviews:[],
+      scoreSum: 0,
+      average: 0,
+      userId: newUser.id
     })
     res.status(201).json(newUser);
 
