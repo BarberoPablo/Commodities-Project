@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { getUserDetails, getPosts, createPost, getCategory, 
+const { getPosts, createPost, getCategory, 
   getReviews, createReview , postCategory, createPlan, createUser, getPlans, getPlanDetail } = require("./services");
 
-router.get("/userDetails/:id", getUserDetails);
-
-router.get("/posts/:idPost", getPosts);
+router.get("/posts/", getPosts);
 
 router.get("/reviews/:id", getReviews);
 

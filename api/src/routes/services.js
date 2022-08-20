@@ -1,69 +1,10 @@
 const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("../db");
 
-const getUserDetails = async(req, res)=>{
-  try {
-
-  } catch (error) {
-    
-  }
-}
-
 const getPosts = async(req, res)=>{
-  try {
-    const {idUser} = req.query;
-    const {idPost} = req.params;
-    
-    //Si no recibo un id de usuario y un id de post entonces devuelvo todos los posts
-    if(!idUser && !idPost){
-      //Chequear que funcione atributes: "" o atributes: []
-      const posts = await Post.findAll({
-        include: {
-          model: Category,
-          attributes: ["name", "subcategory", "display"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        },
-      })
-      return res.status(200).json(posts)
-    }
-    
-    //Si solo me pasan el id del user y no del post, devuelvo todos los posts del user
-    if(!idPost && idUser){
-      //Chequear que funcione atributes: "" o atributes: []
-      const posts = await Post.findAll({
-        where: {idUser: idUser},
-        include: {
-          model: Category,
-          attributes: ["name", "subcategory", "display"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        },
-      })
-      return res.status(200).json(posts)
-    }
-    
-    //Si me pasan id de usuario y post, solo devuelve ese post del usuario en particular
-    if(idPost && idUser){
-      //Chequear que funcione atributes: "" o atributes: []
-      const post = await Post.findOne({
-        where: {
-          idUser: idUser,
-          idPost: idPost,
-        },
-        include: {
-          model: Category,
-          attributes: ["name", "subcategory", "display"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        },
-      })
-      return res.status(200).json(post)
-    }
-    throw { status: 400, message: `Error`}
+  try { 
+    const posts = await Post.findAll();
 
+    return res.status(200).json(posts)
   } catch (error) {
     res.status(error.status).send(error.message)
   }
@@ -283,5 +224,5 @@ const getPlanDetail = async(req, res)=>{
   }
 };
 
-module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, 
+module.exports = { createPost, getPosts, getCategory, getReviews, 
   createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail}
