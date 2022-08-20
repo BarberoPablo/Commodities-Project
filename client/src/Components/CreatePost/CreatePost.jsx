@@ -12,17 +12,14 @@ export default function CreatePost() {
   //get category y sub category
 
 const [input, setInput] = useState({ //acomadar a modelo
-  id: "",
-  user: "",
-  tittle:"",
+  title:"",
   description: "",
   sell: false,
   shipping:"",
   payment:"",
   Category: "",
   SubCategory: "",
-  idUser:"",
-  image:"",
+  //image:"",
 });
 
 //handles
@@ -61,17 +58,14 @@ function handleSubmit(e){
   console.log(input)
   alert("Post Created")
   setInput({
-    id: "",
-    user: "",
-    tittle:"",
+    title:"",
     description: "",
     sell: false,
     shipping:"",
     payment:"",
     Category: "",
     SubCategory: "",
-    idUser:"",
-    image:"",
+    //image:"",
   })
 }
 
@@ -97,9 +91,9 @@ function validacion(input){
   </Link>
   <h1>Create new post</h1>
 <form onSubmit={(e)=>handleSubmit(e)}>
-  <label>Tittle: </label>
-  <input type="text" value={input.tittle} autoComplete="off" placeholder="Please write a tittle..." name="tittle" onChange={(e)=>handleChange(e)}/><br/>
-  {errors.tittle &&<p className="err">{errors.tittle}</p>}
+  <label>title: </label>
+  <input type="text" value={input.title} autoComplete="off" placeholder="Please write a title..." name="title" onChange={(e)=>handleChange(e)}/><br/>
+  {errors.title &&<p className="err">{errors.title}</p>}
 
   <select value={input.shipping} name="shipping" onChange={(e)=>handleChange(e)}>
     <option hidden value="">Shipping method</option>
