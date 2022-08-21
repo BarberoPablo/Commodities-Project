@@ -1,34 +1,29 @@
-
 const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("../db");
 const axios = require("axios");
+const {api, categories} = require('./jsons.js');
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
-  // Me traigo 10 usuarios de la API
-  let usersRawData = await axios.get("https://randomuser.me/api/?results=10")
-  // Creo 4 categorias
-  const categories = [
-    {name: "Agriculture", subcategories: ["Coffee", "Corn", "Rice", "Soybeans", "Sugar"]},
-    {name: "Energy", subcategories: ["Gasoline", "Heating Fuel", "Natural Gas", "Petroleum"]},
-    {name: "Livestock", subcategories: ["Beef Cattle", "Chicken Cattle", "Pig Cattle"]},
-    {name: "Metals", subcategories: ["Copper", "Gold", "Platinum", "Silver"]},
-  ]
-  // Se crean 10 User en la database
-  for(const person of usersRawData.data.results){
-    await User.create({
-      "name": `${person.name.first} ${person.name.last}`,
-      "phone": person.phone,
-      "email": person.email,
-      "country": person.location.country,
-      "image": person.picture.large
-    });
-  }
-  //Se crean las categorías en la database:
-  for(const category of categories){
-    await Category.create({
-      "name": category.name,
-      "subcategories": category.subcategories,
-    });
+  try {
+    // Se crean los User en la base de datos
+    for(const person of api){
+      await User.create({
+        name: `${person.name.first} ${person.name.last}`,
+        phone: person.phone,
+        email: person.email,
+        country: person.location.country,
+        image: person.picture.large
+      });
+    }
+    //Se crean las Category en la database:
+    for(const category of categories){
+      await Category.create({
+        name: category.name,
+        subcategories: category.subcategories,
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
   }
 })();
 
@@ -282,4 +277,3 @@ const assignPlanToUser = async (req, res) => {
 
 module.exports = { createPost, getPosts, getCategory, getReviews, 
   createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser}
-
