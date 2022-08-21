@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 //import { useDispatch } from 'react-redux';
 //import { searchPosts } from '../../../Redux/Actions/Actions';
+import s from './Navbar.module.css'
 
 const Search = () => {
   //const dispatch = useDispatch();

@@ -9,7 +9,7 @@ export default function CreatePost() {
   const [checkBS, setCheckBS] = useState(0) 
 
   //actions necesarias
-  //get category y sub category
+//get category y sub category
 
 const [input, setInput] = useState({ //acomadar a modelo
   id: "",
