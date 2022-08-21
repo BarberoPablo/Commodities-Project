@@ -1,9 +1,11 @@
 const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("../db");
-const axios = require("axios");
-const {api, categories} = require('./jsons.js');
+//const axios = require("axios");
+const {api, categories, posts} = require('./jsons.js');
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
-(async () => {
+var inicial = true;
+var first = async () => {
+  inicial = false;
   try {
     // Se crean los User en la base de datos
     for(const person of api){
@@ -15,6 +17,7 @@ const {api, categories} = require('./jsons.js');
         image: person.picture.large
       });
     }
+    console.log("@1@");
     //Se crean las Category en la database:
     for(const category of categories){
       await Category.create({
@@ -22,10 +25,41 @@ const {api, categories} = require('./jsons.js');
         subcategories: category.subcategories,
       });
     }
+    console.log("@2@");
   } catch (error) {
     console.log(error.message);
   }
-})();
+};
+var second = async () => {
+  try {
+    //Se crean los Posts en la database:
+    for(const post of posts){
+      await Post.create( {
+        title: post.title,
+        description: post.description,
+        sell: post.sell,
+        shipping: post.shipping,
+        payment: post.payment,
+        subCategory: post.subCategory,
+        image: post.image,
+        country: post.country,
+        categoryName: post.categoryName,
+        userId: post.userId
+      });
+    }
+    console.log("@3@");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+if(inicial) {
+  first()
+  //second()
+  .then(console.log("@@@@@11111111111"))
+  .then(second())
+  .then(console.log("@4@"))
+}
 
 const getPosts = async(req, res)=>{
   try { 
@@ -42,7 +76,7 @@ const createPost = async(req, res)=>{
     //El id es del user a quien pertenece el post
     const {id} = req.params;
     //Category es un id (integer)
-    const {title, description, sell, category, shipping, payment, image } = req.body;
+    const {title, description, sell, shipping, payment, subCategory, image, country, categoryName} = req.body;
     
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
     if(!id){
@@ -56,8 +90,8 @@ const createPost = async(req, res)=>{
       throw { status: 400, message: `User with id: ${id}, does not exists`};
     }
     
-    if(!description || !shipping || !payment || !category ){
-      throw { status: 400, message: "Parameters error, check description, shipping, paymend and category"};
+    if(!description || !shipping || !payment || !categoryName || !country || !subCategory){
+      throw { status: 400, message: "Parameters error, check description, shipping, paymend, country, category and subCategory"};
     }
     
     //Buscar al user con el id "id" recibido por params y a ese agregarle el post
@@ -67,23 +101,25 @@ const createPost = async(req, res)=>{
 
     //Descomentar cuando esten las categorías
     const categoryInDb = await Category.findOne({ 
-      where: {id:category},
+      where: {name:categoryName},
     });
     //Si no encontro a la categoría ocurre un error:
     if(!categoryInDb){
       throw { status: 400, message: "Category id not found"} 
     }
-    const categoryId = categoryInDb.id; // .toJSON?
+   // const categoryId = categoryInDb.id; // .toJSON?
 
     const newPost = await Post.create({
       title,
       description,
       sell,
-      categoryId,
-      userId: id,
       shipping,
       payment,
+      subCategory,
       image,
+      country,
+      categoryName,
+      userId: id
     })
 
     res.status(201).json(newPost);
