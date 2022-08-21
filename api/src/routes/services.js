@@ -1,114 +1,45 @@
-const { Category, Feedback, Plan, Post, Review, ReviewUser, SubCategory, User } = require("../db");
 
+const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("../db");
 
 const getPosts = async(req, res)=>{
-  try {
-    const {idUser} = req.query;
-    const {idPost} = req.params;
-    
-    //Si no recibo un id de usuario y un id de post entonces devuelvo todos los posts
-    if(!idUser && !idPost){
-      //Chequear que funcione atributes: "" o atributes: []
-      const posts = await Post.findAll({
-        include: {
-          model: Category,
-          attributes: ["name"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        },
-        include: {
-          model: SubCategory,
-          attributes: ["name"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        }
-      })
-      return res.status(200).json(posts)
-    }
-    
-    //Si solo me pasan el id del user y no del post, devuelvo todos los posts del user
-    if(!idPost && idUser){
-      //Chequear que funcione atributes: "" o atributes: []
-      const posts = await Post.findAll({
-        where: {idUser: idUser},
-        include: {
-          model: Category,
-          attributes: ["name"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        },
-        include: {
-          model: SubCategory,
-          attributes: ["name"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        }
-      })
-      return res.status(200).json(posts)
-    }
-    
-    //Si me pasan id de usuario y post, solo devuelve ese post del usuario en particular
-    if(idPost && idUser){
-      //Chequear que funcione atributes: "" o atributes: []
-      const post = await Post.findOne({
-        where: {
-          idUser: idUser,
-          idPost: idPost,
-        },
-        include: {
-          model: Category,
-          attributes: ["name"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        },
-        include: {
-          model: SubCategory,
-          attributes: ["name"], //el id lo trae solo
-          through: {
-            attributes: "",
-          },
-        }
-      })
-      return res.status(200).json(post)
-    }
-    throw { status: 400, message: `Error`}
+  try { 
+    const posts = await Post.findAll();
 
+    return res.status(200).json(posts)
   } catch (error) {
     res.status(error.status).send(error.message)
   }
 }
 
 const createPost = async(req, res)=>{
-  //HACER UN PROMISE ALL CON LAS PROMESAS
   try {
+    //El id es del user a quien pertenece el post
     const {id} = req.params;
-    //Category y subCategory son id (integer)
-    const {title, description, sell, category, subCategory, shipping, payment, image } = req.body;
+    //Category es un id (integer)
+    const {title, description, sell, category, shipping, payment, image } = req.body;
     
-
+    //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
     if(!id){
-      throw { status: 400, message: "id required"}
+      throw { status: 400, message: "id required"};
     }
-    /*
-    const user = User.findOne({
+    const user = await User.findOne({
       where: {id:id}
     })  
     //Si no existe un usuario con ese id ocurre un error
     if(!user){
-      throw { status: 400, message: `User with id: ${id}, does not exists`}
+      throw { status: 400, message: `User with id: ${id}, does not exists`};
     }
-
-    if(!id || !description || !shipping || !payment || !category || !subCategory){
-      throw { status: 400, message: "Parameters error"}
-    }
-    //Buscar al user con el id "id" recibido por params y a ese agregarle el post
     
-    Descomentar cuando esten las categorías
+    if(!description || !shipping || !payment || !category ){
+      throw { status: 400, message: "Parameters error, check description, shipping, paymend and category"};
+    }
+    
+    //Buscar al user con el id "id" recibido por params y a ese agregarle el post
+
+
+
+
+    //Descomentar cuando esten las categorías
     const categoryInDb = await Category.findOne({ 
       where: {id:category},
     });
@@ -116,30 +47,19 @@ const createPost = async(req, res)=>{
     if(!categoryInDb){
       throw { status: 400, message: "Category id not found"} 
     }
-    const idCategoryInDb = categoryInDb.id;
-    
-    Descomentar cuando esten las subCategorías
-    const subCategoryInDb = await SubCategory.findOne({ 
-      where: {id:subCategory},
-    }); 
-    if(!subCategoryInDb){
-      throw { status: 400, message: "Sub-category id not found"} 
-    }
-    const idSubCategoryInDb = subCategoryInDb.id;
-    */
-    
+    const categoryId = categoryInDb.id; // .toJSON?
+
     const newPost = await Post.create({
       title,
       description,
       sell,
-      //Cambiar esto cuando se descomente la funcion:
-      idCategory: idCategoryInDb,
-      idSubcategory: idSubCategoryInDb,
-      idUser: id, //idUser
+      categoryId,
+      userId: id,
       shipping,
       payment,
       image,
     })
+
     res.status(201).json(newPost);
 
   } catch (error) {
@@ -156,7 +76,6 @@ const getReviews = async(req, res)=>{
    });
    return res.status(200).send(reviews);
   } catch (error) {
-    console.log (error);
     return res.status(404).send("The reviews selected are no longer available");
   }
 };
@@ -188,7 +107,6 @@ const createReview = async(req, res)=>{
    };
    
   } catch (error) {
-    console.log (error);
     return res.status(400).send("The review was not created");
   }
 };
@@ -204,20 +122,6 @@ const getCategory = async (req , res) => {
   }
 };
 
-const getSubCategory = async (req , res) => {
-  try {
-    const { id } = req.params
-
-    let subCategory = await SubCategory.findAll({
-      where : {idCategory: id},
-    });
-
-    res.status(200).json(subCategory)
-    
-  } catch (error) {
-    res.status(404).send(subCategory)
-  }
-};
 const createPlan = async(req, res)=>{
     try {
       const {name, cost, contacts, posts, reviews } = req.body;
@@ -232,15 +136,14 @@ const createPlan = async(req, res)=>{
       res.status(201).json(newPlan);
 
   } catch (error) {
-    console.log(error.message);
     res.status(error.status).send(error.message)
   }
 };
 
 const postCategory = async (req , res) => {
-  const { name , display , subcategories } = req.body
+  const { name, subcategories } = req.body
 
-  const newCategory = {name , display , subcategories}
+  const newCategory = {name, subcategories}
 
   if (!name) {
     return res.status(400).send('Incomplete data')
@@ -274,7 +177,6 @@ const createUser = async (req, res) => {
       El usuario al ser creado, como no tiene un plan, contactsId y remainingContacts no son seteados al igual que sus FK:
         planId, feedbackId, reviewUserId, postId
     */
-   console.log(name);
     const newUser = await User.create({
       name,
       phone,
@@ -348,4 +250,5 @@ const assignPlanToUser = async (req, res) => {
 }
 
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  getSubCategory, createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser}
+  createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser}
+
