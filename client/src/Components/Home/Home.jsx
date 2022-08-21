@@ -5,7 +5,6 @@ import DrawerCategories from './DrawerCategories/DrawerCategories'
 const Home = () => {
   return (
     <div>
-      <Navbar />
       <DrawerCategories />
       {/* more components in HOME */}
     </div>
