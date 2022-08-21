@@ -7,7 +7,7 @@ const {
 } = process.env;
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/b2b`, {
-  logging: true, // set to console.log to see the raw SQL queries
+  logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
 const basename = path.basename(__filename);
@@ -32,9 +32,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { User, Category, Plan, Post, ReviewUser, Feedback } = sequelize.models;
 
-// Aca vendrian las relaciones
 
-Category.hasMany(Post);  //hasOne para cuando es 1:1
+Category.hasMany(Post); 
 Post.belongsTo(Category);
 
 User.hasMany(Post);

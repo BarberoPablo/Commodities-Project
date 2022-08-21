@@ -21,32 +21,32 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const port = process.env.PORT || 3001;
 require('dotenv').config();
-const { auth, requiresAuth } = require('express-openid-connect');
+//const { auth, requiresAuth } = require('express-openid-connect');
 
-server.use(
-  auth({
-    authRequired: false,
-    auth0Logout: true,
-    issuerBaseURL: process.env.ISSUER_BASE_URL ,
-    baseURL: process.env.BASE_URL ,
-    clientID: process.env.CLIENT_ID ,
-    secret: process.env.SECRET ,
-    idpLogout: true,
-  })
-);
+// server.use(
+//   auth({
+//     authRequired: false,
+//     auth0Logout: true,
+//     issuerBaseURL: process.env.ISSUER_BASE_URL ,
+//     baseURL: process.env.BASE_URL ,
+//     clientID: process.env.CLIENT_ID ,
+//     secret: process.env.SECRET ,
+//     idpLogout: true,
+//   })
+// );
 
-server.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged Out")
-});
+// server.get('/', (req, res) => {
+//   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged Out")
+// });
 
-server.get('/profile', requiresAuth(), (req, res) => {  //This route reauieres to be authenticated to be able to get it
-  console.log(req.oidc.user);
-  res.send(JSON.stringify(req.oidc.user));
+// server.get('/profile', requiresAuth(), (req, res) => {  //This route requieres to be authenticated to be able to get it
+//   console.log(req.oidc.user);
+//   res.send(JSON.stringify(req.oidc.user));
   
-});
+// });
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {  // COMENTADO PARA PODER LEVANTAR LA APP SIN DB
+conn.sync({ force: false }).then(() => {  
   server.listen(port, () => {
     console.log(`Server listening at Port ${port}`); // eslint-disable-line no-console
   });
