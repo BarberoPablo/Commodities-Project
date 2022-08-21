@@ -4,16 +4,16 @@ module.exports = (sequelize) => {
   //Definicion del modelo ReviewUser:
   sequelize.define('reviewUser', {
     average: {
-      type: DataTypes.FLOAT(0),
-      allowNull: false,
+      type: DataTypes.FLOAT,
+      defaultValue: 0,
     },
-    idReview: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    reviews: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
+      defaultValue: []
     },
-    idUser: {
+    scoreSum: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      defaultValue: 0,
     },
     display: {
       type: DataTypes.BOOLEAN,
