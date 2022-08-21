@@ -8,10 +8,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    isSeller: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-    },
     phone: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -19,6 +15,7 @@ module.exports = (sequelize) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     verified: {
       type: DataTypes.BOOLEAN,
@@ -28,8 +25,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    contactsId: {
-      type: DataTypes.ARRAY(DataTypes.STRING), //se guardan los id de los match
+    contactsIds: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: [],
     },
     remainingContacts: {
       type: DataTypes.INTEGER,
@@ -43,9 +41,9 @@ module.exports = (sequelize) => {
       defaultValue: false,
     },
     image: {
-      type: DataTypes.BLOB('long'),
+      type: DataTypes.STRING,
       defaultValue: false,
     },
-
-  });
+  }
+  );
 };
