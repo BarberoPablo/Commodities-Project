@@ -1,12 +1,5 @@
 const { Category, Feedback, Plan, Post, Review, ReviewUser, SubCategory, User } = require("../db");
 
-const getUserDetails = async(req, res)=>{
-  try {
-
-  } catch (error) {
-    
-  }
-}
 
 const getPosts = async(req, res)=>{
   try {
@@ -330,5 +323,29 @@ const getPlanDetail = async(req, res)=>{
   }
 };
 
-module.exports = {getUserDetails , createPost, getPosts, getCategory, getReviews, 
-  getSubCategory, createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail}
+const assignPlanToUser = async (req, res) => {
+  const {PlanId, id} = req.body;
+  try {
+    console.log("entré");
+    const planExists = await Plan.findOne({
+      where: { id : PlanId },
+    });
+    const userExists = await User.findOne({
+      where: { id : id },
+    });
+    if(planExists && userExists) {
+      let planId = planExists.toJSON().id
+      await userExists.update({
+        planId
+      });
+       res.status(201).json(userExists);
+    } else {
+      res.status(400).send("El plan o el usuario no existen");
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+}
+
+module.exports = { createPost, getPosts, getCategory, getReviews, 
+  getSubCategory, createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser}
