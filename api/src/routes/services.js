@@ -1,35 +1,45 @@
-
 const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("../db");
-const axios = require("axios");
+//const axios = require("axios");
+const {api, categories, posts} = require('./jsons.js');
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
-  // Me traigo 10 usuarios de la API
-  let usersRawData = await axios.get("https://randomuser.me/api/?results=10")
-  // Creo 4 categorias
-  const categories = [
-    {name: "Agriculture", subcategories: ["Coffee", "Corn", "Rice", "Soybeans", "Sugar"]},
-    {name: "Energy", subcategories: ["Gasoline", "Heating Fuel", "Natural Gas", "Petroleum"]},
-    {name: "Livestock", subcategories: ["Beef Cattle", "Chicken Cattle", "Pig Cattle"]},
-    {name: "Metals", subcategories: ["Copper", "Gold", "Platinum", "Silver"]},
-  ]
-  // Se crean 10 User en la database
-  for(const person of usersRawData.data.results){
-    await User.create({
-      "name": `${person.name.first} ${person.name.last}`,
-      "phone": person.phone,
-      "email": person.email,
-      "country": person.location.country,
-      "image": person.picture.large
-    });
-  }
-  //Se crean las categorías en la database:
-  for(const category of categories){
-    await Category.create({
-      "name": category.name,
-      "subcategories": category.subcategories,
-    });
-  }
+  try {
+    // Se crean los User en la base de datos
+    for(const person of api){
+      await User.create({
+        name: `${person.name.first} ${person.name.last}`,
+        phone: person.phone,
+        email: person.email,
+        country: person.location.country,
+        image: person.picture.large
+      });
+    }
+    //Se crean las Category en la database:
+    for(const category of categories){
+      await Category.create({
+        name: category.name,
+        subcategories: category.subcategories,
+      });
+    }
+    //Se crean los Post en la database:
+    for(const post of posts){
+      await Post.create( {
+        title: post.title,
+        description: post.description,
+        sell: post.sell,
+        shipping: post.shipping,
+        payment: post.payment,
+        subCategory: post.subCategory,
+        image: post.image,
+        country: post.country,
+        categoryName: post.categoryName,
+        userId: post.userId
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
+  } 
 })();
 
 const getPosts = async(req, res)=>{
@@ -47,7 +57,7 @@ const createPost = async(req, res)=>{
     //El id es del user a quien pertenece el post
     const {id} = req.params;
     //Category es un id (integer)
-    const {title, description, sell, category, shipping, payment, image } = req.body;
+    const {title, description, sell, shipping, payment, subCategory, image, country, categoryName} = req.body;
     
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
     if(!id){
@@ -61,8 +71,8 @@ const createPost = async(req, res)=>{
       throw { status: 400, message: `User with id: ${id}, does not exists`};
     }
     
-    if(!description || !shipping || !payment || !category ){
-      throw { status: 400, message: "Parameters error, check description, shipping, paymend and category"};
+    if(!description || !shipping || !payment || !categoryName || !country || !subCategory){
+      throw { status: 400, message: "Parameters error, check description, shipping, paymend, country, category and subCategory"};
     }
     
     //Buscar al user con el id "id" recibido por params y a ese agregarle el post
@@ -72,23 +82,25 @@ const createPost = async(req, res)=>{
 
     //Descomentar cuando esten las categorías
     const categoryInDb = await Category.findOne({ 
-      where: {id:category},
+      where: {name:categoryName},
     });
     //Si no encontro a la categoría ocurre un error:
     if(!categoryInDb){
       throw { status: 400, message: "Category id not found"} 
     }
-    const categoryId = categoryInDb.id; // .toJSON?
+   // const categoryId = categoryInDb.id; // .toJSON?
 
     const newPost = await Post.create({
       title,
       description,
       sell,
-      categoryId,
-      userId: id,
       shipping,
       payment,
+      subCategory,
       image,
+      country,
+      categoryName,
+      userId: id
     })
 
     res.status(201).json(newPost);
@@ -259,7 +271,6 @@ const getPlanDetail = async(req, res)=>{
 const assignPlanToUser = async (req, res) => {
   const {PlanId, id} = req.body;
   try {
-    console.log("entré");
     const planExists = await Plan.findOne({
       where: { id : PlanId },
     });
@@ -282,4 +293,3 @@ const assignPlanToUser = async (req, res) => {
 
 module.exports = { createPost, getPosts, getCategory, getReviews, 
   createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser}
-
