@@ -32,9 +32,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { User, Category, Plan, Post, ReviewUser, Feedback } = sequelize.models;
 
-// Aca vendrian las relaciones
 
-Category.hasMany(Post);  //hasOne para cuando es 1:1
+Category.hasMany(Post); 
 Post.belongsTo(Category);
 
 User.hasMany(Post);
