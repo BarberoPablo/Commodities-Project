@@ -4,16 +4,20 @@ export const postSlice = createSlice({
   name:'posts', //nombre del slice- pasarlo al store 
   initialState:{
     allPosts:[],
+    posts:[]
   },
   reducers:{
     //trae todos los posteos
     getAllPosts: (state,action)=>{
+      console.log(action.payload);
       state.allPosts=action.payload
+      state.posts=action.payload
     },
     //traerme los posteos que se busca en el search
     getPosts: (state,action)=>{
-      state.allPosts=action.payload
-    }
+      const filtered= state.allPosts.filter((e)=> (action.payload.sell=== e.sell ? false : true) && (e.subCategory.toLowerCase().includes(action.payload.input.toLowerCase()) || e.country.toLowerCase().includes(action.payload.input.toLowerCase())))
+      state.posts = filtered
+    },
     //more actions
   }
 })
