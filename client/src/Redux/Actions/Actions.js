@@ -1,4 +1,4 @@
-import { getAllPosts, getPosts } from "../Slices/postsSlice";
+import { getAllPosts, getPosts,filteredSubcategory } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import axios from 'axios'
 
@@ -16,6 +16,11 @@ export const searchPosts = (name,sell) =>(dispatch)=>{
 
 // FUNCTIONS CATEGORIES
 
+// FILTERS SUBCATEGORY 
+
+export const filterBySubcategory = (value) => (dispatch)=>{
+  dispatch(filteredSubcategory(value))
+}
 
 
 // FUNCTIONS USERS
