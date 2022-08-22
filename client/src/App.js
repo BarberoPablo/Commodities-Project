@@ -8,17 +8,19 @@ import ContactUs from "./Components/Home/Footer/ContactUs.jsx"
 import PrivacyPolicy from "./Components/Home/Footer/PrivacyPolicy.jsx"
 import TermsOfUse from "./Components/Home/Footer/TermsOfUse.jsx"
 import CreatePost from "./Components/CreatePost/CreatePost.jsx"
+import Navbar from './Components/Home/Navbar/Navbar';
 
 function App() {
 
   return (
     <div className="App">
+      <Route path={'/'} component={Navbar}/>
       <Route exact path={'/'} component={Home}/>
+      <Route path="/create-post" component={CreatePost}/>
       <Route path={'/about-us'} component={AboutUs}/>
       <Route path={'/contact-us'} component={ContactUs}/>
       <Route path={'/privacy-policy'} component={PrivacyPolicy}/>
       <Route path={'/terms-of-use'} component={TermsOfUse}/>
-      <Route path="/create-post" component={CreatePost}/>
       <Route path={'/'} component={Footer}/>
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>

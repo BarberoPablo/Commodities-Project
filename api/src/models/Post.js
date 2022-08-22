@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING(256),
+      type: DataTypes.STRING(512),
       allowNull: false,
     },
     sell: {
@@ -19,12 +19,13 @@ module.exports = (sequelize) => {
     shipping: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
-      defaultValue: [],
     },
     payment: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
-      defaultValue: [],
+    },
+    subCategory: {
+      type: DataTypes.STRING,
     },
     image: {
       type: DataTypes.STRING,
@@ -32,6 +33,9 @@ module.exports = (sequelize) => {
     display: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+    },
+    country: {
+      type: DataTypes.STRING,
     }
   });
 };
