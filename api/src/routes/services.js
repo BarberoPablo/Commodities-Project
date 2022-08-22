@@ -4,7 +4,7 @@ const {api, categories, posts} = require('./jsons.js');
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
-  try {
+  setTimeout( async () => {try {
     // Se crean los User en la base de datos
     for(const person of api){
       await User.create({
@@ -39,7 +39,7 @@ const {api, categories, posts} = require('./jsons.js');
     }
   } catch (error) {
     console.log(error.message);
-  } 
+  }},2000)
 })();
 
 const getPosts = async(req, res)=>{
