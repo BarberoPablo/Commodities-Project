@@ -3,9 +3,7 @@ const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("..
 const {api, categories, posts} = require('./jsons.js');
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
-var inicial = true;
-var first = async () => {
-  inicial = false;
+(async () => {
   try {
     // Se crean los User en la base de datos
     for(const person of api){
@@ -17,7 +15,6 @@ var first = async () => {
         image: person.picture.large
       });
     }
-    console.log("@1@");
     //Se crean las Category en la database:
     for(const category of categories){
       await Category.create({
@@ -25,14 +22,7 @@ var first = async () => {
         subcategories: category.subcategories,
       });
     }
-    console.log("@2@");
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-var second = async () => {
-  try {
-    //Se crean los Posts en la database:
+    //Se crean los Post en la database:
     for(const post of posts){
       await Post.create( {
         title: post.title,
@@ -47,19 +37,10 @@ var second = async () => {
         userId: post.userId
       });
     }
-    console.log("@3@");
   } catch (error) {
     console.log(error.message);
-  }
-};
-
-if(inicial) {
-  first()
-  //second()
-  .then(console.log("@@@@@11111111111"))
-  .then(second())
-  .then(console.log("@4@"))
-}
+  } 
+})();
 
 const getPosts = async(req, res)=>{
   try { 
@@ -290,7 +271,6 @@ const getPlanDetail = async(req, res)=>{
 const assignPlanToUser = async (req, res) => {
   const {PlanId, id} = req.body;
   try {
-    console.log("entré");
     const planExists = await Plan.findOne({
       where: { id : PlanId },
     });
