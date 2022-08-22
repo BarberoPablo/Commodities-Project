@@ -1,40 +1,35 @@
-import React from "react";
 import s from "./Card.module.css";
 const CardDetail = ({ e }) => {
   return (
-    <div className={s.body}>
-      <div className={s.container}>
-        <div className={s.cardContainer}>
-          <div className={s.user}>
-            <div className={s.userDate}>
-              {/* <div className={s.imgProfile}>
-                <img
-                  src="https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg"
-                  alt="profile"
-                />
-              </div> */}
-              <h4>{e.name}</h4>
-              <p>{e.title}</p>
-              <p>{e.country}</p>
-              <p>{e.categoryName}</p>
-              <p className={s.fecha}>{e.createdAt}</p>
-            </div>
-          </div>
-          <div className={s.post}>
-            <p>{e.description}</p>
-          </div>
+    <div className={s.card}>
+      <div className={s.userDate}>
+        <div className={s.imgProfile} >
+          <img
+            src="https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg"
+            alt="profile"
+          />
         </div>
-        <div className={s.type}>
-          <div className={s.typeData}>
-            {e.sell ? (
-              <p style={{ backgroundColor: "red" }}>Seller</p>
-            ) : (
-              <p style={{ backgroundColor: "green" }}>Buyer</p>
-            )}
-          </div>
+        <b>user</b>
+        <p>
+          {e.createdAt
+            .slice(0, 10)
+            .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+        </p>
+      </div>
+      <div className={s.post}>
+        <div className={s.info}>
+          <p>Category: {e.categoryName}</p>
+          <p>Sub Category: {e.subCategory}</p>
+          <p>Country: {e.country}</p>
+          <p>Payment: {e.payment}</p>
+          <p>Shipping: {e.shipping}</p>
         </div>
+        <hr />
+        <b>{e.title}</b>
+        <p>{e.description}</p>
       </div>
     </div>
   );
 };
+
 export default CardDetail;
