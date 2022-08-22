@@ -1,11 +1,10 @@
 import React from "react";
-import s from "./Card.module.css";
 import CardDetail from "./CardDetail";
-
+import s from "./Card.module.css"
 const Cards = ({ posts }) => {
 
   return (
-    <div className={s}>
+    <div className={s.container}>
       {posts?.map((e, i) => {
         return <CardDetail e={e} key={i} />;
       })}
