@@ -10,7 +10,6 @@ const Home = ({currentPage, setCurrentPage}) => {
 
   const dispatch = useDispatch()
   const {posts} = useSelector(state=>state.posts)
-
   useEffect(()=>{
     dispatch(getPost())
   },[dispatch])

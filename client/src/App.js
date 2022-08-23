@@ -10,10 +10,11 @@ import TermsOfUse from "./Components/Home/Footer/TermsOfUse.jsx"
 import Glosary from './Components/Home/Footer/Glosary';
 import CreatePost from "./Components/CreatePost/CreatePost.jsx"
 import Navbar from './Components/Home/Navbar/Navbar';
+import Profile from './Components/User/Profile'
 import { useState } from 'react';
 
-
 function App() {
+ 
 const [currentPage, setCurrentPage] = useState(1);
 
   return (
@@ -26,6 +27,7 @@ const [currentPage, setCurrentPage] = useState(1);
       <Route path={'/privacy-policy'} component={PrivacyPolicy}/>
       <Route path={'/terms-of-use'} component={TermsOfUse}/>
       <Route path={'/glosary'} component={Glosary}/>
+      <Route path={'/profile'} component={Profile}/>
       <Route path={'/'} component={Footer}/>
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
