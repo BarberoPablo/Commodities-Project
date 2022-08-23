@@ -16,7 +16,7 @@
           transform: translateX(-50%);
 }
 .card_offset {
-  margin-top: -200px;
+  margin-top: -199px;
 }
 .card {
   position: relative;
