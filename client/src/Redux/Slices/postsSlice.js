@@ -34,7 +34,7 @@ export const postSlice = createSlice({
   },
 });
 
-export const { getAllPosts, getPosts } = postSlice.actions;
+export const { getAllPosts, getPosts, filteredSubcategory } = postSlice.actions;
 export default postSlice.reducer;
 
 //PARA CREAR OTRO SLICE HACERLO EN OTRO ARCHIVO
