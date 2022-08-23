@@ -3,7 +3,8 @@ const router = express.Router();
 
 
 const { getPosts, createPost, getCategory, 
-  getReviews, createReview , postCategory, createPlan, createUser, getPlans, getPlanDetail, assignPlanToUser } = require("./services");
+  getReviews, createReview , postCategory, createPlan, createUser, getPlans, getPlanDetail,
+   assignPlanToUser, modifyCategory } = require("./services");
 
 router.get("/posts/", getPosts);
 
@@ -26,5 +27,7 @@ router.get("/plan", getPlans);
 router.get("/plan/:name", getPlanDetail);
 
 router.post("/planUser", assignPlanToUser);
+
+router.post("/category/:name",modifyCategory)
 
 module.exports = { router };
