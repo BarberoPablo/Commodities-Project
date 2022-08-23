@@ -1,11 +1,11 @@
-import { getAllPosts, getPosts,filteredSubcategory } from "../Slices/postsSlice";
+import { getAllPosts, getPosts, getUserPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import axios from 'axios'
-
+//filteredSubcategory
 // FUNCTIONS POSTS
 
 export const getPost = ()=>(dispatch)=>{
-  axios('http://localhost:3000/posts') // end-point del back /posts
+  axios('/posts') // end-point del back /posts
   .then(data => dispatch(getAllPosts(data.data)))
   .catch(e=>console.log(e))
 }
@@ -14,13 +14,17 @@ export const searchPosts = (name,sell) =>(dispatch)=>{
   dispatch(getPosts(name,sell))
 }
 
+export const userPosts = () =>(dispatch)=>{
+  axios('/posts') // end-point del back /posts
+  .then(data => dispatch(getUserPosts(data.data)))}
+
 // FUNCTIONS CATEGORIES
 
 // FILTERS SUBCATEGORY 
 
-export const filterBySubcategory = (value) => (dispatch)=>{
-  dispatch(filteredSubcategory(value))
-}
+// export const filterBySubcategory = (value) => (dispatch)=>{
+//   dispatch(filteredSubcategory(value))
+// }
 
 
 // FUNCTIONS USERS

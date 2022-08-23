@@ -6,6 +6,6 @@ export default configureStore({
   reducer:{
     posts: posts,
     users:users,
-    //more Slices
+    //more Slices 
   }
 })
