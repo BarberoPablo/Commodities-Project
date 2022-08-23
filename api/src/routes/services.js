@@ -298,7 +298,7 @@ const modifyCategory = async (req, res) => {
   //En este punto asumimos que lo que venga por body va a reemplazar directamente lo que
   //teníamos previamente en los campos de la categoría. De manera que desde el front deben primero 
   //requerir todos los campos de la categoría, modificar y reenviar el resultado final.
-  const {display, subCategory} = req.body;
+  const {display, subcategories} = req.body;
   try {
     const categoryExists = await Category.findOne({
       where: { name : name },
@@ -306,7 +306,7 @@ const modifyCategory = async (req, res) => {
     if(categoryExists) {
       await categoryExists.update({
         display,
-        subCategory
+        subcategories
       });
        res.status(201).json(categoryExists);
     } else {
@@ -316,5 +316,33 @@ const modifyCategory = async (req, res) => {
     res.status(400).send(error);
   }
 }
+
+const modifyUserData = async (req, res) => {
+  const { id } = req.params
+  const { phone , country , image , name } = req.body
+
+  try {
+    const userExists = await User.findOne({
+      where: { id : id },
+    });
+
+    if (userExists) {
+      await userExists.update({
+        name,
+        phone,
+        country,
+        image
+      });
+      res.status(200).send(userExists)
+    }
+    else {
+      res.status(404).send("User is not found")
+    }
+
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser, modifyCategory}
+  createReview , postCategory, createPlan, createUser , getPlans , 
+  getPlanDetail, assignPlanToUser, modifyCategory , modifyUserData}
