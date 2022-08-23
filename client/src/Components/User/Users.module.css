@@ -1,0 +1,139 @@
+.details{
+  display: block;
+  color: rgb(255, 255, 255);
+  font-size:2rem;
+}
+.frame {
+  max-width: 730px;
+  margin: auto;
+  overflow: hidden;
+}
+.horizontal_center {
+  position: relative;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+.card_offset {
+  margin-top: -199px;
+}
+.card {
+  position: relative;
+  padding: 20px 0;
+  width: 100%;
+  background: #404040;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  text-align: center;
+  z-index: 5;
+}
+.card:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 130px;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  z-index: -1;
+}
+.card .user_photo {
+  position: relative;
+  background: #404040;
+  padding: 5px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.card .user_photo img {
+  width: 150px;
+  border-radius: 50%;
+}
+.card .user_photo .refresh {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  padding: 10px 15px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 3px;
+  text-decoration: none;
+  opacity: 0;
+  display: block;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-transition: all 0.25s ease-out;
+          transition: all 0.25s ease-out;
+}
+.card .user_photo:hover .refresh {
+  bottom: -20px;
+  opacity: 1;
+}
+.details #user_title {
+  color: #999999;
+  font-size: 18px;
+  margin: 0;
+}
+.details #user_value {
+  color: #2c2e31;
+  font-size: 38px;
+  margin: 5px;
+  text-transform: capitalize;
+}
+.values_list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  float: left;
+}
+.values_list li {
+  cursor: pointer;
+  display: block;
+  width: 40px;
+  height: 48px;
+  float: left;
+  margin: 20px;
+  background-image: url(./card_icons.png);
+  -webkit-background-size: 378px 378px;
+          background-size: 378px;
+  background-position-y: -48px;
+  -webkit-transition: all 0.25s ease-out;
+          transition: all 0.25s ease-out;
+}
+.values_list li:before {
+  content: attr(data-label);
+  opacity: 0;
+}
+.values_list li.active[data-label="name"] {
+  background-position: 0px -96px;
+}
+.values_list li.active[data-label="email"] {
+  background-position: -68px -96px;
+}
+.values_list li.active[data-label="location"] {
+  background-position: -203px -96px;
+}
+.values_list li.active[data-label="phone"] {
+  background-position: -270px -96px;
+}
+.values_list li[data-label="name"] {
+  background-position: 0px -48px;
+}
+.values_list li[data-label="email"] {
+  background-position: -68px -48px;
+}
+.values_list li[data-label="location"] {
+  background-position: -203px -48px;
+}
+.values_list li[data-label="phone"] {
+  background-position: -270px -48px;
+}
+/* s */

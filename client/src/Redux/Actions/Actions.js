@@ -5,7 +5,7 @@ import axios from 'axios'
 // FUNCTIONS POSTS
 
 export const getPost = ()=>(dispatch)=>{
-  axios('http://localhost:3001/posts') // end-point del back /posts
+  axios('/posts') // end-point del back /posts
   .then(data => dispatch(getAllPosts(data.data)))
   .catch(e=>console.log(e))
 }
@@ -13,6 +13,10 @@ export const getPost = ()=>(dispatch)=>{
 export const searchPosts = (name,sell) =>(dispatch)=>{
   dispatch(getPosts(name,sell))
 }
+
+export const userPosts = () =>(dispatch)=>{
+  axios('/posts') // end-point del back /posts
+  .then(data => dispatch(getUserPosts(data.data)))}
 
 // FUNCTIONS CATEGORIES
 
