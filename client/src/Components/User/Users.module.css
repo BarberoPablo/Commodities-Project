@@ -19,6 +19,8 @@
   margin-top: -199px;
 }
 .card {
+  display: flex;
+  flex-direction: column;
   position: relative;
   padding: 20px 0;
   width: 100%;
@@ -137,3 +139,22 @@
   background-position: -270px -48px;
 }
 /* s */
+.form{
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  margin: 0 auto;
+  gap: 0.7rem;
+  
+}
+.form input{
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.form button{
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+}

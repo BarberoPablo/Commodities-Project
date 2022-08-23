@@ -10,9 +10,9 @@ import TermsOfUse from "./Components/Home/Footer/TermsOfUse.jsx"
 import Glosary from './Components/Home/Footer/Glosary';
 import CreatePost from "./Components/CreatePost/CreatePost.jsx"
 import Navbar from './Components/Home/Navbar/Navbar';
+import Profile from './Components/User/Profile'
 
 function App() {
-
   return (
     <div className="App">
       <Route path={'/'} component={Navbar}/>
@@ -23,6 +23,7 @@ function App() {
       <Route path={'/privacy-policy'} component={PrivacyPolicy}/>
       <Route path={'/terms-of-use'} component={TermsOfUse}/>
       <Route path={'/glosary'} component={Glosary}/>
+      <Route path={'/profile'} component={Profile}/>
       <Route path={'/'} component={Footer}/>
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>

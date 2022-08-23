@@ -1,11 +1,11 @@
-import { getAllPosts, getPosts, } from "../Slices/postsSlice";
+import { getAllPosts, getPosts, getUserPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import axios from 'axios'
 //filteredSubcategory
 // FUNCTIONS POSTS
 
 export const getPost = ()=>(dispatch)=>{
-  axios('/posts') // end-point del back /posts
+  axios('https://b2b-01.herokuapp.com/posts') // end-point del back /posts
   .then(data => dispatch(getAllPosts(data.data)))
   .catch(e=>console.log(e))
 }
