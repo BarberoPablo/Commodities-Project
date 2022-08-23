@@ -5,7 +5,7 @@ import axios from 'axios'
 // FUNCTIONS POSTS
 
 export const getPost = ()=>(dispatch)=>{
-  axios('http://localhost:3001/posts') // end-point del back /posts
+  axios('/posts') // end-point del back /posts
   .then(data => dispatch(getAllPosts(data.data)))
   .catch(e=>console.log(e))
 }
