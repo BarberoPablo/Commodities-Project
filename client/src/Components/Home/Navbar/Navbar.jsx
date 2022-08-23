@@ -4,7 +4,7 @@ import Search from './Search'
 import s from './Navbar.module.css'
 import { useHistory } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({setCurrentPage}) => {
   const history = useHistory();
 
   const goFor = (e) => {
@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <div className={s.container} >
       <img src={Logo} alt='Logo' className={s.container_logo} onClick={e => goFor(e)}/>
-      <Search/>
+      <Search setCurrentPage={setCurrentPage}/>
       <a href='create-post' className={s.container_a} > CREATE POST</a>
       <div>
         <a href='login'className={s.container_a} > LOGIN </a>

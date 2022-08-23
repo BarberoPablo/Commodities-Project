@@ -12,6 +12,7 @@ export const postSlice = createSlice({
       console.log(action.payload);
       state.allPosts = action.payload;
       state.posts = action.payload;
+    
     },
     //traerme los posteos que se busca en el search
     getPosts: (state, action) => {
@@ -38,6 +39,7 @@ export const postSlice = createSlice({
 });
 
 export const { getAllPosts, getPosts, getUserPosts, filteredSubcategory } = postSlice.actions;
+
 export default postSlice.reducer;
 
 //PARA CREAR OTRO SLICE HACERLO EN OTRO ARCHIVO
