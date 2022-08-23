@@ -1,4 +1,4 @@
-import { getAllPosts, getPosts, getUserPosts} from "../Slices/postsSlice";
+import { getAllPosts, getPosts, getUserPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import axios from 'axios'
 //filteredSubcategory
