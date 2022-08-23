@@ -1,19 +1,15 @@
 import React from 'react'
-import { useHistory } from "react-router-dom";
+
 
 const Footer = () => {
-    const history = useHistory();
-
-    const goFor = (e) => {
-        history.push("/" + e.target.id)
-    }
 
     return (
         <div>
-            <p id="about-us" onClick={e => goFor(e)}>About Us</p>
-            <p id="contact-us" onClick={e => goFor(e)}>Contact Us</p>
-            <p id="terms-of-use" onClick={e => goFor(e)}>Terms of Use</p>
-            <p id="privacy-policy" onClick={e => goFor(e)}>Pivacy Policy</p>
+            <a href="/about-us">About Us</a>
+            <a href="/contact-us">Contact Us</a>
+            <a href="/terms-of-use">Terms of Use</a>
+            <a href="/privacy-policy">Pivacy Policy</a>
+            <a href="/glosary">Glosary</a>
         </div>
     )
 }
