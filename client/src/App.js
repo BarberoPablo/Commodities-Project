@@ -11,12 +11,16 @@ import Glosary from './Components/Home/Footer/Glosary';
 import CreatePost from "./Components/CreatePost/CreatePost.jsx"
 import Navbar from './Components/Home/Navbar/Navbar';
 import Profile from './Components/User/Profile'
+import { useState } from 'react';
 
 function App() {
+ 
+const [currentPage, setCurrentPage] = useState(1);
+
   return (
     <div className="App">
-      <Route path={'/'} component={Navbar}/>
-      <Route exact path={'/'} component={Home}/>
+      <Route path={'/'}> <Navbar setCurrentPage={setCurrentPage}/></Route>
+      <Route exact path={'/'}> <Home currentPage={currentPage} setCurrentPage={setCurrentPage}/></Route>
       <Route path="/create-post" component={CreatePost}/>
       <Route path={'/about-us'} component={AboutUs}/>
       <Route path={'/contact-us'} component={ContactUs}/>

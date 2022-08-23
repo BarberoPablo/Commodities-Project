@@ -4,7 +4,8 @@ import Search from "./Search";
 import s from "./Navbar.module.css";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-const Navbar = () => {
+
+const Navbar = ({setCurrentPage}) => {
   const history = useHistory();
   const { user, loginWithRedirect, logout } = useAuth0();
   const goFor = (e) => {
@@ -12,18 +13,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className={s.container}>
-      <img
-        src={Logo}
-        alt="Logo"
-        className={s.container_logo}
-        onClick={(e) => goFor(e)}
-      />
-      <Search />
-      <a href="create-post" className={s.container_a}>
-        {" "}
-        CREATE POST
-      </a>
+    <div className={s.container} >
+      <img src={Logo} alt='Logo' className={s.container_logo} onClick={e => goFor(e)}/>
+      <Search setCurrentPage={setCurrentPage}/>
+      <a href='create-post' className={s.container_a} > CREATE POST</a>
       <div>
         {user ? (
           <>
