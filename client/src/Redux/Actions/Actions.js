@@ -14,6 +14,10 @@ export const searchPosts = (name,sell) =>(dispatch)=>{
   dispatch(getPosts(name,sell))
 }
 
+export const userPosts = () =>(dispatch)=>{
+  axios('/posts') // end-point del back /posts
+  .then(data => dispatch(getUserPosts(data.data)))}
+
 // FUNCTIONS CATEGORIES
 
 // FILTERS SUBCATEGORY 

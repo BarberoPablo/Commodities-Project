@@ -28,6 +28,9 @@ export const postSlice = createSlice({
       );
       state.posts = filtered;
     },
+    getUserPosts: (state, action) => {
+      const info = action.payload.filter((e) => e.userId === 1);
+      state.posts = info},
     //more actions
   },filteredSubcategory: (state,action)=>{
     state.posts = state.allPosts.filter((e)=> e.subCategory.includes(action.payload))
