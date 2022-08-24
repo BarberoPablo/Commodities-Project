@@ -1,7 +1,8 @@
-import { getAllPosts, getPosts, getUserPosts } from "../Slices/postsSlice";
+import { getAllPosts, getPosts, filteredSubcategory, getUserPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
-import axios from 'axios'
-//filteredSubcategory
+import { getCategories } from "../Slices/categoriesSlice";
+import axios from 'axios';
+
 // FUNCTIONS POSTS
 
 export const getPost = ()=>(dispatch)=>{
@@ -19,6 +20,11 @@ export const userPosts = () =>(dispatch)=>{
   .then(data => dispatch(getUserPosts(data.data)))}
 
 // FUNCTIONS CATEGORIES
+
+export const getCategoriesByName = () => (dispatch) => {
+  axios('http://localhost:3000/category')
+  .then(resp => dispatch(getCategories(resp.data)))
+}
 
 // FILTERS SUBCATEGORY 
 
