@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchPosts } from "../../../Redux/Actions/Actions";
 
-const Search = () => {
+
+const Search = ({setCurrentPage}) => {
 
   const dispatch = useDispatch();
   const [input, setInput] = useState("");
@@ -23,6 +24,7 @@ const Search = () => {
       console.log("Sellers", input);
       dispatch(searchPosts({ input, sell }));
     }
+    setCurrentPage(1)
   };
 
   return (

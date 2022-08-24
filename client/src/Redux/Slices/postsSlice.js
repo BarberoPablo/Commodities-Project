@@ -11,6 +11,7 @@ export const postSlice = createSlice({
     getAllPosts: (state, action) => {
       state.allPosts = action.payload;
       state.posts = action.payload;
+    
     },
     //traerme los posteos que se busca en el search
     getPosts: (state, action) => {
@@ -30,11 +31,13 @@ export const postSlice = createSlice({
     filteredSubcategory: (state,action)=>{
       state.posts = state.allPosts.filter((e)=> e.subCategory.includes(action.payload))
     },
+    getUserPosts: (state, action) => {
+      const info = action.payload.filter((e) => e.userId === 1);
+      state.posts = info},
     //more actions
   },
 });
-
-export const { getAllPosts, getPosts, filteredSubcategory } = postSlice.actions;
+export const { getAllPosts, getPosts, getUserPosts, filteredSubcategory } = postSlice.actions;
 export default postSlice.reducer;
 
 //PARA CREAR OTRO SLICE HACERLO EN OTRO ARCHIVO

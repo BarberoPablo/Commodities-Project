@@ -19,35 +19,12 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const port = process.env.PORT || 3001;
+//const port = process.env.PORT || 3001;
 require('dotenv').config();
-//const { auth, requiresAuth } = require('express-openid-connect');
-
-// server.use(
-//   auth({
-//     authRequired: false,
-//     auth0Logout: true,
-//     issuerBaseURL: process.env.ISSUER_BASE_URL ,
-//     baseURL: process.env.BASE_URL ,
-//     clientID: process.env.CLIENT_ID ,
-//     secret: process.env.SECRET ,
-//     idpLogout: true,
-//   })
-// );
-
-// server.get('/', (req, res) => {
-//   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged Out")
-// });
-
-// server.get('/profile', requiresAuth(), (req, res) => {  //This route requieres to be authenticated to be able to get it
-//   console.log(req.oidc.user);
-//   res.send(JSON.stringify(req.oidc.user));
-  
-// });
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {  
-  server.listen(port, () => {
-    console.log(`Server listening at Port ${port}`); // eslint-disable-line no-console
+  server.listen(process.env.PORT, () => {
+    console.log(`Server listening at Port 3001`); // eslint-disable-line no-console
   });
 });
