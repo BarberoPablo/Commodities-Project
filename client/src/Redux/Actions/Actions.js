@@ -22,7 +22,7 @@ export const userPosts = () =>(dispatch)=>{
 // FUNCTIONS CATEGORIES
 
 export const getCategoriesByName = () => (dispatch) => {
-  axios('http://localhost:3000/category')
+  axios('https://b2b-01.herokuapp.com/category')
   .then(resp => dispatch(getCategories(resp.data)))
 }
 
