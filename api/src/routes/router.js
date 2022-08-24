@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 
-const { getPosts, createPost, getCategory, getReviews, createReview , postCategory, 
-    createPlan, createUser, getPlans, getPlanDetail,
-    assignPlanToUser, modifyCategory, getUserDetail } = require("./services");
+
+const { getPosts, createPost, getCategory, 
+  getReviews, createReview , postCategory, createPlan, createUser, getPlans, getPlanDetail,
+   assignPlanToUser, modifyCategory , modifyUserData , getUserDetail } = require("./services");
+
 
 router.get("/posts/", getPosts);
 
@@ -28,8 +30,10 @@ router.get("/plan/:name", getPlanDetail);
 
 router.post("/planUser", assignPlanToUser);
 
-router.post("/category/:name",modifyCategory)
+router.post("/category/:name",modifyCategory);
 
-router.get("/user/:id", getUserDetail)
+router.put("/user/:id", modifyUserData);
+
+router.get("/user/:id", getUserDetail);
 
 module.exports = { router };

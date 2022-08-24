@@ -9,7 +9,6 @@ export const postSlice = createSlice({
   reducers: {
     //trae todos los posteos
     getAllPosts: (state, action) => {
-      console.log(action.payload);
       state.allPosts = action.payload;
       state.posts = action.payload;
     
@@ -29,17 +28,16 @@ export const postSlice = createSlice({
       );
       state.posts = filtered;
     },
+    filteredSubcategory: (state,action)=>{
+      state.posts = state.allPosts.filter((e)=> e.subCategory.includes(action.payload))
+    },
     getUserPosts: (state, action) => {
       const info = action.payload.filter((e) => e.userId === 1);
       state.posts = info},
     //more actions
-  },filteredSubcategory: (state,action)=>{
-    state.posts = state.allPosts.filter((e)=> e.subCategory.includes(action.payload))
   },
 });
-
 export const { getAllPosts, getPosts, getUserPosts, filteredSubcategory } = postSlice.actions;
-
 export default postSlice.reducer;
 
 //PARA CREAR OTRO SLICE HACERLO EN OTRO ARCHIVO

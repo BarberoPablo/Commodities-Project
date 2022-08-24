@@ -1,11 +1,12 @@
-import { getAllPosts, getPosts, getUserPosts } from "../Slices/postsSlice";
+import { getAllPosts, getPosts, filteredSubcategory, getUserPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
-import axios from 'axios'
-//filteredSubcategory
+import { getCategories } from "../Slices/categoriesSlice";
+import axios from 'axios';
+
 // FUNCTIONS POSTS
 
 export const getPost = ()=>(dispatch)=>{
-  axios('/posts') // end-point del back /posts
+  axios('https://b2b-01.herokuapp.com/posts') // end-point del back /posts
   .then(data => dispatch(getAllPosts(data.data)))
   .catch(e=>console.log(e))
 }
@@ -20,11 +21,16 @@ export const userPosts = () =>(dispatch)=>{
 
 // FUNCTIONS CATEGORIES
 
+export const getCategoriesByName = () => (dispatch) => {
+  axios('https://b2b-01.herokuapp.com/category')
+  .then(resp => dispatch(getCategories(resp.data)))
+}
+
 // FILTERS SUBCATEGORY 
 
-// export const filterBySubcategory = (value) => (dispatch)=>{
-//   dispatch(filteredSubcategory(value))
-// }
+export const filterBySubcategory = (value) => (dispatch)=>{
+  dispatch(filteredSubcategory(value))
+}
 
 
 // FUNCTIONS USERS
