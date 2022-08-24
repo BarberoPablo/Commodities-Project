@@ -6,8 +6,15 @@ import { getPost, getCategoriesByName} from '../../Redux/Actions/Actions'
 import Cards from './Card/Cards'
 import Paginado from "./Paginado/Paginado"
 import s from './Home.module.css'
+import PaypalCheckoutButton from './PaypalCheckoutButton'
+//import PaypalButton from "../Paypal/public/paypalButton.jsx";
 
 const Home = ({currentPage, setCurrentPage}) => {
+  const product = {
+    planName: "Premium",
+    price: 10
+  };
+
   const dispatch = useDispatch()
   const {allCategories} = useSelector(state => state.categories)
   const {posts} = useSelector(state=>state.posts)
@@ -46,8 +53,13 @@ const paginado = (pageNumber) => {
           currentPage={currentPage}
         />
       {/* more components in HOME */}
+
+     <div className="paypal-button-conteiner">
+      <PaypalCheckoutButton 
+        product={product} 
+      />
+     </div>
     </div>
   )
 }
-
 export default Home;
