@@ -315,7 +315,7 @@ const modifyCategory = async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
-}
+}  
 
 const modifyUserData = async (req, res) => {
   const { id } = req.params
@@ -338,11 +338,30 @@ const modifyUserData = async (req, res) => {
     else {
       res.status(404).send("User is not found")
     }
-
   } catch (error) {
     res.status(400).send(error)
   }
 }
+
+const getUserDetail = async (req, res) => {
+  const { id } = req.params
+  try {
+    let user = await User.findOne({
+      where:
+        {id:id}
+    })
+    if (user) {
+      res.status(200).send(user)
+    }
+    else {
+      res.status(404).send("User not found")
+    }   
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}  
+
 module.exports = { createPost, getPosts, getCategory, getReviews, 
   createReview , postCategory, createPlan, createUser , getPlans , 
-  getPlanDetail, assignPlanToUser, modifyCategory , modifyUserData}
+  getPlanDetail, assignPlanToUser, modifyCategory , modifyUserData , getUserDetail}
+
