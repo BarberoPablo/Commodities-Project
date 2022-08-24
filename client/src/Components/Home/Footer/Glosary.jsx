@@ -20,6 +20,7 @@ const Glosary = () => {
                         <li><b>FOB:</b> Free on Board. The seller clears the goods for export and ensures they are delivered to and loaded onto the vessel for transport at the named por of departure.</li>
                     </ol>
                 </li>
+                <li><b>Membership:</b> The state of being a user with special characteristics. </li>
                 <li><b>Seller:</b> A person/company that sells a product.</li>
                 <li><b>Buyer:</b> A person/company that buy a product.</li>
                 <li><b>Inquiry: </b> Consult of a specific product</li>
