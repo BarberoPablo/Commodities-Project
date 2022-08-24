@@ -10,11 +10,15 @@ const Navbar = ({setCurrentPage}) => {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const goFor = (e) => {
     history.push("/");
+    history.go(0);
   };
 
   return (
     <div className={s.container} >
-      <img src={Logo} alt='Logo' className={s.container_logo} onClick={e => goFor(e)}/>
+      <div className={s.logo} onClick={e => goFor(e)}>
+        <img src={Logo} alt='Logo' className={s.container_logo} />
+        <p>B2B Commodities</p>
+      </div>
       <Search setCurrentPage={setCurrentPage}/>
       <a href='create-post' className={s.container_a} > CREATE POST</a>
       <div>
