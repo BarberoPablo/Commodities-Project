@@ -6,11 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
   const { posts } = useSelector((state) => state.posts);
-  //const [users, setUser] = useState("");
-
-  const { user } = useAuth0();
-
-  const [input, setInput] = useState({
+  const [userData, setUserData] = useState({
     name: "",
     email: "",
     country: "",
@@ -18,27 +14,34 @@ const Profile = () => {
     image: "",
   });
 
+  const { user } = useAuth0();
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(userPosts());
   }, [dispatch, user]);
 
   const handleChange = (e) => {
-    setInput({
-      ...input,
+    setUserData({
+      ...userData,
+      email: user.email,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setInput({
-      ...input,
-      name: input.name ? input.name : user.name,
+    setUserData({
+      ...userData,
       email: user.email,
+      [e.target.name]: e.target.value,
     });
+    console.log(userData);
   };
-
+  // const handleActive = (e) => {
+  //   let info = document.getElementById("user_value")
+  //   info.p = e.target.id;
+  // };
   return (
     <div>
       {user ? (
@@ -59,50 +62,45 @@ const Profile = () => {
                     alt="a"
                   />
                 </div>
-                {user ? (
-                  <p id="user_value">{input.name ? input.name : user.name}</p>
-                  
-                ) : null}
-                {console.log(user)}
+
+                {/* {userData.name !== "" ? (
+                  <p id="user_value">{userData.name}</p>
+                ) : userData.country !== "" ? (
+                  <p id="user_value">{userData.country}</p>
+                ) : (
+                  <p>...</p>
+                )}
                 <ul
                   className={`${s.values_list} ${s.horizontal_center}`}
                   id="values_list"
                 >
                   <li
-                    //onClick={(e) => handleChange(e)}
-                    //id={posts.userId}
-                    data-title="Hi, My name is"
-                    //data-value={posts.userId}
+                    name="name"
                     data-label="name"
-                    //className={user === posts.userId ? `${s.active}` : ""}
-                    // className={s.active}
+                    id={userData.name !== "" ? userData.name : user.name}
+                    //onClick={handleActive}
+                    className={userData !== user.name ? `${s.active}` : ""}
                   ></li>
                   <li
-                    data-title="My email address is"
-                    //id={e.email}
-                    //onClick={(e) => handleChange(e)}
-                    //data-value={e.email}
                     data-label="email"
-                    data-caps="false"
-                    //className={user === e.email ? `${s.active}` : ""}
+                    id={user.email}
+                    //onClick={(e) => handleActive(e)}
+                    className={userData === user.email ? `${s.active}` : ""}
                   ></li>
                   <li
-                    //onClick={(e) => handleChange(e)}
-                    //id={e.location}
-                    data-title="My address is"
-                    //data-value={e.location}
+                    name="country"
                     data-label="location"
-                    //className={user === e.location ? `${s.active}` : ""}
+                    id={userData.country}
+                    //onClick={(e) => handleActive(e)}
+                    className={userData.country !== "" ? `${s.active}` : ""}
                   ></li>
                   <li
-                    //onClick={(e) => handleChange(e)}
-                    //id={e.phone}
-                    data-title="My phone number is"
-                    //data-value={e.phone}
                     data-label="phone"
-                    //className={user === e.phone ? `${s.active}` : ""}
+                    id={userData.phone}
+                    //onClick={(e) => handleActive(e)}
+                    className={userData === userData.phone ? `${s.active}` : ""}
                   ></li>
-                </ul>
+                </ul> */}
               </div>
 
               <div className={s.containerForm}>
@@ -114,15 +112,15 @@ const Profile = () => {
                     onChange={handleChange}
                   ></input>
                   <input
-                    name="phone"
-                    type="text"
-                    placeholder="phone"
-                    onChange={handleChange}
-                  ></input>
-                  <input
                     name="country"
                     type="text"
                     placeholder="country"
+                    onChange={handleChange}
+                  ></input>
+                  <input
+                    name="phone"
+                    type="text"
+                    placeholder="phone"
                     onChange={handleChange}
                   ></input>
                   <input
