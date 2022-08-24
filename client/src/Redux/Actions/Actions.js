@@ -28,9 +28,9 @@ export const getCategoriesByName = () => (dispatch) => {
 
 // FILTERS SUBCATEGORY 
 
-// export const filterBySubcategory = (value) => (dispatch)=>{
-//   dispatch(filteredSubcategory(value))
-// }
+export const filterBySubcategory = (value) => (dispatch)=>{
+  dispatch(filteredSubcategory(value))
+}
 
 
 // FUNCTIONS USERS
