@@ -34,7 +34,7 @@ const paginado = (pageNumber) => {
   return (
     <div>
     <div className={s.container}>
-      <DrawerCategories allCategories={allCategories} />
+      <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage}/>
       <Cards currentPost={currentPost} />
       </div>
       <Paginado
