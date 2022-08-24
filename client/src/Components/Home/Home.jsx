@@ -5,9 +5,9 @@ import {useDispatch, useSelector} from 'react-redux'
 import { getPost, getCategoriesByName} from '../../Redux/Actions/Actions'
 import Cards from './Card/Cards'
 import Paginado from "./Paginado/Paginado"
+import s from './Home.module.css'
 
 const Home = ({currentPage, setCurrentPage}) => {
-
   const dispatch = useDispatch()
   const {allCategories} = useSelector(state => state.categories)
   const {posts} = useSelector(state=>state.posts)
@@ -31,12 +31,12 @@ const paginado = (pageNumber) => {
   setCurrentPage(pageNumber);
 };
 
-
-
   return (
-    <div style={{display:'flex'}}>
+    <div>
+    <div className={s.container}>
       <DrawerCategories allCategories={allCategories} />
       <Cards currentPost={currentPost} />
+      </div>
       <Paginado
           setPostPerPage={setPostPerPage}
           setCurrentPage={setCurrentPage}

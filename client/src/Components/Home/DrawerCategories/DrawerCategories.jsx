@@ -10,6 +10,7 @@ const Drawer = ({allCategories}) => {
     dispatch(filterBySubcategory(e.target.value))
   }
 
+
   return (
     <div className={style.container}>
       <div className={style.containercard}>
