@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = ({setCurrentPage}) => {
   const history = useHistory();
-  const { user, loginWithRedirect, logout } = useAuth0();
+  const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const goFor = (e) => {
     history.push("/");
   };
@@ -29,9 +29,10 @@ const Navbar = ({setCurrentPage}) => {
         ) : (
           false
         )}
-        <button className={s.container_a} onClick={loginWithRedirect}>
+        {isAuthenticated? null
+          :<button className={s.container_a} onClick={loginWithRedirect}>
           LogIn
-        </button>
+        </button>}
         <button className={s.container_a} onClick={logout}>
           Logout
         </button>
