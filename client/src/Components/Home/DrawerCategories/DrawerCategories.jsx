@@ -1,6 +1,5 @@
 import React from 'react'
 import style from "./DrawerCategories.module.css"
-
 const Drawer = () => {
   return (
     <div className={style.container}>

@@ -18,11 +18,11 @@ const CardDetail = ({ e }) => {
       </div>
       <div className={s.post}>
         <div className={s.info}>
-          <p>Category: {e.categoryName}</p>
-          <p>Sub Category: {e.subCategory}</p>
-          <p>Country: {e.country}</p>
-          <p>Payment: {e.payment}</p>
-          <p>Shipping: {e.shipping}</p>
+          <p>Category: <b>{e.categoryName}</b></p>
+          <p>Sub Category: <b>{e.subCategory}</b></p>
+          <p>Country: <b>{e.country}</b></p>
+          <p>Payment: <b>{e.payment}</b></p>
+          <p>Shipping: <b>{e.shipping}</b></p>
         </div>
         <hr />
         <b>{e.title}</b>
