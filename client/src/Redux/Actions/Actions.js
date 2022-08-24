@@ -1,6 +1,8 @@
 import { getAllPosts, getPosts, filteredSubcategory, getUserPosts } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
+import { getCountries } from "../Slices/countriesSlice";
+
 import axios from 'axios';
 
 // FUNCTIONS POSTS
@@ -38,5 +40,12 @@ export const filterBySubcategory = (value) => (dispatch)=>{
 export const getUser = ()=>(dispatch)=>{
   axios('https://rickandmortyapi.com/api/character') // end-point del back /users
   .then(data=>dispatch(getAllUsers(data.data.results)))
+  .catch(e=>console.log(e))
+}
+
+//get counties
+export const getAllCountries = ()=>(dispatch)=>{
+  axios('https://restcountries.com/v3/all') // end-point del back /users
+  .then(data=>dispatch(getCountries(data.data)))
   .catch(e=>console.log(e))
 }
