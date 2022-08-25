@@ -67,5 +67,5 @@ export const getAllCountries = ()=>(dispatch)=>{
 
 //postPost
 export const postPost = (input)=>(dispatch)=>{
-  axios.post(`/post/${input.id}`,input)
+  axios.post(`/post/${input.userId}`,input)
 }
