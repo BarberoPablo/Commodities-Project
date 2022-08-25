@@ -1,4 +1,4 @@
-import { getAllPosts, getPosts, filteredSubcategory, getUserPosts } from "../Slices/postsSlice";
+import { getAllPosts, getPosts, filteredSubcategory, getUserPosts, filteredPayment, filteredCountry, filteredShippment } from "../Slices/postsSlice";
 import { getAllUsers } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
@@ -34,6 +34,21 @@ export const filterBySubcategory = (value) => (dispatch)=>{
   dispatch(filteredSubcategory(value))
 }
 
+// FILTER PAYMENT
+
+export const filterByPayment = (value) => (dispatch) => {
+  dispatch(filteredPayment(value))
+}
+
+//FILTER COUNTRY 
+export const filterCountry = (value) => (dispatch) => {
+  dispatch(filteredCountry(value))
+}
+
+//FILTER SHIPPMENT
+export const filterShippment = (value) => (dispatch) => {
+  dispatch(filteredShippment(value))
+}
 
 // FUNCTIONS USERS
 
