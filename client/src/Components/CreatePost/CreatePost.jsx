@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesByName, getAllCountries } from "../../Redux/Actions/Actions";
-//import { postPost } from "../redux/Actions/Actions.js";  //importar acciones
+import { getCategoriesByName, getAllCountries, postPost } from "../../Redux/Actions/Actions";
+import axios from "axios";
 
 export default function CreatePost() {
+
+
   const dispatch = useDispatch();
   const {allCategories} = useSelector(state => state.categories);
   const {allCountries} = useSelector(state => state.countries);
@@ -26,8 +28,10 @@ const [input, setInput] = useState({ //acomadar a modelo
   categoryName: "",
   subCategory: "",
   country:"",
-  //image:"",
+  image:"",
 });
+
+
 
 //handles
 function handleChange(e){
@@ -95,7 +99,7 @@ function handleSubmit(e){
     categoryName: "",
     subCategory: "",
     country:"",
-    //image:"",
+    image:"",
   })
 }
 
@@ -109,14 +113,30 @@ function validacion(input){
   if(input.payment === ""){errors.payment = "Complete payment";}
   if(input.categoryName === ""){errors.categoryName = "Complete Category";}
   if(input.subCategory === ""){errors.subCategory = "Complete Sub category";}
+  if(input.country === ""){errors.country = "Complete country";}
   if(checkBS<1){errors.sell = "Select sell or buy";}
 
   return errors
 }
 
-//country
+const [img, setImg] = useState()
 
+async function  uploadImage(file){
+const formData = new FormData()
+formData.append("file",file[0])
+formData.append("upload_preset","kl8ubh2v")
+const imgUrl = await axios.post("https://api.cloudinary.com/v1_1/nicomsl/image/upload", formData)
+.then((response)=>response.data.secure_url)
+setImg(imgUrl)
+console.log(imgUrl)
+}
 
+function aceptar(){
+  setInput({
+    ...input,
+    image: img
+  })
+}
 
 
   return (
@@ -137,12 +157,13 @@ function validacion(input){
     <option value={["CIF","FOB"]}>CIF or FOB</option>
   </select><br/>
   {errors.shipping &&<p className="err">{errors.shipping}</p>}
-
+<div>
 <label>Payment method:</label><br/>
 <label><input type="checkbox" value="LC" onChange={(e)=>handleChange2(e)} name="payment"/> LC</label><br/>
 <label><input type="checkbox" value="DLC" onChange={(e)=>handleChange2(e)} name="payment"/> DLC</label><br/>
 <label><input type="checkbox" value="SBLC" onChange={(e)=>handleChange2(e)} name="payment"/> SBLC</label><br/>
   {errors.payment &&<p className="err">{errors.payment}</p>}
+</div>
 
 <select value={input.categoryName} name="categoryName" onChange={(e)=>handleChange3(e)}>
 <option hidden value="">Select category</option>
@@ -172,13 +193,23 @@ function validacion(input){
   <label><input onChange={(e)=>handleCheck(e)}  type="radio" name="check" value="sell"/>sell</label><br/>
   {errors.sell &&<p className="err">{errors.sell}</p>}
 
+<label>country:</label><br/>
   <select value={input.country} name="country" onChange={(e)=>handleChange(e)}>
         <option hidden value="">Select country...</option>
           {allCountries.map((c)=>(
             <option value={c.name.common}>{c.name.common}</option>
           ))}
         </select><br/>
+{errors.country &&<p className="err">{errors.country}</p>}
 
+<div>
+<input type="file" onChange={(e)=>{uploadImage(e.target.files)}}/><br/>
+<img 
+style={{width:200}}
+src={img}/><br/>
+<button onClick={()=>{aceptar()}}>confrim image:</button>
+
+</div>
 
   <button type="submit" className="boton">Create Post</button>
 </form>

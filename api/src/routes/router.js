@@ -30,7 +30,7 @@ router.post("/category/:name",modifyCategory);
 
 router.post("/user", modifyOrCreateUser);
 
-router.get("/user/:id", getUserDetail);
+router.get("/user/:email", getUserDetail);
 
 router.get("/users", getAllUsers);
 

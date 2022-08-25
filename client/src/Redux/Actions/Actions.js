@@ -84,3 +84,13 @@ export const getUserDetails = (email) => (dispatch) => {
   .then((data) => dispatch(getUserDetail(data.data)))
   .catch((e) => console.log(e));
 };
+export const getAllCountries = ()=>(dispatch)=>{
+  axios('https://restcountries.com/v3/all') // end-point del back /users
+  .then(data=>dispatch(getCountries(data.data)))
+  .catch(e=>console.log(e))
+}
+//postPost
+export const postPost = (input)=>(dispatch)=>{
+  axios.post(`/post/${input.userId}`,input)
+}
+
