@@ -5,12 +5,22 @@
   width: 100%;
   background-color: #303347 ;
 }
+.logo{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 
+}
+.logo p{
+  color: white;
+  font-weight: bold;
+  font-size:1.3rem;
+}
 
 .container_logo{
   width: 60px;
   height: 45px;
-  margin: 10px 20px;
+  margin: 15px;
 }
 
 .container_a{
@@ -22,4 +32,9 @@
   text-decoration: none;
   margin: 0px 5px;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  cursor: pointer;
 }
+.container_a:hover{
+  background-color: #515464;
+}
+

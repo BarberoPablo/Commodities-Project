@@ -1,44 +1,36 @@
-import React from 'react'
-import style from "./DrawerCategories.module.css"
+import React from "react";
+import style from "./DrawerCategories.module.css";
+import {  useDispatch } from "react-redux";
+import { filterBySubcategory } from "../../../Redux/Actions/Actions";
 
-const Drawer = () => {
+const Drawer = ({allCategories, setCurrentPage}) => {
+
+  const dispatch = useDispatch()
+  const handleChange = (e) =>{
+    dispatch(filterBySubcategory(e.target.value))
+    setCurrentPage(1)
+  }
+
+
   return (
     <div className={style.container}>
       <div className={style.containercard}>
         <div className={style.categories}>
-          <h4 className={style.text}>Categories 🚢</h4>
-          <select defaultValue={"DEFAULT"}>
-            <option value="DEFAULT" disabled>Agriculture</option>
-            <option>Coffee</option>
-            <option>Corn</option>
-            <option>Rice</option>
-            <option>Soybeans</option>
-            <option>Sugar</option>
-          </select>
-          <select defaultValue={"DEFAULT"}>
-            <option value="DEFAULT" disabled>Energy</option>
-            <option>Gasoline</option>
-            <option>Heating Fuel</option>
-            <option>Natural Gas</option>
-            <option>Petroleum</option>
-          </select>
-          <select defaultValue={"DEFAULT"}>
-            <option value="DEFAULT" disabled>Livestock</option>
-            <option>Beef Cattle</option>
-            <option>Chicken Cattle</option>
-            <option>Pig Cattle</option>
-          </select>
-          <select defaultValue={"DEFAULT"}>
-            <option value="DEFAULT" disabled>Metals</option>
-            <option>Copper</option>
-            <option>Gold</option>
-            <option>Platinum</option>
-            <option>Silver</option>
-          </select>
+          <h4 className={style.text}>CATEGORIES</h4>
+          {allCategories?.map((e,i) => (
+            <select key={i}  defaultValue={"DEFAULT"} onChange={handleChange} >
+              <option value="DEFAULT" disabled>{e.name}</option>
+              {
+                e.subcategories?.map((e,i)=>(
+                  <option key={i} value={e}>{e}</option>
+                ))
+              }
+            </select>
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Agriculture: Coffe, Corn, Rice, Soybeans, Sugar

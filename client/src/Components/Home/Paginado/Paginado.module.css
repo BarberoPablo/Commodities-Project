@@ -1,0 +1,72 @@
+.container {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.number {
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+  list-style: none;
+}
+.notnumerito {
+  margin: 5px;
+  color: rgba(255, 255, 255, 0.905);
+  background-color: #1d1d1d;
+  font-size: 1.2em;
+  padding: 9px;
+  border-radius: 5px;
+}
+
+.notnumerito:hover {
+  background-color: rgba(10, 10, 10, 0.643);
+  cursor: pointer;
+}
+
+.numerito {
+  margin: 6px;
+  background-color: #373378;
+  color: rgb(255, 255, 255);
+  font-size: 1.2em;
+  padding: 9px;
+  border-radius: 5px;
+  transition: all 0.8s;
+  font-weight: bold;
+}
+.numerito:hover {
+  cursor: pointer;
+  background-color: #373378;
+}
+.btnpn {
+  min-width: 40px;
+  height: 40px;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  background-color: #373378;
+  color: #fff;
+  font-weight: bold;
+  transition: all 0.8s;
+  margin: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.btnpn:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #373378;
+}
+.btnpn:active {
+  height: 5vmin;
+  color: black;
+}

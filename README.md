@@ -13,7 +13,7 @@ International Commodities. Users generate “posts”
 where they can offer/find products. The idea of the forum is to facilitate
 contact between buyers and sellers about the specified product,
 provide seller/buyer information through your membership
-as a user (Free, Trial, Basic, Premium).
+as a user (Free, Basic, Premium).
 Users can be both buyers and sellers.
 Each membership has its particular benefits.
 International trade is handled between contracts through

@@ -63,7 +63,7 @@ const TermsOfUse = () => {
               if this website doesn't accept the payment, a registered member can't be termed as Paid Member.
               After expiry of term of subscription, a Paid Member becomes a Registered Free Member,
               if he does not renew his membership.
-              Memberships: Trial, Basic, Premium.
+              Memberships: Basic and Premium.
             </li>
             <li>
               <b> Services: </b> Any service or subscription offered or provided by this website, right to view or

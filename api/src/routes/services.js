@@ -1,4 +1,4 @@
-const { Category, Feedback, Plan, Post, Review, ReviewUser, User } = require("../db");
+const { Category, Feedback, Plan, Post, ReviewUser, User } = require("../db");
 //const axios = require("axios");
 const {api, categories, posts} = require('./jsons.js');
 
@@ -128,7 +128,7 @@ const getReviews = async(req, res)=>{
 const createReview = async(req, res)=>{
   const {comment, score, userId, idReviewer} = req.body;
   try {
-   if (comment.length < 255) {
+   if (comment.length < 512) {
     const userAlreadyExists = await ReviewUser.findOne({
       where: { userId : userId },
     });
@@ -201,69 +201,24 @@ const postCategory = async (req , res) => {
   }
 }
 
-const createUser = async (req, res) => {
-  //Propiedades de un User: name, phone, email, verified, country, contactsId, remainingContacts, isadmin, isbanned, image
-  try {
-    const {name, phone, email, country, image} = req.body;
-    if(!name || !email || !country){
-      throw {status: 400, message: "Parameters error, check name, email and country"}
-    }
-    //Si ya existe el email en la base de datos, para no romper todo mejor le damos un warning al usuario
-    const emailAlreadyExists = await User.findOne({
-      where: { email: email },
-    });
-    
-    if(emailAlreadyExists){
-      throw {status: 400, message: "Email already exists, please Log-in"}
-    }
-    /*Si la informacion esta correcta, creo el usuario
-      El usuario al ser creado, como no tiene un plan, contactsId y remainingContacts no son seteados al igual que sus FK:
-        planId, feedbackId, reviewUserId, postId
-    */
-    const newUser = await User.create({
-      name,
-      phone,
-      email,
-      country,
-      image
-    });
-    let newReview = await ReviewUser.create({
-      reviews:[],
-      scoreSum: 0,
-      average: 0,
-      userId: newUser.id
-    })
-    res.status(201).json(newUser);
-
-  } catch (error) {
-    res.status(error.status).send(error.message)
-  }
-
-}
-
-const getPlans = async (req, res) => {
-  try {
-    const plans= await Plan.findAll() 
-    
-    res.status(200).send(plans)
-  } catch (error) {
-    res.status(404).send(error)
-  }
-}
 
 const getPlanDetail = async(req, res)=>{
   const {name} = req.params;
 
   try {
-    let planDetail = await Plan.findOne({
-      where: {name:name}
-    });
-    if (planDetail === null) {
-      res.status(400).send(error)
+    if(name) {  
+      let planDetail = await Plan.findOne({
+        where: {name:name}
+      });
+      if (planDetail === null) {
+        res.status(400).send(error)
+      }
+      else res.status(200).json(planDetail)
+    } else {
+     const plans= await Plan.findAll() 
+     res.status(200).send(plans)
     }
-    else
-      res.status(200).json(planDetail)
-  } catch (error) {
+    } catch (error) {
     res.status(400).send(error);
   }
 };
@@ -291,5 +246,111 @@ const assignPlanToUser = async (req, res) => {
   }
 }
 
+const modifyCategory = async (req, res) => {
+  // get the name provided by params
+  const {name} = req.params;
+  //get the display property and subcategory property
+  //En este punto asumimos que lo que venga por body va a reemplazar directamente lo que
+  //teníamos previamente en los campos de la categoría. De manera que desde el front deben primero 
+  //requerir todos los campos de la categoría, modificar y reenviar el resultado final.
+  const {display, subcategories} = req.body;
+  try {
+    const categoryExists = await Category.findOne({
+      where: { name : name },
+    });
+    if(categoryExists) {
+      await categoryExists.update({
+        display,
+        subcategories
+      });
+       res.status(201).json(categoryExists);
+    } else {
+      res.status(400).send("The category selected does not exists");
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+}  
+
+//Propiedades de un User: name, phone, email, verified, country, contactsId, remainingContacts, isadmin, isbanned, image
+const modifyOrCreateUser = async (req, res) => {
+  try {
+    const { country, email, image, name, phone } = req.body;
+
+    if(!country || !email || !image || !name || !phone){
+      throw {status: 400, message: "Please send all the properties of the new user, even the old ones"};
+    }
+    // Si el usuario no existe, se crea
+    const [user, created] = await User.findOrCreate({
+      where: { email : email },
+      defaults:{
+        email,
+        country,
+        image, 
+        name,
+        phone,
+      }
+    });
+    // Uso la componente created para ver si se acaba de crear o si ya existía,
+    // Si se acaba de crear tengo que crearle el userReviews:
+    if (created) {  
+      
+      //Arreglar la coneccion entre User y reviewUser, debería ser una FK y no lo es
+      let newReview = await ReviewUser.create({
+        reviews:[],
+        scoreSum: 0,
+        average: 0,
+        userId: newUser.id
+      })
+      return res.status(200).send(user);
+    }
+    // Si el user ya existía, lo modifico:
+    else {
+      await user.update({
+        country,
+        email, 
+        image,
+        name,
+        phone,
+      })
+      return res.status(201).json(user);  
+    }
+
+  } catch (error) {
+    return res.status(400).send(error.message)
+  }
+}
+
+const getUserDetail = async (req, res) => {
+  const { email } = req.params
+  try {
+    let user = await User.findOne({
+      where:
+        {email:email}
+    })
+    if (user) {
+      res.status(200).send(user)
+    }
+    else {
+      res.status(404).send("User not found")
+    }   
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}  
+
+const getAllUsers = async(req, res)=>{
+  //Ruta util para el panel de usuario
+  try { 
+    const allUsers = await User.findAll();
+
+    return res.status(200).json(allUsers);
+  } catch (error) {
+    return res.status(error.status).send(error.message)
+  }
+}
+
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  createReview , postCategory, createPlan, createUser , getPlans , getPlanDetail, assignPlanToUser}
+  createReview , postCategory, createPlan, 
+  getPlanDetail, assignPlanToUser, modifyCategory, modifyOrCreateUser, getUserDetail, getAllUsers}
+
