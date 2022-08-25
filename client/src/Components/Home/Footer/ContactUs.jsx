@@ -1,4 +1,7 @@
 import React from 'react'
+import BahiaBlanca from './Maps/BahiaBlanca'
+import PuertoMadero from './Maps/PuertoMadero'
+import Posadas from './Maps/Posadas'
 
 const ContactUs = () => {
   return (
@@ -10,19 +13,21 @@ const ContactUs = () => {
       <div>
         <b>Argentina:</b><br /><br />
         <address>
-          <span>Villarino 433</span> <br />
+          <span>Av. Colón 22</span> <br />
           <span>Bahia Blanca,</span> <br />
           <span>Buenos Aires</span>, <br />
           <span>8000 -</span> <span> ARG</span>. <br />
           Phone: <span>+54 9 2916 41-9871</span> <br />
+          <div><BahiaBlanca/></div>
         </address>
         <br />
         <address>
-          <span>Ayacucho 2030</span> <br />
+          <span>Felix de Azara 1872</span> <br />
           <span>Posadas,</span> <br />
           <span>Misiones</span>, <br />
           <span>3300 -</span> <span> ARG</span>. <br />
           Phone: <span>+54 9 3764 41-0695</span> <br />
+          <div><Posadas/></div>
         </address>
         <br />
         <address>
@@ -31,6 +36,7 @@ const ContactUs = () => {
           <span>Ciudad Autónoma de Buenos Aires</span>, <br />
           <span>1000-1499 -</span> <span> ARG</span>. <br />
           Phone: <span>+54 9 11 3941-2309</span> <br />
+          <div><PuertoMadero/></div>
         </address>
       </div>
     </div>
