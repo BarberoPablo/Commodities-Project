@@ -50,33 +50,12 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  margin-bottom: 30px;
   border: 1px solid rgba(0, 0, 0, 0.25);
 }
 .card .user_photo img {
   width: 150px;
+  height: 150px;
   border-radius: 50%;
-}
-.card .user_photo .refresh {
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  padding: 10px 15px;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.75);
-  border-radius: 3px;
-  text-decoration: none;
-  opacity: 0;
-  display: block;
-  -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-          transform: translateX(-50%);
-  -webkit-transition: all 0.25s ease-out;
-          transition: all 0.25s ease-out;
-}
-.card .user_photo:hover .refresh {
-  bottom: -20px;
-  opacity: 1;
 }
 .details #user_title {
   color: #999999;

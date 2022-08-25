@@ -82,7 +82,7 @@ function handleSubmit(e){
   e.preventDefault();
   let val = validacion(input);
   setErrors(val)
-  //dispatch(postPost(input))
+  dispatch(postPost(input))
   if(Object.keys(val).length >0 ){
     alert("Fix errors");
     val = {}

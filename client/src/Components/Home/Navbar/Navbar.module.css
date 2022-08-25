@@ -37,4 +37,10 @@
 .container_a:hover{
   background-color: #515464;
 }
-
+.a{
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

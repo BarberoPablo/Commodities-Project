@@ -7,16 +7,17 @@ import {
   filteredCountry,
   filteredShippment,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog } from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser} from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
 
 import axios from "axios";
 
+const url = "https://b2b-01.herokuapp.com"
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
-  axios("https://b2b-01.herokuapp.com/posts") // end-point del back /posts
+  axios(`${url}/posts`) // end-point del back /posts
     .then((data) => dispatch(getAllPosts(data.data)))
     .catch((e) => console.log(e));
 };
@@ -26,14 +27,14 @@ export const searchPosts = (name, sell) => (dispatch) => {
 };
 
 export const userPosts = () => (dispatch) => {
-  axios("https://b2b-01.herokuapp.com/posts") // end-point del back /posts
+  axios(`${url}/posts`) // end-point del back /posts
     .then((data) => dispatch(getUserPosts(data.data)));
 };
 
 // FUNCTIONS CATEGORIES
 
 export const getCategoriesByName = () => (dispatch) => {
-  axios("https://b2b-01.herokuapp.com/category").then((resp) =>
+  axios(`${url}/category`).then((resp) =>
     dispatch(getCategories(resp.data))
   );
 };
@@ -74,15 +75,21 @@ export const getAllCountries = () => (dispatch) => {
     .catch((e) => console.log(e));
 };
 export const userLogin = (payload) => (dispatch) => {
+  axios(`${url}/user`)
   dispatch(userLog(payload));
 };
+
+export const createNewUser = (value) => (dispatch) => {
+  axios.post(`${url}/user`,value)
+  dispatch(createUser(value))
+}
 export const getUserDetails = (email) => (dispatch) => {
-  axios("https://b2b-01.herokuapp.com/user/"+email)
+  axios(`${url}/user/servezynskimarcos1@gmail.com`)
   .then((data) => dispatch(getUserDetail(data.data)))
   .catch((e) => console.log(e));
 };
 //postPost
-export const postPost = (input)=>(dispatch)=>{
-  axios.post(`/post/${input.userId}`,input)
+export const postPost = (input)=>()=>{
+  axios.post(`${url}/post/`, input)
 }
 
