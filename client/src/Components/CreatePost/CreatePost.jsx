@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesByName, getAllCountries } from "../../Redux/Actions/Actions";
-//import { postPost } from "../redux/Actions/Actions.js";  //importar acciones
+import { getCategoriesByName, getAllCountries, postPost } from "../../Redux/Actions/Actions";
 import axios from "axios";
 
 export default function CreatePost() {

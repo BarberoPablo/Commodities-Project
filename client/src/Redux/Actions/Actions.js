@@ -64,3 +64,8 @@ export const getAllCountries = ()=>(dispatch)=>{
   .then(data=>dispatch(getCountries(data.data)))
   .catch(e=>console.log(e))
 }
+
+//postPost
+export const postPost = (input)=>(dispatch)=>{
+  axios.post(`/post/${input.userId}`,input)
+}
