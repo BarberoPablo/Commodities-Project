@@ -145,7 +145,7 @@
   max-width: 50%;
   margin: 0 auto;
   gap: 0.7rem;
-  
+  font-size:0.8rem;
 }
 .form input{
   border: none;
