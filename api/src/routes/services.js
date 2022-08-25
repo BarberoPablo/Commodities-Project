@@ -201,46 +201,6 @@ const postCategory = async (req , res) => {
   }
 }
 
-const createUser = async (req, res) => {
-  //Propiedades de un User: name, phone, email, verified, country, contactsId, remainingContacts, isadmin, isbanned, image
-  try {
-    const {name, phone, email, country, image} = req.body;
-    if(!name || !email || !country){
-      throw {status: 400, message: "Parameters error, check name, email and country"}
-    }
-    //Si ya existe el email en la base de datos, para no romper todo mejor le damos un warning al usuario
-    const emailAlreadyExists = await User.findOne({
-      where: { email: email },
-    });
-    
-    if(emailAlreadyExists){
-      throw {status: 400, message: "Email already exists, please Log-in"}
-    }
-    /*Si la informacion esta correcta, creo el usuario
-      El usuario al ser creado, como no tiene un plan, contactsId y remainingContacts no son seteados al igual que sus FK:
-        planId, feedbackId, reviewUserId, postId
-    */
-    const newUser = await User.create({
-      name,
-      phone,
-      email,
-      country,
-      image
-    });
-    let newReview = await ReviewUser.create({
-      reviews:[],
-      scoreSum: 0,
-      average: 0,
-      userId: newUser.id
-    })
-    res.status(201).json(newUser);
-
-  } catch (error) {
-    res.status(error.status).send(error.message)
-  }
-
-}
-
 const getPlans = async (req, res) => {
   try {
     const plans= await Plan.findAll() 
@@ -317,29 +277,52 @@ const modifyCategory = async (req, res) => {
   }
 }  
 
-const modifyUserData = async (req, res) => {
-  const { id } = req.params
-  const { phone , country , image , name } = req.body
-
+//Propiedades de un User: name, phone, email, verified, country, contactsId, remainingContacts, isadmin, isbanned, image
+const modifyOrCreateUser = async (req, res) => {
   try {
-    const userExists = await User.findOne({
-      where: { id : id },
-    });
+    const { country, email, image, name, phone } = req.body;
 
-    if (userExists) {
-      await userExists.update({
+    if(!country || !email || !image || !name || !phone){
+      throw {status: 400, message: "Please send all the properties of the new user, even the old ones"};
+    }
+    // Si el usuario no existe, se crea
+    const [user, created] = await User.findOrCreate({
+      where: { email : email },
+      defaults:{
+        email,
+        country,
+        image, 
         name,
         phone,
-        country,
-        image
-      });
-      res.status(200).send(userExists)
+      }
+    });
+    // Uso la componente created para ver si se acaba de crear o si ya existía,
+    // Si se acaba de crear tengo que crearle el userReviews:
+    if (created) {  
+      
+      /* Arreglar la coneccion entre User y reviewUser, debería ser una FK y no lo es
+      let newReview = await ReviewUser.create({
+        reviews:[],
+        scoreSum: 0,
+        average: 0,
+        userId: newUser.id
+      }) */
+      return res.status(200).send(user);
     }
+    // Si el user ya existía, lo modifico:
     else {
-      res.status(404).send("User is not found")
+      await user.update({
+        country,
+        email, 
+        image,
+        name,
+        phone,
+      })
+      return res.status(201).json(user);  
     }
+
   } catch (error) {
-    res.status(400).send(error)
+    return res.status(400).send(error.message)
   }
 }
 
@@ -361,7 +344,18 @@ const getUserDetail = async (req, res) => {
   }
 }  
 
+const getAllUsers = async(req, res)=>{
+  //Ruta util para el panel de usuario
+  try { 
+    const allUsers = await User.findAll();
+
+    return res.status(200).json(allUsers);
+  } catch (error) {
+    return res.status(error.status).send(error.message)
+  }
+}
+
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  createReview , postCategory, createPlan, createUser , getPlans , 
-  getPlanDetail, assignPlanToUser, modifyCategory , modifyUserData , getUserDetail}
+  createReview , postCategory, createPlan, getPlans , 
+  getPlanDetail, assignPlanToUser, modifyCategory, modifyOrCreateUser, getUserDetail, getAllUsers}
 
