@@ -300,13 +300,13 @@ const modifyOrCreateUser = async (req, res) => {
     // Si se acaba de crear tengo que crearle el userReviews:
     if (created) {  
       
-      /* Arreglar la coneccion entre User y reviewUser, debería ser una FK y no lo es
+      //Arreglar la coneccion entre User y reviewUser, debería ser una FK y no lo es
       let newReview = await ReviewUser.create({
         reviews:[],
         scoreSum: 0,
         average: 0,
         userId: newUser.id
-      }) */
+      })
       return res.status(200).send(user);
     }
     // Si el user ya existía, lo modifico:
