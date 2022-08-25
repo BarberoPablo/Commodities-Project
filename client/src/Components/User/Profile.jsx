@@ -1,7 +1,7 @@
 import { React, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import { userPosts, userLogin } from "../../Redux/Actions/Actions";
+import { userPosts, userLogin, createNewUser, getUserDetails} from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { useFormik } from "formik";
@@ -24,6 +24,11 @@ const validate = (values) => {
   } else if (values.phone.length > 15) {
     errors.phone = "Must be 15 characters or less";
   }
+  if (!values.image) {
+    errors.image = "*";
+  } else if (values.image.length > 175) {
+    errors.image = "Must be 175 characters or less";
+  }
 
   return errors;
 };
@@ -31,11 +36,12 @@ const validate = (values) => {
 const Profile = () => {
   const { posts } = useSelector((state) => state.posts);
   const { user } = useAuth0();
-
+  const userLog  = useSelector(state=> state.users.user)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userPosts());
+    dispatch(getUserDetails());
   }, [dispatch, user]);
 
   const formik = useFormik({
@@ -44,11 +50,15 @@ const Profile = () => {
       country: "",
       phone: "",
       email: "",
+      image: "",
     },
     validate,
     onSubmit: (values) => {
       values.email = user.email;
-      dispatch(userLogin(values));
+      //dispatch(userLogin(values));
+      dispatch(createNewUser(values));
+      // console.log(JSON.stringify(values))
+      // alert("user creado correctamente con los datos: " + JSON.stringify(values));
     },
   });
   return (
@@ -64,9 +74,7 @@ const Profile = () => {
                 >
                   <img
                     src={
-                      user.picture
-                        ? user.picture
-                        : "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg"
+                      userLog ? userLog.image : user.picture
                     }
                     alt="a"
                   />
@@ -105,6 +113,19 @@ const Profile = () => {
                   {formik.errors.phone ? (
                     <div>{formik.errors.phone}</div>
                   ) : null}
+
+                  <input
+                    id="image"
+                    name="image"
+                    type="text"
+                    placeholder="image"
+                    onChange={formik.handleChange}
+                    value={formik.values.image}
+                  />
+                  {formik.errors.image ? (
+                    <div>{formik.errors.image}</div>
+                  ) : null}
+
                   <button type="submit">Submit</button>
                 </form>
               </div>

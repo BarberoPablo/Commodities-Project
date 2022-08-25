@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const postSlice = createSlice({
+export const userSlice = createSlice({
   name:'users', //nombre del slice- pasarlo al store 
   initialState:{
     user: {},
@@ -15,12 +15,15 @@ export const postSlice = createSlice({
       state.allUsers=action.payload;
     },
     userLog: (state, action) =>{
-      state.logUser = action.payload;
+      state.logUser = action;
+    },
+    createUser: (state, action) =>{
+      state.user = action.payload;
     }
     
     //more actions
   }
 })
 
-export const {getUserDetail, getAllUsers, userLog} = postSlice.actions
-export default postSlice.reducer
+export const {getUserDetail, getAllUsers, createUser, userLog} = userSlice.actions
+export default userSlice.reducer

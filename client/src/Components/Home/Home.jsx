@@ -14,12 +14,12 @@ const Home = ({currentPage, setCurrentPage}) => {
   const {allCategories} = useSelector(state => state.categories)
   const {posts} = useSelector(state=>state.posts)
   const { user } = useAuth0();
-
+  
   useEffect(()=>{
-    dispatch(getUserDetails(user.email))
+    dispatch(getUserDetails())
     dispatch(getPost())
     dispatch(getCategoriesByName())
-  },[dispatch, user.email])
+  },[dispatch])
 
 //paginado
  //pagina actual
@@ -37,7 +37,6 @@ const paginado = (pageNumber) => {
 
   return (
     <div>
-    
     <div className={s.container}>
       <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage}/>
       <Cards currentPost={currentPost} />
