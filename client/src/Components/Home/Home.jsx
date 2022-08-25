@@ -6,6 +6,7 @@ import { getPost, getCategoriesByName} from '../../Redux/Actions/Actions'
 import Cards from './Card/Cards'
 import Paginado from "./Paginado/Paginado"
 import s from './Home.module.css'
+import Filters from './Filters/Filters'
 
 const Home = ({currentPage, setCurrentPage}) => {
   const dispatch = useDispatch()
@@ -36,6 +37,7 @@ const paginado = (pageNumber) => {
     <div className={s.container}>
       <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage}/>
       <Cards currentPost={currentPost} />
+      <Filters setCurrentPage={setCurrentPage}/>
       </div>
       <Paginado
           setPostPerPage={setPostPerPage}
