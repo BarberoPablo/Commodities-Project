@@ -201,15 +201,6 @@ const postCategory = async (req , res) => {
   }
 }
 
-// const getPlans = async (req, res) => {
-//   try {
-//     const plans= await Plan.findAll() 
-    
-//     res.status(200).send(plans)
-//   } catch (error) {
-//     res.status(404).send(error)
-//   }
-// }
 
 const getPlanDetail = async(req, res)=>{
   const {name} = req.params;
@@ -360,6 +351,6 @@ const getAllUsers = async(req, res)=>{
 }
 
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  createReview , postCategory, createPlan, getPlans , 
+  createReview , postCategory, createPlan, 
   getPlanDetail, assignPlanToUser, modifyCategory, modifyOrCreateUser, getUserDetail, getAllUsers}
 

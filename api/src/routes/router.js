@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 const { getPosts, createPost, getCategory, 
-  getReviews, createReview , postCategory, createPlan, getPlans, getPlanDetail,
+  getReviews, createReview , postCategory, createPlan, getPlanDetail,
    assignPlanToUser, modifyCategory, modifyOrCreateUser, getUserDetail, getAllUsers } = require("./services");
 
 
