@@ -322,11 +322,11 @@ const modifyOrCreateUser = async (req, res) => {
 }
 
 const getUserDetail = async (req, res) => {
-  const { id } = req.params
+  const { email } = req.params
   try {
     let user = await User.findOne({
       where:
-        {id:id}
+        {email:email}
     })
     if (user) {
       res.status(200).send(user)
