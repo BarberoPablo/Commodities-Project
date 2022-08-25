@@ -7,6 +7,7 @@ const {api, categories, posts} = require('./jsons.js');
   setTimeout( async () => {try {
     // Se crean los User en la base de datos
     for(const person of api){
+      
       await User.create({
         name: `${person.name.first} ${person.name.last}`,
         phone: person.phone,
@@ -14,6 +15,14 @@ const {api, categories, posts} = require('./jsons.js');
         country: person.location.country,
         image: person.picture.large
       });
+     
+      await ReviewUser.create({
+        reviews:[],
+        scoreSum: 0,
+        average: 0,
+        userId: person.id
+      });
+      
     }
     //Se crean las Category en la database:
     for(const category of categories){
@@ -110,7 +119,8 @@ const createPost = async(req, res)=>{
   }
 }
 
-// GET review devuelve la review que se le consulta por el id
+// GET review devuelve la review del user que se le consulta por el id
+// y dentro de ella todas las reviews individuales
 const getReviews = async(req, res)=>{
   try {
    const {id} = req.params;
@@ -183,28 +193,9 @@ const createPlan = async(req, res)=>{
   }
 };
 
-const postCategory = async (req , res) => {
-  const { name, subcategories } = req.body
-
-  const newCategory = {name, subcategories}
-
-  if (!name) {
-    return res.status(400).send('Incomplete data')
-  }
-  try {
-      const cat = await Category.create(newCategory)
-      
-      res.status(201).send(cat)
-    
-  } catch (error) {
-    res.status(500).send(error)
-  }
-}
-
-
 const getPlanDetail = async(req, res)=>{
   const {name} = req.params;
-
+  
   try {
     if(name) {  
       let planDetail = await Plan.findOne({
@@ -237,16 +228,34 @@ const assignPlanToUser = async (req, res) => {
       await userExists.update({
         planId
       });
-       res.status(201).json(userExists);
+      res.status(201).json(userExists);
     } else {
       res.status(400).send("El plan o el usuario no existen");
     }
   } catch (error) {
     res.status(400).send(error);
   }
-}
+};
 
-const modifyCategory = async (req, res) => {
+// const postCategory = async (req , res) => {
+//   const { name, subcategories } = req.body
+
+//   const newCategory = {name, subcategories}
+
+//   if (!name) {
+//     return res.status(400).send('Incomplete data')
+//   }
+//   try {
+//       const cat = await Category.create(newCategory)
+      
+//       res.status(201).send(cat)
+    
+//   } catch (error) {
+//     res.status(500).send(error)
+//   }
+// };
+
+const modifyOrCreateCategory = async (req, res) => {
   // get the name provided by params
   const {name} = req.params;
   //get the display property and subcategory property
@@ -258,6 +267,7 @@ const modifyCategory = async (req, res) => {
     const categoryExists = await Category.findOne({
       where: { name : name },
     });
+    const newCategory = {name, subcategories}
     if(categoryExists) {
       await categoryExists.update({
         display,
@@ -265,7 +275,8 @@ const modifyCategory = async (req, res) => {
       });
        res.status(201).json(categoryExists);
     } else {
-      res.status(400).send("The category selected does not exists");
+      const cat = await Category.create(newCategory)
+      res.status(201).send(cat);
     }
   } catch (error) {
     res.status(400).send(error);
@@ -295,12 +306,11 @@ const modifyOrCreateUser = async (req, res) => {
     // Si se acaba de crear tengo que crearle el userReviews:
     if (created) {  
       
-      //Arreglar la coneccion entre User y reviewUser, debería ser una FK y no lo es
       let newReview = await ReviewUser.create({
         reviews:[],
         scoreSum: 0,
         average: 0,
-        userId: newUser.id
+        userId: user.id
       })
       return res.status(200).send(user);
     }
@@ -351,6 +361,6 @@ const getAllUsers = async(req, res)=>{
 }
 
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  createReview , postCategory, createPlan, 
-  getPlanDetail, assignPlanToUser, modifyCategory, modifyOrCreateUser, getUserDetail, getAllUsers}
+  createReview , createPlan, getPlanDetail, assignPlanToUser, modifyOrCreateCategory,
+   modifyOrCreateUser, getUserDetail, getAllUsers}
 
