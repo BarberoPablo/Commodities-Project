@@ -22,8 +22,6 @@ router.post("/category", postCategory)
 
 router.post("/plan/", createPlan);
 
-router.get("/plan", getPlans);
-
 router.get("/plan/:name", getPlanDetail);
 
 router.post("/planUser", assignPlanToUser);
