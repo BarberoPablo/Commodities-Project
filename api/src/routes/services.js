@@ -128,7 +128,7 @@ const getReviews = async(req, res)=>{
 const createReview = async(req, res)=>{
   const {comment, score, userId, idReviewer} = req.body;
   try {
-   if (comment.length < 255) {
+   if (comment.length < 512) {
     const userAlreadyExists = await ReviewUser.findOne({
       where: { userId : userId },
     });
@@ -201,29 +201,24 @@ const postCategory = async (req , res) => {
   }
 }
 
-const getPlans = async (req, res) => {
-  try {
-    const plans= await Plan.findAll() 
-    
-    res.status(200).send(plans)
-  } catch (error) {
-    res.status(404).send(error)
-  }
-}
 
 const getPlanDetail = async(req, res)=>{
   const {name} = req.params;
 
   try {
-    let planDetail = await Plan.findOne({
-      where: {name:name}
-    });
-    if (planDetail === null) {
-      res.status(400).send(error)
+    if(name) {  
+      let planDetail = await Plan.findOne({
+        where: {name:name}
+      });
+      if (planDetail === null) {
+        res.status(400).send(error)
+      }
+      else res.status(200).json(planDetail)
+    } else {
+     const plans= await Plan.findAll() 
+     res.status(200).send(plans)
     }
-    else
-      res.status(200).json(planDetail)
-  } catch (error) {
+    } catch (error) {
     res.status(400).send(error);
   }
 };
@@ -356,6 +351,6 @@ const getAllUsers = async(req, res)=>{
 }
 
 module.exports = { createPost, getPosts, getCategory, getReviews, 
-  createReview , postCategory, createPlan, getPlans , 
+  createReview , postCategory, createPlan, 
   getPlanDetail, assignPlanToUser, modifyCategory, modifyOrCreateUser, getUserDetail, getAllUsers}
 
