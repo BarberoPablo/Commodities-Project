@@ -15,6 +15,7 @@ const {
   getUserDetail,
   getAllUsers,
   getUserPosts,
+  getAllPlans,
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -25,13 +26,15 @@ router.get("/reviews/:id", getReviews);
 
 router.post("/review/", createReview);
 
-router.post("/post/:id", createPost);
+router.post("/post/:email", createPost);
 
 router.get("/category", getCategory);
 
 router.post("/plan/", createPlan);
 
 router.get("/plan/:name", getPlanDetail);
+
+router.get("/plans", getAllPlans);
 
 router.post("/planUser", assignPlanToUser);
 
