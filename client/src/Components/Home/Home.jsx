@@ -16,10 +16,12 @@ const Home = ({currentPage, setCurrentPage}) => {
   const { user } = useAuth0();
   
   useEffect(()=>{
-    dispatch(getUserDetails())
     dispatch(getPost())
     dispatch(getCategoriesByName())
-  },[dispatch])
+    if(user){
+       dispatch(getUserDetails(user.email))
+    }
+  },[dispatch, user])
 
 //paginado
  //pagina actual
@@ -42,6 +44,7 @@ const paginado = (pageNumber) => {
       <Cards currentPost={currentPost} />
       <Filters setCurrentPage={setCurrentPage}/>
       </div>
+      {}
       <Paginado
           setPostPerPage={setPostPerPage}
           setCurrentPage={setCurrentPage}
