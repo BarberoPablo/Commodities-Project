@@ -1,62 +1,92 @@
-import React from 'react'
+import React, { useState } from "react";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-const Memberships = () => {
+export default function App() {
+  const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState("");
+  const [orderID, setOrderID] = useState(false);
+  const { plans } = useSelector((state) => state.plans);
+
+  // creates a paypal order
+  const createOrder = (data, actions) => {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            description: "Sunflower",
+            amount: {
+              currency_code: "USD",
+              value: 20,
+            },
+          },
+        ],
+        // not needed if a shipping address is actually needed
+        application_context: {
+          shipping_preference: "NO_SHIPPING",
+        },
+      })
+      .then((orderID) => {
+        setOrderID(orderID);
+        return orderID;
+      });
+  };
+
+  // check Approval
+  const onApprove = (data, actions) => {
+    return actions.order.capture().then(function (details) {
+      const { payer } = details;
+      setSuccess(true);
+    });
+  };
+  //capture likely error
+  const onError = (data, actions) => {
+    setErrorMessage("An Error occured with your payment ");
+  };
   return (
-    <div>
+    <PayPalScriptProvider
+      options={{
+        "client-id": "AQmAOKkaooq3WRmt-zUyck2qmSVYykzLUOhUfHPFDEFfDGY92Pn_ExDZCdG2zmreMqCBN3tGJta5vEBT",
+      }}
+    >
       <div>
-        <div id="membership">
-          <h3>Membership Features</h3>
-        </div>
-        <p id="bagde">Membership Badge</p>
-        <p id="catalog">Your complete product catalog with images in your profile</p>
-        <p id="ranking">High search ranking (other companies find you easily)</p>
-        <p id="seller">Directly contact any Seller on our website</p>
-        <p id="buyer">Directly contact any Buyer on our website</p>
-      </div>
-      <div>
-        <div id="membership">
-          <h5>FREE Membership</h5>
-          <p>Price</p>
-          <h2>$0</h2>
-          <p>(Free Forever)</p>
-        </div>
-        <p id="bagde">❌</p>
-        <p id="catalog">❌</p>
-        <p id="ranking">Lowest</p>
-        <p id="seller">❌</p>
-        <p id="buyer">❌</p>
-        <button>Get Started</button>
-      </div>
-      <div>
-        <div id="membership">
-          <h5>BASIC Membership</h5>
-          <p>Price</p>
-          <h2>$300</h2>
-          <p>(Total for 6 months)</p>
-        </div>
-        <p id="bagde">Basic Membership</p>
-        <p id="catalog">❌</p>
-        <p id="ranking">Medium</p>
-        <p id="seller">Limit 10 per week</p>
-        <p id="buyer">Limit 10 per week</p>
-        <button>Get Started</button>
-      </div>
-      <div>
-        <div id="membership">
-          <h5>PREMIUM Membership</h5>
-          <p>Price</p>
-          <h2>$500</h2>
-          <p>(Total for 6 months)</p>
-        </div>
-        <p id="bagde">Premium Membership🌐</p>
-        <p id="catalog">✔</p>
-        <p id="ranking">Highest</p>
-        <p id="seller">Unlimited</p>
-        <p id="buyer">Unlimited</p>
-        <button>Get Started</button>
-      </div>
-    </div>
-  )
-}
+        <div className="wrapper">
+          <div className="product-img">
+            <img
+              src="https://cdn.pixabay.com/photo/2021/08/15/06/54/sunflower-6546993_1280.jpg"
+              alt="SunFlower"
+              height="420"
+              width="327"
+            />
+          </div>
+          <div className="product-info">
+            <div className="product-text">
+              <h1>Sunflower</h1>
+              <h2>POPULAR HOUSE PLANT</h2>
+              <p>
+                Sunflowers are usually tall annual or perennial plants.
+                <br />
+                Each "flower" is actually a
+                <br />
+                disc made up of tiny flowers,
+                <br />
+                to better attract pollinators.{" "}
+              </p>
+            </div>
 
-export default Memberships
+            <div className="product-price-btn">
+              <p>
+                <span>$20</span>
+              </p>
+              <button type="submit" onClick={() => setShow(true)}>
+                Buy now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {show ? <PayPalButtons style={{ layout: "vertical" }} createOrder={createOrder} onApprove={onApprove} /> : null}
+      </div>
+    </PayPalScriptProvider>
+  );
+}

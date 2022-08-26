@@ -73,6 +73,9 @@ typings/
 .env
 .env.test
 
+# prettier
+.prettierrc.json
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
