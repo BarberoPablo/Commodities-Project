@@ -346,9 +346,9 @@ const getFeedback = async (req , res) => {
   }
 }
 
-// esta ruta es para los usuarios
+// Esta ruta es para los usuarios
 const postFeedback = async (req, res) => {
-  // El email de quien realiza el feedback
+  // El id del usuario que realiza el feedback
   const { id } = req.params
   const { comment  } = req.body
 
