@@ -5,7 +5,7 @@ const router = express.Router();
 
 const { getPosts, createPost, getCategory, 
   getReviews, createReview , createPlan, getPlanDetail, assignPlanToUser, modifyOrCreateCategory, modifyOrCreateUser,
-   getUserDetail, getAllUsers } = require("./services");
+   getUserDetail, getAllUsers, sendEmail } = require("./services");
 
 
 router.get("/posts/", getPosts);
@@ -31,5 +31,7 @@ router.post("/user", modifyOrCreateUser);
 router.get("/user/:email", getUserDetail);
 
 router.get("/users", getAllUsers);
+
+router.post("/mail", sendEmail);
 
 module.exports = { router };
