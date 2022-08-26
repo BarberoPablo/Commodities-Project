@@ -47,20 +47,22 @@ const getPosts = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     //El id es del user a quien pertenece el post
-    const { id } = req.params;
+    const { email } = req.params;
+    console.log(email);
     //Category es un id (integer)
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (!id) {
-      throw { status: 400, message: "id required" };
+    if (!email) {
+      throw { status: 400, message: "email required" };
     }
     const user = await User.findOne({
-      where: { id: id },
+      where: { email: email },
     });
+    console.log("@@@", user);
     //Si no existe un usuario con ese id ocurre un error
     if (!user) {
-      throw { status: 400, message: `User with id: ${id}, does not exists` };
+      throw { status: 400, message: `User with id: ${email}, does not exists` };
     }
 
     if (!description || !shipping || !payment || !categoryName || !country || !subCategory) {
@@ -81,7 +83,7 @@ const createPost = async (req, res) => {
       throw { status: 400, message: "Category id not found" };
     }
     // const categoryId = categoryInDb.id; // .toJSON?
-
+    console.log("Llega");
     const newPost = await Post.create({
       title,
       description,
@@ -92,7 +94,7 @@ const createPost = async (req, res) => {
       image,
       country,
       categoryName,
-      userId: id,
+      userId: user.id,
     });
 
     res.status(201).json(newPost);
@@ -344,7 +346,7 @@ const getFeedback = async (req , res) => {
   } catch (error) {
     res.status(404).send(error)
   }
-}
+};
 
 // Esta ruta es para los usuarios
 const postFeedback = async (req, res) => {
@@ -377,7 +379,40 @@ const postFeedback = async (req, res) => {
   } catch (error) {
     res.status(400).send(error)
   }
-}
+};
+
+const getUserPosts = async (req, res) => {
+  //Ruta util para el panel de usuario
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({
+      where: { email: email },
+    });
+
+    if (user) {
+      console.log("Entra");
+      const userPosts = await Post.findAll({
+        where: { userId: user.id },
+      });
+      return res.status(200).json(userPosts);
+    } else {
+      throw { status: 404, message: `User with email: ${email} not found}` };
+    }
+  } catch (error) {
+    return res.status(error.status).send(error.message);
+  }
+};
+
+const getAllPlans = async (req, res) => {
+  //Ruta util para el panel de usuario
+  try {
+    const allPlans = await Plan.findAll();
+    console.log(allPlans);
+    return res.status(200).json(allPlans);
+  } catch (error) {
+    return res.status(error.status).send(error.message);
+  }
+};
 
 module.exports = {
   createPost,
@@ -393,5 +428,8 @@ module.exports = {
   getUserDetail,
   getAllUsers,
   getFeedback,
-  postFeedback
+  postFeedback,
+  getUserPosts,
+  getAllPlans,
+
 };

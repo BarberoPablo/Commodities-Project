@@ -31,11 +31,11 @@ const Navbar = ({ setCurrentPage }) => {
           <>
             <span style={{ color: "white" }}>
               <a href="http://localhost:3000/profile" className={s.a}>
-                {userLog ? userLog.name : user.name}{" "}
+                {userLog.name ? userLog.name : user.nickname}{" "}
                 <img
-                  width={50}
-                  height={50}
-                  src={userLog ? userLog.image : user.picture}
+                  width={40}
+                  height={40}
+                  src= {userLog.image ? userLog.image : user.picture}
                   alt=""
                 />
               </a>
