@@ -353,7 +353,7 @@ const postFeedback = async (req, res) => {
   const { comment  } = req.body
 
   if (!comment) {
-    res.status(400).send('Incomplete data')
+    res.status(400).send('Insert your comment')
   }
   try {
     let user = await User.findOne({
