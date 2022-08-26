@@ -336,6 +336,51 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// Esta ruta es para los admins
+const getFeedback = async (req , res) => {
+  try {
+    const allFeedback = await Feedback.findAll();
+    
+    return res.status(200).json(allFeedback) 
+
+  } catch (error) {
+    res.status(404).send(error)
+  }
+};
+
+// Esta ruta es para los usuarios
+const postFeedback = async (req, res) => {
+  try {
+  // El id es del usuario que realiza el feedback
+    const { id } = req.params
+    const { comment  } = req.body
+
+    if (!id) {
+      res.status(404).send('Id is required')
+    }
+    const user = await User.findOne({
+      where: { id: id },
+    });
+    
+    if (!user) {
+      throw { status: 404, message: `User with id: ${id}, does not exists` };
+    }
+
+    if (!comment) {
+      throw{ status: 400, message: 'Insert a comment please'}
+    }
+    
+    const newFeedback = await Feedback.create({
+      comment,
+      userId: id
+    });
+    res.status(201).json(newFeedback)
+
+  } catch (error) {
+    res.status(400).send(error)
+  }
+};
+
 const getUserPosts = async (req, res) => {
   //Ruta util para el panel de usuario
   try {
@@ -382,6 +427,9 @@ module.exports = {
   modifyOrCreateUser,
   getUserDetail,
   getAllUsers,
+  getFeedback,
+  postFeedback,
   getUserPosts,
   getAllPlans,
+
 };
