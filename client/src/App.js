@@ -14,6 +14,7 @@ import Profile from "./Components/User/Profile";
 import { useState } from "react";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Memberships from "./Components/Memberships/Membership";
+import Feedback from "./Components/Home/Footer/Feedback";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +32,7 @@ function App() {
           {" "}
           <Home currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </Route>
-        <Route path="/create-post" component={CreatePost} />
+        <Route path={"/create-post"} component={CreatePost} />
         <Route path={"/about-us"} component={AboutUs} />
         <Route path={"/contact-us"} component={ContactUs} />
         <Route path={"/privacy-policy"} component={PrivacyPolicy} />
@@ -40,6 +41,7 @@ function App() {
         <Route path={"/profile"} component={Profile} />
         <Route path={"/"} component={Footer} />
         <Route path={"/memberships"} component={Memberships} />
+        <Route path={"/feedback"} component={Feedback}/>
         {/* More routes eje: Profile, Post, UserProfile  */}
       </div>
     </PayPalScriptProvider>

@@ -10,6 +10,7 @@ const Footer = () => {
             <a href="/terms-of-use">Terms of Use</a>
             <a href="/privacy-policy">Pivacy Policy</a>
             <a href="/glosary">Glosary</a>
+            <a href="/feedback">Feedback</a>
         </div>
     )
 }
