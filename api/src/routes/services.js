@@ -334,6 +334,47 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// Esta ruta es para los admins
+const getFeedback = async (req , res) => {
+  try {
+    const allFeedback = await Feedback.findAll();
+    
+    return res.status(200).json(allFeedback) 
+
+  } catch (error) {
+    res.status(404).send(error)
+  }
+}
+
+// esta ruta es para los usuarios
+const postFeedback = async (req, res) => {
+  // El email de quien realiza el feedback
+  const { id } = req.params
+  const { comment  } = req.body
+
+  if (!comment) {
+    res.status(400).send('Incomplete data')
+  }
+  try {
+    let user = await User.findOne({
+      where: { id: id },
+    });
+    
+    if (user) {
+      let newFeedback = await Feedback.create({
+        comment,
+        userId : id
+      })
+      res.status(201).send(newFeedback)
+      }
+    else {
+      res.status(404).send("User not found")
+    }
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -347,4 +388,6 @@ module.exports = {
   modifyOrCreateUser,
   getUserDetail,
   getAllUsers,
+  getFeedback,
+  postFeedback
 };
