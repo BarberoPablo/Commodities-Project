@@ -1,33 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-//import { postPost } from "../redux/Actions/Actions.js";  //importar acciones
-//import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategoriesByName, getAllCountries, postPost } from "../../Redux/Actions/Actions";
+import axios from "axios";
 
 export default function CreatePost() {
-  //const dispatch = useDispatch();
+
+
+  const dispatch = useDispatch();
+  const {allCategories} = useSelector(state => state.categories);
+  const {allCountries} = useSelector(state => state.countries);
+
   const [errors, setErrors] = useState({})    //validaciones front
   const [checkBS, setCheckBS] = useState(0) 
 
-  //actions necesarias
-//get category y sub category
+  useEffect(() => {
+    dispatch(getCategoriesByName()); 
+    dispatch(getAllCountries()); 
+  }, [dispatch]);
 
 const [input, setInput] = useState({ //acomadar a modelo
   title:"",
   description: "",
   sell: false,
-  shipping:"",
-  payment:"",
-  Category: "",
-  SubCategory: "",
-  //image:"",
+  shipping:[],
+  payment:[],
+  categoryName: "",
+  subCategory: "",
+  country:"",
+  image:"",
 });
+
+
 
 //handles
 function handleChange(e){
   setInput({
     ...input,
-    [e.target.name]: e.target.value
+    [e.target.name]: [e.target.value]
   })}
+
+function handleChange2(e){
+  if(e.target.checked){
+    setInput({
+      ...input,
+      [e.target.name]: [...input.payment, e.target.value]
+    })}else{
+      setInput({
+        ...input,
+        [e.target.name]: input.payment.filter(p=> p !== e.target.value)
+    })
+  }}
+
+const [idCategory, setIdCategory] = useState(0) 
+
+function handleChange3(e){
+  setInput({
+    ...input,
+    [e.target.name]: [e.target.value]
+  })
+setIdCategory(e.target.value)
+}
 
 function handleCheck(e){
   setCheckBS(1)
@@ -49,7 +82,7 @@ function handleSubmit(e){
   e.preventDefault();
   let val = validacion(input);
   setErrors(val)
-  //dispatch(postPost(input))
+  dispatch(postPost(input))
   if(Object.keys(val).length >0 ){
     alert("Fix errors");
     val = {}
@@ -61,11 +94,12 @@ function handleSubmit(e){
     title:"",
     description: "",
     sell: false,
-    shipping:"",
-    payment:"",
-    Category: "",
-    SubCategory: "",
-    //image:"",
+    shipping:[],
+    payment:[],
+    categoryName: "",
+    subCategory: "",
+    country:"",
+    image:"",
   })
 }
 
@@ -75,14 +109,35 @@ function validacion(input){
   if(!input.tittle){errors.tittle="Please complete the tittle of the post"}
   if(input.description === ""){errors.description = "Complete description";}
   if(input.description.length > 255){errors.description = "the description can not have more than 255 characters";}
-  if(input.shipping === ""){errors.shipping = "Complete shipping";}
+  if(input.shipping.length){errors.shipping = "Complete shipping";}
   if(input.payment === ""){errors.payment = "Complete payment";}
-  if(input.Category === ""){errors.Category = "Complete Category";}
-  //if(input.SubCategory === ""){errors.SubCategory = "Complete SubCategory";}
+  if(input.categoryName === ""){errors.categoryName = "Complete Category";}
+  if(input.subCategory === ""){errors.subCategory = "Complete Sub category";}
+  if(input.country === ""){errors.country = "Complete country";}
   if(checkBS<1){errors.sell = "Select sell or buy";}
 
   return errors
 }
+
+const [img, setImg] = useState()
+
+async function  uploadImage(file){
+const formData = new FormData()
+formData.append("file",file[0])
+formData.append("upload_preset","kl8ubh2v")
+const imgUrl = await axios.post("https://api.cloudinary.com/v1_1/nicomsl/image/upload", formData)
+.then((response)=>response.data.secure_url)
+setImg(imgUrl)
+console.log(imgUrl)
+}
+
+function aceptar(){
+  setInput({
+    ...input,
+    image: img
+  })
+}
+
 
   return (
 <div>
@@ -97,31 +152,38 @@ function validacion(input){
 
   <select value={input.shipping} name="shipping" onChange={(e)=>handleChange(e)}>
     <option hidden value="">Shipping method</option>
-    <option value="CIF">CIF</option>
-    <option value="FOB">FOB</option>
-    <option value="CIF or FOB">CIF or FOB</option>
-  </select>
+    <option value={["CIF"]}>CIF</option>
+    <option value={["FOB"]}>FOB</option>
+    <option value={["CIF","FOB"]}>CIF or FOB</option>
+  </select><br/>
   {errors.shipping &&<p className="err">{errors.shipping}</p>}
-
-  <select value={input.payment} name="payment" onChange={(e)=>handleChange(e)}>
-    <option hidden value="">Payment method</option>
-    <option value="LC">LC</option>
-    <option value="DLC">DLC</option>
-    <option value="SBLC">SBLC</option>
-    <option value="Any">Any</option>
-  </select><br/>
+<div>
+<label>Payment method:</label><br/>
+<label><input type="checkbox" value="LC" onChange={(e)=>handleChange2(e)} name="payment"/> LC</label><br/>
+<label><input type="checkbox" value="DLC" onChange={(e)=>handleChange2(e)} name="payment"/> DLC</label><br/>
+<label><input type="checkbox" value="SBLC" onChange={(e)=>handleChange2(e)} name="payment"/> SBLC</label><br/>
   {errors.payment &&<p className="err">{errors.payment}</p>}
+</div>
 
-  <select value={input.Category} name="Category" onChange={(e)=>handleChange(e)}>
-    <option hidden value="">Select category</option>
-    <option value="asd">get categoriy</option>
+<select value={input.categoryName} name="categoryName" onChange={(e)=>handleChange3(e)}>
+<option hidden value="">Select category</option>
+{allCategories?.map((e)=>{
+  return<option value={e.name}>{e.name}</option>
+})}
+</select><br/>
+{errors.categoryName &&<p className="err">{errors.categoryName}</p>}
+
+{idCategory === 0?<div/>:<div>
+<select value={input.subCategory} name="subCategory" onChange={(e)=>handleChange(e)}> 
+<option hidden value="">Select sub category</option>
+  {allCategories.map((e)=>{
+    if(e.name === idCategory)return e.subcategories.map((e)=>
+    <option value={e}>{e}</option>
+    )
+    })}
   </select><br/>
-  {errors.Category &&<p className="err">{errors.Category}</p>}
-
-  {/* <select value={input.Category} name="Category" onChange={(e)=>handleChange(e)}>
-    <option hidden value="">Select category</option>
-    <option value="">get categoriy</option>
-  </select><br/> */}
+  {errors.subCategory &&<p className="err">{errors.subCategory}</p>}
+</div>}
 
   <label>Description: </label>
   <textarea value={input.description} autoComplete="off" placeholder="Please write a description..." name="description" onChange={(e)=>handleChange(e)}/><br/>
@@ -130,6 +192,24 @@ function validacion(input){
   <label><input onChange={(e)=>handleCheck(e)}  type="radio" name="check" value="buy" />Buy</label>
   <label><input onChange={(e)=>handleCheck(e)}  type="radio" name="check" value="sell"/>sell</label><br/>
   {errors.sell &&<p className="err">{errors.sell}</p>}
+
+<label>country:</label><br/>
+  <select value={input.country} name="country" onChange={(e)=>handleChange(e)}>
+        <option hidden value="">Select country...</option>
+          {allCountries.map((c)=>(
+            <option value={c.name.common}>{c.name.common}</option>
+          ))}
+        </select><br/>
+{errors.country &&<p className="err">{errors.country}</p>}
+
+<div>
+<input type="file" onChange={(e)=>{uploadImage(e.target.files)}}/><br/>
+<img 
+style={{width:200}}
+src={img}/><br/>
+<button onClick={()=>{aceptar()}}>confrim image:</button>
+
+</div>
 
   <button type="submit" className="boton">Create Post</button>
 </form>

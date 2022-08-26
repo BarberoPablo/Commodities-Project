@@ -3,11 +3,12 @@ import style from "./DrawerCategories.module.css";
 import {  useDispatch } from "react-redux";
 import { filterBySubcategory } from "../../../Redux/Actions/Actions";
 
-const Drawer = ({allCategories}) => {
+const Drawer = ({allCategories, setCurrentPage}) => {
 
   const dispatch = useDispatch()
   const handleChange = (e) =>{
     dispatch(filterBySubcategory(e.target.value))
+    setCurrentPage(1)
   }
 
 
