@@ -1,6 +1,8 @@
 const { Category, Feedback, Plan, Post, ReviewUser, User } = require("../db");
 //const axios = require("axios");
 const { users, categories, posts, plans } = require("./jsons.js");
+const nodemailer = require("nodemailer");
+const { EMAIL_USER, EMAIL_PASS} = process.env;
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
@@ -217,24 +219,6 @@ const assignPlanToUser = async (req, res) => {
   }
 };
 
-// const postCategory = async (req , res) => {
-//   const { name, subcategories } = req.body
-
-//   const newCategory = {name, subcategories}
-
-//   if (!name) {
-//     return res.status(400).send('Incomplete data')
-//   }
-//   try {
-//       const cat = await Category.create(newCategory)
-
-//       res.status(201).send(cat)
-
-//   } catch (error) {
-//     res.status(500).send(error)
-//   }
-// };
-
 const modifyOrCreateCategory = async (req, res) => {
   // get the name provided by params
   const { name } = req.params;
@@ -336,6 +320,41 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+//Ruta pensada para enviar correos salientes a quien haga falta.
+const sendEmail = async (req, res) => {
+  const { from, to, subject, text, html } = req.body;
+  try {
+    var transport = {
+      from,
+      to,
+      subject,
+      text,
+      html
+    };
+    let transporter = nodemailer.createTransport( {
+      host: "smtp-mail.outlook.com",
+      port: 587,
+      secure: false,
+      tls: {
+        ciphers:'SSLv3'
+     },
+      auth: {
+        user: EMAIL_USER,
+        pass: EMAIL_PASS,
+      },
+    });
+    transporter.sendMail(transport, function(error, info){
+      if(error){
+          return console.log(error);
+      }
+      console.log('Message sent: ' + info.response);
+      return res.status(200).send("Message sent correctly");
+    })
+  } catch (error) {
+    res.status(500).send(error.message)
+     }
+};
+
 // Esta ruta es para los admins
 const getFeedback = async (req , res) => {
   try {
@@ -378,9 +397,7 @@ const postFeedback = async (req, res) => {
 
   } catch (error) {
     res.status(400).send(error)
-  }
-};
-
+ 
 const getUserPosts = async (req, res) => {
   //Ruta util para el panel de usuario
   try {
@@ -427,6 +444,7 @@ module.exports = {
   modifyOrCreateUser,
   getUserDetail,
   getAllUsers,
+  sendEmail,
   getFeedback,
   postFeedback,
   getUserPosts,
