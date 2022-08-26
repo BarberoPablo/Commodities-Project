@@ -333,6 +333,27 @@ const getAllUsers = async (req, res) => {
     return res.status(error.status).send(error.message);
   }
 };
+const getUserPosts = async (req, res) => {
+  //Ruta util para el panel de usuario
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({
+      where: { email: email },
+    });
+
+    if (user) {
+      console.log("Entra");
+      const userPosts = await Post.findAll({
+        where: { userId: user.id },
+      });
+      return res.status(200).json(userPosts);
+    } else {
+      throw { status: 404, message: `User with email: ${email} not found}` };
+    }
+  } catch (error) {
+    return res.status(error.status).send(error.message);
+  }
+};
 
 module.exports = {
   createPost,
@@ -347,4 +368,5 @@ module.exports = {
   modifyOrCreateUser,
   getUserDetail,
   getAllUsers,
+  getUserPosts,
 };
