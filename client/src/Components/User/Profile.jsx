@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
 import {
@@ -10,6 +10,7 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 
 import { useFormik } from "formik";
+
 const validate = (values) => {
   const errors = {};
   if (!values.name) {
@@ -29,21 +30,16 @@ const validate = (values) => {
   } else if (values.phone.length > 15) {
     errors.phone = "Must be 15 characters or less";
   }
-  if (!values.image) {
-    errors.image = "*";
-  } else if (values.image.length > 175) {
-    errors.image = "Must be 175 characters or less";
-  }
 
   return errors;
 };
 
 const Profile = () => {
-
   const { posts } = useSelector((state) => state.posts);
   const { user } = useAuth0();
   const userLog = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     dispatch(userPosts());
@@ -61,12 +57,18 @@ const Profile = () => {
     validate,
     onSubmit: (values) => {
       values.email = user.email;
+      values.image = values.image ? values.image : user.picture;
       //dispatch(userLogin(values));
       dispatch(createNewUser(values));
       // console.log(JSON.stringify(values))
       // alert("user creado correctamente con los datos: " + JSON.stringify(values));
     },
   });
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setActive(!active);
+  };
 
   return (
     <div>
@@ -84,7 +86,10 @@ const Profile = () => {
                     alt="a"
                   />
                 </div>
-                <div className={userLog.name ? `${s.oculto}` : `${s.active}` }>
+                <button className={s.btnactive} onClick={handleClick}>
+                  🖋️
+                </button>
+                <div className={!active ? `${s.oculto}` : ``}>
                   <form className={s.form} onSubmit={formik.handleSubmit}>
                     <input
                       id="name"
