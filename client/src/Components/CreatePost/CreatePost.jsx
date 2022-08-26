@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesByName, getAllCountries, postPost } from "../../Redux/Actions/Actions";
+import { getCategoriesByName, getAllCountries, postPost, getUserDetails } from "../../Redux/Actions/Actions";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function CreatePost() {
 
@@ -10,6 +11,7 @@ export default function CreatePost() {
   const dispatch = useDispatch();
   const {allCategories} = useSelector(state => state.categories);
   const {allCountries} = useSelector(state => state.countries);
+  const { user } = useAuth0();
 
   const [errors, setErrors] = useState({})    //validaciones front
   const [checkBS, setCheckBS] = useState(0) 
@@ -17,7 +19,8 @@ export default function CreatePost() {
   useEffect(() => {
     dispatch(getCategoriesByName()); 
     dispatch(getAllCountries()); 
-  }, [dispatch]);
+    dispatch(getUserDetails(user))
+  }, [dispatch, user]);
 
 const [input, setInput] = useState({ //acomadar a modelo
   title:"",
@@ -29,15 +32,20 @@ const [input, setInput] = useState({ //acomadar a modelo
   subCategory: "",
   country:"",
   image:"",
+  userId:"",
 });
 
-
-
+function validationLogIn(){
+  if(!user) alert("plaese login to create a post")
+}
+console.log(input)
 //handles
 function handleChange(e){
+
   setInput({
     ...input,
-    [e.target.name]: [e.target.value]
+    [e.target.name]: e.target.value,
+    userId: user.email
   })}
 
 function handleChange2(e){
@@ -82,13 +90,18 @@ function handleSubmit(e){
   e.preventDefault();
   let val = validacion(input);
   setErrors(val)
-  //dispatch(postPost(input))
+  console.log(val);
+  dispatch(postPost(input))
   if(Object.keys(val).length >0 ){
     alert("Fix errors");
     val = {}
+    setInput({
+      sell: false,
+      shipping:[],
+      payment:[],
+    })
     return
   }
-  console.log(input)
   alert("Post Created")
   setInput({
     title:"",
@@ -100,17 +113,18 @@ function handleSubmit(e){
     subCategory: "",
     country:"",
     image:"",
+    userId:"",
   })
 }
 
 //validacion
 function validacion(input){
   let errors = {};
-  if(!input.tittle){errors.tittle="Please complete the tittle of the post"}
+  if(!input.title){errors.title="Please complete the tittle of the post"}
   if(input.description === ""){errors.description = "Complete description";}
   if(input.description.length > 255){errors.description = "the description can not have more than 255 characters";}
-  if(input.shipping.length){errors.shipping = "Complete shipping";}
-  if(input.payment === ""){errors.payment = "Complete payment";}
+  if(input.shipping.length === 0){errors.shipping = "Complete shipping";}
+  if(input.payment.length === 0){errors.payment = "Complete payment";}
   if(input.categoryName === ""){errors.categoryName = "Complete Category";}
   if(input.subCategory === ""){errors.subCategory = "Complete Sub category";}
   if(input.country === ""){errors.country = "Complete country";}
@@ -119,7 +133,7 @@ function validacion(input){
   return errors
 }
 
-const [img, setImg] = useState()
+const [img, setImg] = useState("")
 
 async function  uploadImage(file){
 const formData = new FormData()
@@ -132,6 +146,9 @@ console.log(imgUrl)
 }
 
 function aceptar(){
+  if(img ===""){
+    alert("image not selected");
+    return}
   setInput({
     ...input,
     image: img
@@ -176,11 +193,10 @@ function aceptar(){
 {idCategory === 0?<div/>:<div>
 <select value={input.subCategory} name="subCategory" onChange={(e)=>handleChange(e)}> 
 <option hidden value="">Select sub category</option>
-  {allCategories.map((e)=>{
-    if(e.name === idCategory)return e.subcategories.map((e)=>
+  {allCategories?.map((e)=>{
+    if(e.name === idCategory) return e.subcategories?.map((e)=>
     <option value={e}>{e}</option>
-    )
-    })}
+    )})}
   </select><br/>
   {errors.subCategory &&<p className="err">{errors.subCategory}</p>}
 </div>}
@@ -196,7 +212,8 @@ function aceptar(){
 <label>country:</label><br/>
   <select value={input.country} name="country" onChange={(e)=>handleChange(e)}>
         <option hidden value="">Select country...</option>
-          {allCountries.map((c)=>(
+          {allCountries.map((c)=> (
+            
             <option value={c.name.common}>{c.name.common}</option>
           ))}
         </select><br/>
@@ -206,8 +223,8 @@ function aceptar(){
 <input type="file" onChange={(e)=>{uploadImage(e.target.files)}}/><br/>
 <img 
 style={{width:200}}
-src={img}/><br/>
-<button onClick={()=>{aceptar()}}>confrim image:</button>
+src={img} /><br/>
+<button type="button" onClick={()=>{aceptar()}}>confrim image</button>
 
 </div>
 
