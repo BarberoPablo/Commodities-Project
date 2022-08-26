@@ -348,28 +348,32 @@ const getFeedback = async (req , res) => {
 
 // Esta ruta es para los usuarios
 const postFeedback = async (req, res) => {
-  // El id del usuario que realiza el feedback
-  const { id } = req.params
-  const { comment  } = req.body
-
-  if (!comment) {
-    res.status(400).send('Insert your comment')
-  }
   try {
-    let user = await User.findOne({
+  // El id es del usuario que realiza el feedback
+    const { id } = req.params
+    const { comment  } = req.body
+
+    if (!id) {
+      res.status(404).send('Id is required')
+    }
+    const user = await User.findOne({
       where: { id: id },
     });
     
-    if (user) {
-      let newFeedback = await Feedback.create({
-        comment,
-        userId : id
-      })
-      res.status(201).send(newFeedback)
-      }
-    else {
-      res.status(404).send("User not found")
+    if (!user) {
+      throw { status: 404, message: `User with id: ${id}, does not exists` };
     }
+
+    if (!comment) {
+      throw{ status: 400, message: 'Insert a comment please'}
+    }
+    
+    const newFeedback = await Feedback.create({
+      comment,
+      userId: id
+    });
+    res.status(201).json(newFeedback)
+
   } catch (error) {
     res.status(400).send(error)
   }
