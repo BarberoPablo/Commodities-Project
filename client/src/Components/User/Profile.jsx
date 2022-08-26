@@ -13,21 +13,13 @@ import { useFormik } from "formik";
 
 const validate = (values) => {
   const errors = {};
-  if (!values.name) {
-    errors.name = "*";
-  } else if (values.name.length > 20) {
+  if (values.name.length > 20) {
     errors.name = "Must be 15 characters or less";
   }
-
-  if (!values.country) {
-    errors.country = "*";
-  } else if (values.country.length > 15) {
+  if (values.country.length > 15) {
     errors.country = "Must be 15 characters or less";
   }
-
-  if (!values.phone) {
-    errors.phone = "*";
-  } else if (values.phone.length > 15) {
+  if (values.phone.length > 15) {
     errors.phone = "Must be 15 characters or less";
   }
 
@@ -56,8 +48,11 @@ const Profile = () => {
     },
     validate,
     onSubmit: (values) => {
+      values.name = values.name ? values.name : userLog.name;
+      values.country = values.country ? values.country : userLog.country;
+      values.phone = values.phone ? values.phone : userLog.phone;
       values.email = user.email;
-      values.image = values.image ? values.image : user.picture;
+      values.image = values.image ? values.image : userLog.image;
       //dispatch(userLogin(values));
       dispatch(createNewUser(values));
       // console.log(JSON.stringify(values))
