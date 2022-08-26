@@ -12,12 +12,14 @@ import CreatePost from "./Components/CreatePost/CreatePost.jsx"
 import Navbar from './Components/Home/Navbar/Navbar';
 import Profile from './Components/User/Profile'
 import { useState } from 'react';
+import { PayPalScriptProvider} from "@paypal/react-paypal-js"
 
 function App() {
  
 const [currentPage, setCurrentPage] = useState(1);
 
   return (
+    <PayPalScriptProvider options={{"client-id":"AQmAOKkaooq3WRmt-zUyck2qmSVYykzLUOhUfHPFDEFfDGY92Pn_ExDZCdG2zmreMqCBN3tGJta5vEBT"}}>
     <div className="App">
       <Route path={'/'}> <Navbar setCurrentPage={setCurrentPage}/></Route>
       <Route exact path={'/'}> <Home currentPage={currentPage} setCurrentPage={setCurrentPage}/></Route>
@@ -31,6 +33,8 @@ const [currentPage, setCurrentPage] = useState(1);
       <Route path={'/'} component={Footer}/>
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
+    </PayPalScriptProvider>
+
   );
 }
 
