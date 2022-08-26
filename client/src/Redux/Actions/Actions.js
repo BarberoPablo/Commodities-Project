@@ -84,7 +84,7 @@ export const createNewUser = (value) => (dispatch) => {
   dispatch(createUser(value))
 }
 export const getUserDetails = (email) => (dispatch) => {
-  axios(`${url}/user/servezynskimarcos1@gmail.com`)
+  axios(`${url}/user/${email}`)
   .then((data) => dispatch(getUserDetail(data.data)))
   .catch((e) => console.log(e));
 };

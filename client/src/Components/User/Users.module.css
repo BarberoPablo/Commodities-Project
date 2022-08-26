@@ -137,3 +137,6 @@
   border-radius: 10px;
   padding: 10px;
 }
+.oculto{
+  display: none;
+}
