@@ -52,13 +52,12 @@ const createPost = async (req, res) => {
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (!email) {
-      throw { status: 400, message: "email required" };
+    if (!email || !title || !description || !shipping[0] || !payment[0] || !subCategory || !country || !categoryName) {
+      throw { status: 400, message: "missing data" };
     }
     const user = await User.findOne({
       where: { email: email },
     });
-    console.log("@@@", user);
     //Si no existe un usuario con ese id ocurre un error
     if (!user) {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
@@ -274,7 +273,7 @@ const modifyOrCreateUser = async (req, res) => {
       });
       await user.update({
         planId: plan.id,
-        remainingContacts: 0,
+        remainingContacts: plan.contacts,
       });
 
       let newReview = await ReviewUser.create({
