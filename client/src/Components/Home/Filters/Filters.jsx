@@ -24,7 +24,7 @@ const Filters = ({ setCurrentPage }) => {
         countrysToMap.push(e)
     });
 
-    console.log("AAAA", countrysToMap)
+
 
     useEffect(() => {
         dispatch(getAllCountries());
