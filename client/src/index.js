@@ -20,7 +20,8 @@ ReactDOM.render(
         <Auth0Provider
           domain="dev-8blc4gou.us.auth0.com"
           clientId="tJkc2r5FoNG8a49WAtltabd4coXLKCzj"
-          redirectUri={window.location.origin}
+          redirectUri={"https://dev-commodities.vercel.app/profile"}
+          //redirectUri={"http://localhost:3000"}
         >
           <App />
         </Auth0Provider>
