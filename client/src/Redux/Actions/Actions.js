@@ -93,7 +93,7 @@ export const postPost = (input) => () => {
 };
 
 export const getPlans = () => (dispatch) => {
-  axios(`${url}/plans/`)
+  axios(`http://localhost:3001/plans/`)
     .then((plans) => {
       dispatch(getAllPlans(plans.data));
     })
@@ -102,5 +102,5 @@ export const getPlans = () => (dispatch) => {
 
 //mail to us
 export const mailTous = (input) => () => {
-  axios.post(`${url}/mail`, input);
+  axios.post(`http://localhost:3001/mail`, input);
 };

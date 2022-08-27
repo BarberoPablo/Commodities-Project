@@ -20,9 +20,16 @@ const Memberships = () => {
   return (
     <div>
       {console.log(memberships)}
-      {memberships?.map((plan) => {
+      {memberships?.map((plan, index) => {
         return (
-          <Plan name={plan.name} cost={plan.cost} contacts={plan.contacts} posts={plan.posts} reviews={plan.reviews} />
+          <Plan
+            key={index}
+            name={plan.name}
+            cost={plan.cost}
+            contacts={plan.contacts}
+            posts={plan.posts}
+            reviews={plan.reviews}
+          />
         );
       })}
     </div>
