@@ -23,8 +23,9 @@ const Filters = ({ setCurrentPage }) => {
     countrysSet.forEach( e => {
         countrysToMap.push(e)
     });
+ 
 
-    console.log("AAAA", countrysToMap)
+    
 
     useEffect(() => {
         dispatch(getAllCountries());
