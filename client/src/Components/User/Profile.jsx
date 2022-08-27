@@ -3,13 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
 import {
   userPosts,
-  userLogin,
   createNewUser,
   getUserDetails,
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
-
 import { useFormik } from "formik";
+
 
 const validate = (values) => {
   const errors = {};
@@ -27,7 +26,7 @@ const validate = (values) => {
 };
 
 const Profile = () => {
-  const { posts } = useSelector((state) => state.posts);
+  const { userPost } = useSelector((state) => state.users);
   const { user } = useAuth0();
   const userLog = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
@@ -35,7 +34,10 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(userPosts());
-    dispatch(getUserDetails(user?.email));
+    if (user) {
+      dispatch(userPosts())
+      dispatch(getUserDetails(user.email));
+    }
   }, [dispatch, user]);
 
   const formik = useFormik({
@@ -52,7 +54,7 @@ const Profile = () => {
       values.country = values.country ? values.country : userLog.country;
       values.phone = values.phone ? values.phone : userLog.phone;
       values.email = user.email;
-      values.image = values.image ? values.image : userLog.image;
+      values.image = values.image ? values.image : user.picture;
       //dispatch(userLogin(values));
       dispatch(createNewUser(values));
       // console.log(JSON.stringify(values))
@@ -140,8 +142,8 @@ const Profile = () => {
             </div>
           </div>
           <div className={s.containerPost}>
-            {posts &&
-              posts.map((e) => {
+            {userPost &&
+              userPost.map((e) => {
                 return (
                   <div className={s.post}>
                     <div className={s.info}>

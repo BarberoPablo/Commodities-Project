@@ -2,12 +2,11 @@ import {
   getAllPosts,
   getPosts,
   filteredSubcategory,
-  getUserPosts,
   filteredPayment,
   filteredCountry,
   filteredShippment,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog, createUser } from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
@@ -63,8 +62,8 @@ export const filterShippment = (value) => (dispatch) => {
 // FUNCTIONS USERS
 
 export const getUser = () => (dispatch) => {
-  axios("https://rickandmortyapi.com/api/character") // end-point del back /users
-    .then((data) => dispatch(getAllUsers(data.data.results)))
+  axios(`${url}/users`) // end-point del back /users
+    .then((data) => dispatch(getAllUsers(data.data)))
     .catch((e) => console.log(e));
 };
 //get counties

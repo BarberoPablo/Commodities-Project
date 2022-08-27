@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 //import Navbar from './Navbar/Navbar'
 import DrawerCategories from "./DrawerCategories/DrawerCategories";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getCategoriesByName, getUserDetails } from "../../Redux/Actions/Actions";
+import { getPost, getCategoriesByName, getUserDetails, getUser } from "../../Redux/Actions/Actions";
 import Cards from "./Card/Cards";
 import Paginado from "./Paginado/Paginado";
 import s from "./Home.module.css";
@@ -10,10 +10,6 @@ import Filters from "./Filters/Filters";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Home = ({ currentPage, setCurrentPage }) => {
-  const product = {
-    planName: "Premium",
-    price: 10,
-  };
 
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
@@ -23,6 +19,7 @@ const Home = ({ currentPage, setCurrentPage }) => {
   useEffect(() => {
     dispatch(getPost());
     dispatch(getCategoriesByName());
+    dispatch(getUser())
     if (user) {
       dispatch(getUserDetails(user.email));
     }
@@ -43,7 +40,7 @@ const Home = ({ currentPage, setCurrentPage }) => {
     <div>
       <div className={s.container}>
         <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage} />
-        <Cards currentPost={currentPost} />
+        <Cards currentPost={currentPost}/>
         <Filters setCurrentPage={setCurrentPage} />
       </div>
       {}

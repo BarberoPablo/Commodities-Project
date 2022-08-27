@@ -1,5 +1,5 @@
 import s from "./Card.module.css";
-const CardDetail = ({ e }) => {
+const CardDetail = ({ e, user }) => {
   return (
     <div className={s.card}>
       <div className={s.userDate}>
@@ -9,7 +9,7 @@ const CardDetail = ({ e }) => {
             alt="profile"
           />
         </div>
-        <b>user</b>
+        <b>{user?.name}</b>
         <p>
           {e.createdAt
             .slice(0, 10)
