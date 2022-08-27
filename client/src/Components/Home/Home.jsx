@@ -38,13 +38,16 @@ const Home = ({ currentPage, setCurrentPage }) => {
   };
 
   return (
-    <div>
-      <div className={s.container}>
-        <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage} />
-        <Container fluid>
+    <div className={s.container}>
+      <div className={s.container2}>
+        <DrawerCategories
+          allCategories={allCategories}
+          setCurrentPage={setCurrentPage}
+        />
+        <div className={s.container3}>
           <Filters setCurrentPage={setCurrentPage} />
           <Cards currentPost={currentPost} />
-        </Container>
+        </div>
       </div>
       {}
       <Paginado

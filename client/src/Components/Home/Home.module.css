@@ -1,4 +1,17 @@
 .container{
   display:flex;
-  border: 2px solid red;
+  flex-direction: column;
+  /* border: 2px solid red; */
+}
+
+.container2{
+  display: flex;
+}
+
+.container3{
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

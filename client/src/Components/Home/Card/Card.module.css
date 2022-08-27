@@ -1,26 +1,17 @@
 .container{
-  display: flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  background-color: #2c2c2c;
-  width: 60%;
-  height: 100vh;
-  margin: 15px auto;
-  padding:15px;
-  border-radius: 10px;
-  color: #fff;
+  margin-top: 10px;
 }
-
+/* //#ffffff #c5c8c8 #001920 #2ecb72  */
+/* // #1b65a7 #040615 #f2f4f5 #ffffff */
 .card{
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #d8dada;
   width: 60%;
   height:200px;
   border-radius: 10px;
   color: #000;
-  margin: 7px;
+  margin-bottom: 15px;
 }
 
 .info{
@@ -39,7 +30,6 @@
   align-items: center;
 }
 .userDate > p{
-  color: #808080;
   font-size: 0.8rem;
   text-align: end;
   width: 80%;
@@ -53,7 +43,13 @@
   display: flex;
   overflow: hidden;
   box-shadow: 1px 1px 10px #404040;
+  color: white;
 }
 .userDate img {
   object-fit: cover;
 }
+
+
+
+/* MEEEE */
+
