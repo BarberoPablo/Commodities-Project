@@ -38,7 +38,6 @@ export default function CreatePost() {
     subCategory: "",
     country: "",
     image: "",
-    userId: "",
   });
 
 
@@ -48,9 +47,17 @@ export default function CreatePost() {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-      userId: user?.email,
+      //userId: user?.email,
     });
   }
+  function handleChangeArray(e) {
+    setInput({
+      ...input,
+      [e.target.name]: [e.target.value],
+      //userId: user?.email,
+    });
+  }
+
 
   function handleChange2(e) {
     if (e.target.checked) {
@@ -71,7 +78,7 @@ export default function CreatePost() {
   function handleChange3(e) {
     setInput({
       ...input,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     });
     setIdCategory(e.target.value);
   }
@@ -98,10 +105,11 @@ export default function CreatePost() {
       alert("plaese login to create a post");
       return;
     }
+    console.log(input)
     let val = validacion(input);
     setErrors(val);
     console.log(val);
-    dispatch(postPost(input));
+    dispatch(postPost(user.email, input));
     if (Object.keys(val).length > 0) {
       alert("Fix errors");
       val = {};
@@ -123,7 +131,6 @@ export default function CreatePost() {
       subCategory: "",
       country: "",
       image: "",
-      userId: "",
     });
   }
 
@@ -210,7 +217,7 @@ export default function CreatePost() {
         <select
           value={input.shipping}
           name="shipping"
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => handleChangeArray(e)}
         >
           <option hidden value="">
             Shipping method
@@ -361,14 +368,17 @@ export default function CreatePost() {
           <br />
           <img style={{ width: 200 }} src={img} />
           <br />
+{img !== "" ?
           <button
-            type="button"
-            onClick={() => {
-              aceptar();
-            }}
+          type="button"
+          onClick={() => {
+            aceptar();
+          }}
           >
             confrim image
-          </button>
+          </button>:null
+          }
+
         </div>
 
         <button type="submit" className="boton">
