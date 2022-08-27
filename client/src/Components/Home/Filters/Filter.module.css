@@ -1,50 +1,15 @@
-.container {
-    display: flex;
-    margin: 15px;
-    width: 15%;
+.categories{
+  padding: 15px;
+}
+
+.select{
+  /* border: 2px solid blue; */
+  margin: 0px 10px;
+  width: 100px;
+}
+
+@media screen and (max-width:420px){
+  .select{
+    width:80px
   }
-  
-  .containercard {
-    display: flex;
-    width: 100%;
-    background-color: #2c2c2c;
-    min-height:100vh;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 10px;
-  }
-  .text {
-    margin-bottom: -60px;
-    text-align: center;
-    color: #fff;
-  }
-  
-  .categories {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin: 15px;
-    gap: 7rem;
-  }
-  .select {
-    background-color: rgb(161, 161, 161);
-    color: rgb(0, 0, 0);
-    padding: 7px;
-    border-radius: 10px;
-    text-align: center;
-    width: 70%;
-  }
-  @media screen and (max-width: 768px) {
-    .container {
-      display: none;
-    }
-  }
-  @media screen and (min-width: 1024px) {
-    .container {
-      min-width: 15%;
-    }
-    .containercard {
-      min-width: 15%;
-    }
-  }
+}
