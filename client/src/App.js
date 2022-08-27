@@ -21,11 +21,9 @@ function App() {
   return (
     <div className="App">
       <Route path={"/"}>
-        {" "}
         <Navbar setCurrentPage={setCurrentPage} />
       </Route>
       <Route exact path={"/"}>
-        {" "}
         <Home currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </Route>
       <Route path="/create-post" component={CreatePost} />

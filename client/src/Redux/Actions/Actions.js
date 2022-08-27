@@ -92,9 +92,8 @@ export const postPost = (input) => () => {
   axios.post(`${url}/post/`, input);
 };
 
-//postPost
 export const getPlans = () => (dispatch) => {
-  axios(`http://localhost:3001/plans/`)
+  axios(`${url}/plans/`)
     .then((plans) => {
       dispatch(getAllPlans(plans.data));
     })

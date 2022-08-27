@@ -1,6 +1,8 @@
 const { Category, Feedback, Plan, Post, ReviewUser, User } = require("../db");
 //const axios = require("axios");
 const { users, categories, posts, plans } = require("./jsons.js");
+const nodemailer = require("nodemailer");
+const { EMAIL_USER, EMAIL_PASS } = process.env;
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
@@ -28,9 +30,7 @@ const { users, categories, posts, plans } = require("./jsons.js");
 
       //Se crean los Planes en la database:
       await Plan.bulkCreate(plans);
-    } catch (error) {
-      console.log(error.message);
-    }
+    } catch (error) {}
   }, 2000);
 })();
 
@@ -47,20 +47,20 @@ const getPosts = async (req, res) => {
 const createPost = async (req, res) => {
   try {
     //El id es del user a quien pertenece el post
-    const { id } = req.params;
+    const { email } = req.params;
     //Category es un id (integer)
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (!id) {
-      throw { status: 400, message: "id required" };
+    if (!email) {
+      throw { status: 400, message: "email required" };
     }
     const user = await User.findOne({
-      where: { id: id },
+      where: { email: email },
     });
     //Si no existe un usuario con ese id ocurre un error
     if (!user) {
-      throw { status: 400, message: `User with id: ${id}, does not exists` };
+      throw { status: 400, message: `User with id: ${email}, does not exists` };
     }
 
     if (!description || !shipping || !payment || !categoryName || !country || !subCategory) {
@@ -81,7 +81,6 @@ const createPost = async (req, res) => {
       throw { status: 400, message: "Category id not found" };
     }
     // const categoryId = categoryInDb.id; // .toJSON?
-
     const newPost = await Post.create({
       title,
       description,
@@ -92,7 +91,7 @@ const createPost = async (req, res) => {
       image,
       country,
       categoryName,
-      userId: id,
+      userId: user.id,
     });
 
     res.status(201).json(newPost);
@@ -215,24 +214,6 @@ const assignPlanToUser = async (req, res) => {
   }
 };
 
-// const postCategory = async (req , res) => {
-//   const { name, subcategories } = req.body
-
-//   const newCategory = {name, subcategories}
-
-//   if (!name) {
-//     return res.status(400).send('Incomplete data')
-//   }
-//   try {
-//       const cat = await Category.create(newCategory)
-
-//       res.status(201).send(cat)
-
-//   } catch (error) {
-//     res.status(500).send(error)
-//   }
-// };
-
 const modifyOrCreateCategory = async (req, res) => {
   // get the name provided by params
   const { name } = req.params;
@@ -333,6 +314,84 @@ const getAllUsers = async (req, res) => {
     return res.status(error.status).send(error.message);
   }
 };
+
+//Ruta pensada para enviar correos salientes a quien haga falta.
+const sendEmail = async (req, res) => {
+  const { from, to, subject, text, html } = req.body;
+  try {
+    var transport = {
+      from,
+      to,
+      subject,
+      text,
+      html,
+    };
+    let transporter = nodemailer.createTransport({
+      host: "smtp-mail.outlook.com",
+      port: 587,
+      secure: false,
+      tls: {
+        ciphers: "SSLv3",
+      },
+      auth: {
+        user: EMAIL_USER,
+        pass: EMAIL_PASS,
+      },
+    });
+    transporter.sendMail(transport, function (error, info) {
+      if (error) {
+        return console.log(error);
+      }
+      return res.status(200).send("Message sent correctly");
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+// Esta ruta es para los admins
+const getFeedback = async (req, res) => {
+  try {
+    const allFeedback = await Feedback.findAll();
+
+    return res.status(200).json(allFeedback);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+};
+
+// Esta ruta es para los usuarios
+const postFeedback = async (req, res) => {
+  try {
+    // El id es del usuario que realiza el feedback
+    const { id } = req.params;
+    const { comment } = req.body;
+
+    if (!id) {
+      res.status(404).send("Id is required");
+    }
+    const user = await User.findOne({
+      where: { id: id },
+    });
+
+    if (!user) {
+      throw { status: 404, message: `User with id: ${id}, does not exists` };
+    }
+
+    if (!comment) {
+      throw { status: 400, message: "Insert a comment please" };
+    }
+
+    const newFeedback = await Feedback.create({
+      comment,
+      userId: id,
+    });
+    res.status(201).json(newFeedback);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
 const getUserPosts = async (req, res) => {
   //Ruta util para el panel de usuario
   try {
@@ -342,7 +401,6 @@ const getUserPosts = async (req, res) => {
     });
 
     if (user) {
-      console.log("Entra");
       const userPosts = await Post.findAll({
         where: { userId: user.id },
       });
@@ -356,11 +414,12 @@ const getUserPosts = async (req, res) => {
 };
 
 const getAllPlans = async (req, res) => {
+  //Ruta util para el panel de usuario
   try {
-    const plans = await Plan.findAll();
-    res.status(200).json(plans);
+    const allPlans = await Plan.findAll();
+    return res.status(200).json(allPlans);
   } catch (error) {
-    return res.status(404).send(error.message);
+    return res.status(error.status).send(error.message);
   }
 };
 
@@ -377,6 +436,9 @@ module.exports = {
   modifyOrCreateUser,
   getUserDetail,
   getAllUsers,
+  sendEmail,
+  getFeedback,
+  postFeedback,
   getUserPosts,
   getAllPlans,
 };
