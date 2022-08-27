@@ -87,8 +87,8 @@ export const getUserDetails = (email) => (dispatch) => {
     .catch((e) => console.log(e));
 };
 //postPost
-export const postPost = (input) => () => {
-  axios.post(`${url}/post/`, input);
+export const postPost = (email, input) => () => {
+  axios.post(`${url}/post/${email}`, input);
 };
 
 export const getPlans = () => (dispatch) => {
