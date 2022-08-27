@@ -96,5 +96,5 @@ export const postPost = (input)=>()=>{
 //mail to us
 export const mailTous = (input) => () => {
   axios.post(`${url}/mail`, input)
-}
+};
 

@@ -57,7 +57,7 @@ const Feedback = () => {
         } else {
             return alert("You have not filled in all the fields correctly")
         }
-    }
+    };
 
     return (
         <div>
