@@ -25,8 +25,6 @@ const Filters = ({ setCurrentPage }) => {
     });
  
 
-    
-
     useEffect(() => {
         dispatch(getAllCountries());
     }, [dispatch]);
