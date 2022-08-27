@@ -82,7 +82,7 @@ const createPost = async (req, res) => {
       throw { status: 400, message: "Category id not found" };
     }
     // const categoryId = categoryInDb.id; // .toJSON?
-    
+
     const newPost = await Post.create({
       title,
       description,
@@ -253,9 +253,12 @@ const modifyOrCreateUser = async (req, res) => {
       throw { status: 400, message: "Please send all the properties of the new user, even the old ones" };
     }
     // Si el usuario no existe, se crea
+    const users = await User.findAll();
+    const usersAmount = users.length + 1;
     const [user, created] = await User.findOrCreate({
       where: { email: email },
       defaults: {
+        id: usersAmount,
         email,
         country,
         image,
@@ -266,6 +269,14 @@ const modifyOrCreateUser = async (req, res) => {
     // Uso la componente created para ver si se acaba de crear o si ya existía,
     // Si se acaba de crear tengo que crearle el userReviews:
     if (created) {
+      const plan = await Plan.findOne({
+        where: { name: "Free" },
+      });
+      await user.update({
+        planId: plan.id,
+        remainingContacts: 0,
+      });
+
       let newReview = await ReviewUser.create({
         reviews: [],
         scoreSum: 0,
@@ -286,7 +297,7 @@ const modifyOrCreateUser = async (req, res) => {
       return res.status(201).json(user);
     }
   } catch (error) {
-    return res.status(400).send(error.message);
+    return res.status(400).json(error);
   }
 };
 
@@ -326,9 +337,9 @@ const sendEmail = async (req, res) => {
       to,
       subject,
       text,
-      html
+      html,
     };
-    let transporter = nodemailer.createTransport( {
+    let transporter = nodemailer.createTransport({
       host: "smtp-mail.outlook.com",
       port: 587,
       secure: false,
@@ -340,27 +351,26 @@ const sendEmail = async (req, res) => {
         pass: EMAIL_PASS,
       },
     });
-    transporter.sendMail(transport, function(error, info){
-      if(error){
-          return console.log(error);
+    transporter.sendMail(transport, function (error, info) {
+      if (error) {
+        return console.log(error);
       }
-      console.log('Message sent: ' + info.response);
+      console.log("Message sent: " + info.response);
       return res.status(200).send("Message sent correctly");
-    })
+    });
   } catch (error) {
-    res.status(500).send(error.message)
-     }
+    res.status(500).send(error.message);
+  }
 };
 
 // Esta ruta es para los admins
-const getFeedback = async (req , res) => {
+const getFeedback = async (req, res) => {
   try {
     const allFeedback = await Feedback.findAll();
-    
-    return res.status(200).json(allFeedback) 
 
+    return res.status(200).json(allFeedback);
   } catch (error) {
-    res.status(404).send(error)
+    res.status(404).send(error);
   }
 };
 
