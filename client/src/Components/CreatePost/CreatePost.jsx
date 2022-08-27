@@ -42,7 +42,7 @@ export default function CreatePost() {
   });
 
 
-  console.log(input);
+  //console.log(input);
   //handles
   function handleChange(e) {
     setInput({
