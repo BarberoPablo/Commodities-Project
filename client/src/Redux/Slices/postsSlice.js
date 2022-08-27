@@ -32,10 +32,6 @@ export const postSlice = createSlice({
         e.subCategory.includes(action.payload)
       );
     },
-    getUserPosts: (state, action) => {
-      const info = action.payload.filter((e) => e.userId === 11);
-      state.posts = info;
-    },
     filteredPayment: (state, action) => {
       state.posts =
         action.payload === "ALL"
@@ -57,7 +53,6 @@ export const postSlice = createSlice({
 export const {
   getAllPosts,
   getPosts,
-  getUserPosts,
   filteredSubcategory,
   filteredPayment,
   filteredCountry,
