@@ -1,41 +1,34 @@
 import React from "react";
-import style from "./DrawerCategories.module.css";
-import {  useDispatch } from "react-redux";
 import { filterBySubcategory } from "../../../Redux/Actions/Actions";
+import { useDispatch } from "react-redux";
+import s from "./DrawerCategories.module.css";
+import { useState } from "react";
 
-const Drawer = ({allCategories, setCurrentPage}) => {
+const Drawer = ({ allCategories, setCurrentPage }) => {
+  const [active, setActive] = useState(false);
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-  const handleChange = (e) =>{
-    dispatch(filterBySubcategory(e.target.value))
-    setCurrentPage(1)
-  }
-
+  const handleClick = (e) => {
+    e.preventDefault();
+    dispatch(filterBySubcategory(e.target.innerHTML));
+    setCurrentPage(1);
+    setActive(!active);
+  };
 
   return (
-    <div className={style.container}>
-      <div className={style.containercard}>
-        <div className={style.categories}>
-          <h4 className={style.text}>CATEGORIES</h4>
-          {allCategories?.map((e,i) => (
-            <select key={i}  defaultValue={"DEFAULT"} onChange={handleChange} >
-              <option value="DEFAULT" disabled>{e.name}</option>
-              {
-                e.subcategories?.map((e,i)=>(
-                  <option key={i} value={e}>{e}</option>
-                ))
-              }
-            </select>
+    <div className={s.container}>
+      {allCategories?.map((e, i) => (
+        <div key={i} className={s.container_subcategories}>
+          <label>{e.name}</label>
+          {e.subcategories.map((e, i) => (
+            <li key={i} onClick={handleClick} className={s.container_li}>
+              {e}
+            </li>
           ))}
         </div>
-      </div>
+      ))}
     </div>
   );
-}
+};
 
-// Agriculture: Coffe, Corn, Rice, Soybeans, Sugar
-// Energy: Gasoline, Heating Fuel, Natural Gas, Petroleum
-// Livestock: Beef Cattle, Chicken Cattle, Pig Cattle
-// Metals: Copper, Gold, Platinum, Silver 
-
-export default Drawer
+export default Drawer;
