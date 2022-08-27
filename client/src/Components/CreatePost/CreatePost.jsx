@@ -41,9 +41,7 @@ export default function CreatePost() {
     userId: "",
   });
 
-  function validationLogIn() {
-    if (!user) alert("plaese login to create a post");
-  }
+
   console.log(input);
   //handles
   function handleChange(e) {
@@ -96,6 +94,10 @@ export default function CreatePost() {
 
   function handleSubmit(e) {
     e.preventDefault();
+        if (!user) {
+      alert("plaese login to create a post");
+      return;
+    }
     let val = validacion(input);
     setErrors(val);
     console.log(val);
