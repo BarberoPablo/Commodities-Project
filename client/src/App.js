@@ -12,7 +12,7 @@ import CreatePost from "./Components/CreatePost/CreatePost.jsx";
 import Navbar from "./Components/Home/Navbar/Navbar";
 import Profile from "./Components/User/Profile";
 import { useState } from "react";
-import Memberships from "./Components/Memberships/Membership";
+import Memberships from "./Components/Memberships/Memberships";
 import Feedback from "./Components/Home/Footer/Feedback.jsx";
 
 function App() {
