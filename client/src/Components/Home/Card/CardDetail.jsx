@@ -5,7 +5,7 @@ const CardDetail = ({ e, user }) => {
       <div className={s.userDate}>
         <div className={s.imgProfile} >
           <img
-            src="https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg"
+            src={user?.image ? user?.image : "https://campussafetyconference.com/wp-content/uploads/2020/08/iStock-476085198.jpg"}
             alt="profile"
           />
         </div>
