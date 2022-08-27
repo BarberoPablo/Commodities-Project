@@ -1,5 +1,11 @@
-.categories{
+.container{
   padding: 15px;
+}
+
+.filters{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .select{

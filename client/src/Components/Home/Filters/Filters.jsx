@@ -8,6 +8,8 @@ import {
   filterShippment,
 } from "../../.././Redux/Actions/Actions";
 import Select from "react-select";
+import Container from "react-bootstrap/esm/Container";
+
 
 const shipping = ["CIF", "FOB"];
 const payment = ["DLC", "LC", "SBLC"];
@@ -59,8 +61,8 @@ const Filters = ({ setCurrentPage }) => {
   };
 
   return (
-    <div className={style.container}>
-      <div>
+    <Container className={style.container}>
+      <div className={style.filters}>
         <Select
           className={style.select}
           defaultValue={{ label: "SHIPPING" }}
@@ -68,8 +70,6 @@ const Filters = ({ setCurrentPage }) => {
           options={shipping.map((e) => ({ label: e, value: e }))}
           isSearchable={false}
         />
-      </div>
-      <div>
         <Select
           className={style.select}
           defaultValue={{ label: "PAYMENT" }}
@@ -77,8 +77,6 @@ const Filters = ({ setCurrentPage }) => {
           options={payment.map((e) => ({ label: e, value: e }))}
           isSearchable={false}
         />
-      </div>
-      <div>
         <Select
           className={style.select}
           defaultValue={{ label: "COUNTRY" }}
@@ -86,7 +84,7 @@ const Filters = ({ setCurrentPage }) => {
           options={countrysToMap.map((e) => ({ label: e, value: e }))}
         />
       </div>
-    </div>
+    </Container> 
   );
 };
 
