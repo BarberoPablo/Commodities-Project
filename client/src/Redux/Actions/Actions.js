@@ -93,3 +93,7 @@ export const postPost = (input)=>()=>{
   axios.post(`${url}/post/`, input)
 }
 
+//mail to us
+export const mailTous = (input) => () => {
+  axios.post(`${url}/mail`, input)
+};
