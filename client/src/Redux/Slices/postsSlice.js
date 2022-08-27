@@ -32,7 +32,7 @@ export const postSlice = createSlice({
       state.posts = state.allPosts.filter((e)=> e.subCategory.includes(action.payload))
     },
     getUserPosts: (state, action) => {
-      const info = action.payload.filter((e) => e.userId === 1);
+      const info = action.payload.filter((e) => e.userId === 11);
       state.posts = info},
     filteredPayment: (state, action) => {
       state.posts = state.allPosts.filter(e => e.payment[0] === action.payload)
