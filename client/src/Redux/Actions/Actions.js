@@ -7,13 +7,14 @@ import {
   filteredCountry,
   filteredShippment,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog, createUser} from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
+import { getAllPlans } from "../Slices/plansSlice";
 
 import axios from "axios";
 
-const url = "https://b2b-01.herokuapp.com"
+const url = "https://b2b-01.herokuapp.com";
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
@@ -34,9 +35,7 @@ export const userPosts = () => (dispatch) => {
 // FUNCTIONS CATEGORIES
 
 export const getCategoriesByName = () => (dispatch) => {
-  axios(`${url}/category`).then((resp) =>
-    dispatch(getCategories(resp.data))
-  );
+  axios(`${url}/category`).then((resp) => dispatch(getCategories(resp.data)));
 };
 
 // FILTERS SUBCATEGORY
@@ -75,25 +74,33 @@ export const getAllCountries = () => (dispatch) => {
     .catch((e) => console.log(e));
 };
 export const userLogin = (payload) => (dispatch) => {
-  axios(`${url}/user`)
+  axios(`${url}/user`);
   dispatch(userLog(payload));
 };
 
 export const createNewUser = (value) => (dispatch) => {
-  axios.post(`${url}/user`,value)
-  dispatch(createUser(value))
-}
+  axios.post(`${url}/user`, value);
+  dispatch(createUser(value));
+};
 export const getUserDetails = (email) => (dispatch) => {
   axios(`${url}/user/${email}`)
-  .then((data) => dispatch(getUserDetail(data.data)))
-  .catch((e) => console.log(e));
+    .then((data) => dispatch(getUserDetail(data.data)))
+    .catch((e) => console.log(e));
 };
 //postPost
-export const postPost = (input)=>()=>{
-  axios.post(`${url}/post/`, input)
-}
+export const postPost = (input) => () => {
+  axios.post(`${url}/post/`, input);
+};
+
+export const getPlans = () => (dispatch) => {
+  axios(`${url}/plans/`)
+    .then((plans) => {
+      dispatch(getAllPlans(plans.data));
+    })
+    .catch((e) => console.log(e));
+};
 
 //mail to us
 export const mailTous = (input) => () => {
-  axios.post(`${url}/mail`, input)
+  axios.post(`${url}/mail`, input);
 };

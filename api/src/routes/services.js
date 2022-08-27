@@ -2,7 +2,11 @@ const { Category, Feedback, Plan, Post, ReviewUser, User } = require("../db");
 //const axios = require("axios");
 const { users, categories, posts, plans } = require("./jsons.js");
 const nodemailer = require("nodemailer");
+<<<<<<< HEAD
+const { EMAIL_USER, EMAIL_PASS } = process.env;
+=======
 const { EMAIL_USER, EMAIL_PASS} = process.env;
+>>>>>>> dev
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
@@ -30,9 +34,7 @@ const { EMAIL_USER, EMAIL_PASS} = process.env;
 
       //Se crean los Planes en la database:
       await Plan.bulkCreate(plans);
-    } catch (error) {
-      console.log(error.message);
-    }
+    } catch (error) {}
   }, 2000);
 })();
 
@@ -50,7 +52,10 @@ const createPost = async (req, res) => {
   try {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
+<<<<<<< HEAD
+=======
     console.log(email);
+>>>>>>> dev
     //Category es un id (integer)
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
@@ -85,7 +90,10 @@ const createPost = async (req, res) => {
       throw { status: 400, message: "Category id not found" };
     }
     // const categoryId = categoryInDb.id; // .toJSON?
+<<<<<<< HEAD
+=======
     console.log("Llega");
+>>>>>>> dev
     const newPost = await Post.create({
       title,
       description,
@@ -336,8 +344,8 @@ const sendEmail = async (req, res) => {
       port: 587,
       secure: false,
       tls: {
-        ciphers:'SSLv3'
-     },
+        ciphers: "SSLv3",
+      },
       auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS,
@@ -370,34 +378,34 @@ const getFeedback = async (req , res) => {
 // Esta ruta es para los usuarios
 const postFeedback = async (req, res) => {
   try {
-  // El id es del usuario que realiza el feedback
-    const { id } = req.params
-    const { comment  } = req.body
+    // El id es del usuario que realiza el feedback
+    const { id } = req.params;
+    const { comment } = req.body;
 
     if (!id) {
-      res.status(404).send('Id is required')
+      res.status(404).send("Id is required");
     }
     const user = await User.findOne({
       where: { id: id },
     });
-    
     if (!user) {
       throw { status: 404, message: `User with id: ${id}, does not exists` };
     }
 
     if (!comment) {
-      throw{ status: 400, message: 'Insert a comment please'}
+      throw { status: 400, message: "Insert a comment please" };
     }
-    
+
     const newFeedback = await Feedback.create({
       comment,
-      userId: id
+      userId: id,
     });
-    res.status(201).json(newFeedback)
-
+    res.status(201).json(newFeedback);
   } catch (error) {
-    res.status(400).send(error)
- 
+    res.status(400).send(error);
+  }
+};
+
 const getUserPosts = async (req, res) => {
   //Ruta util para el panel de usuario
   try {
@@ -407,7 +415,6 @@ const getUserPosts = async (req, res) => {
     });
 
     if (user) {
-      console.log("Entra");
       const userPosts = await Post.findAll({
         where: { userId: user.id },
       });
@@ -424,7 +431,6 @@ const getAllPlans = async (req, res) => {
   //Ruta util para el panel de usuario
   try {
     const allPlans = await Plan.findAll();
-    console.log(allPlans);
     return res.status(200).json(allPlans);
   } catch (error) {
     return res.status(error.status).send(error.message);
@@ -449,5 +455,4 @@ module.exports = {
   postFeedback,
   getUserPosts,
   getAllPlans,
-
 };

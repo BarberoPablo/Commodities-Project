@@ -18,7 +18,7 @@ const {
   getAllPlans,
   sendEmail,
   getFeedback,
-  postFeedback
+  postFeedback,
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -49,12 +49,12 @@ router.get("/user/:email", getUserDetail);
 
 router.get("/users", getAllUsers);
 
+router.get("/plans", getAllPlans);
+
 router.post("/mail", sendEmail);
 
 router.get("/feedback", getFeedback);
 
-router.post("/feedback/:id", postFeedback)
-
+router.post("/feedback/:id", postFeedback);
 
 module.exports = { router };
-

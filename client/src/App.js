@@ -12,39 +12,32 @@ import CreatePost from "./Components/CreatePost/CreatePost.jsx";
 import Navbar from "./Components/Home/Navbar/Navbar";
 import Profile from "./Components/User/Profile";
 import { useState } from "react";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Memberships from "./Components/Memberships/Membership";
+import Memberships from "./Components/Memberships/Memberships";
 import Feedback from "./Components/Home/Footer/Feedback.jsx";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
-    <PayPalScriptProvider
-      options={{ "client-id": "AQmAOKkaooq3WRmt-zUyck2qmSVYykzLUOhUfHPFDEFfDGY92Pn_ExDZCdG2zmreMqCBN3tGJta5vEBT" }}
-    >
-      <div className="App">
-        <Route path={"/"}>
-          {" "}
-          <Navbar setCurrentPage={setCurrentPage} />
-        </Route>
-        <Route exact path={"/"}>
-          {" "}
-          <Home currentPage={currentPage} setCurrentPage={setCurrentPage} />
-        </Route>
-        <Route path="/create-post" component={CreatePost} />
-        <Route path={"/about-us"} component={AboutUs} />
-        <Route path={"/contact-us"} component={ContactUs} />
-        <Route path={"/privacy-policy"} component={PrivacyPolicy} />
-        <Route path={"/terms-of-use"} component={TermsOfUse} />
-        <Route path={"/glosary"} component={Glosary} />
-        <Route path={"/profile"} component={Profile} />
-        <Route path={"/"} component={Footer} />
-        <Route path={"/memberships"} component={Memberships} />
-        <Route path={"/feedback"} component={Feedback}/>
-        {/* More routes eje: Profile, Post, UserProfile  */}
-      </div>
-    </PayPalScriptProvider>
+    <div className="App">
+      <Route path={"/"}>
+        <Navbar setCurrentPage={setCurrentPage} />
+      </Route>
+      <Route exact path={"/"}>
+        <Home currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      </Route>
+      <Route path="/create-post" component={CreatePost} />
+      <Route path={"/about-us"} component={AboutUs} />
+      <Route path={"/contact-us"} component={ContactUs} />
+      <Route path={"/privacy-policy"} component={PrivacyPolicy} />
+      <Route path={"/terms-of-use"} component={TermsOfUse} />
+      <Route path={"/glosary"} component={Glosary} />
+      <Route path={"/profile"} component={Profile} />
+      <Route path={"/memberships"} component={Memberships} />
+      <Route path={"/feedback"} component={Feedback} />
+      <Route path={"/"} component={Footer} />
+      {/* More routes eje: Profile, Post, UserProfile  */}
+    </div>
   );
 }
 
