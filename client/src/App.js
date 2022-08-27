@@ -12,8 +12,8 @@ import CreatePost from "./Components/CreatePost/CreatePost.jsx";
 import Navbar from "./Components/Home/Navbar/Navbar";
 import Profile from "./Components/User/Profile";
 import { useState } from "react";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Memberships from "./Components/Memberships/Memberships";
+import Memberships from "./Components/Memberships/Membership";
+import Feedback from "./Components/Home/Footer/Feedback.jsx";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,6 +34,7 @@ function App() {
       <Route path={"/glosary"} component={Glosary} />
       <Route path={"/profile"} component={Profile} />
       <Route path={"/memberships"} component={Memberships} />
+      <Route path={"/feedback"} component={Feedback} />
       <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>

@@ -2,7 +2,11 @@ const { Category, Feedback, Plan, Post, ReviewUser, User } = require("../db");
 //const axios = require("axios");
 const { users, categories, posts, plans } = require("./jsons.js");
 const nodemailer = require("nodemailer");
+<<<<<<< HEAD
 const { EMAIL_USER, EMAIL_PASS } = process.env;
+=======
+const { EMAIL_USER, EMAIL_PASS} = process.env;
+>>>>>>> dev
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
@@ -48,6 +52,10 @@ const createPost = async (req, res) => {
   try {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
+<<<<<<< HEAD
+=======
+    console.log(email);
+>>>>>>> dev
     //Category es un id (integer)
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
@@ -58,6 +66,7 @@ const createPost = async (req, res) => {
     const user = await User.findOne({
       where: { email: email },
     });
+    console.log("@@@", user);
     //Si no existe un usuario con ese id ocurre un error
     if (!user) {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
@@ -81,6 +90,10 @@ const createPost = async (req, res) => {
       throw { status: 400, message: "Category id not found" };
     }
     // const categoryId = categoryInDb.id; // .toJSON?
+<<<<<<< HEAD
+=======
+    console.log("Llega");
+>>>>>>> dev
     const newPost = await Post.create({
       title,
       description,
@@ -324,9 +337,9 @@ const sendEmail = async (req, res) => {
       to,
       subject,
       text,
-      html,
+      html
     };
-    let transporter = nodemailer.createTransport({
+    let transporter = nodemailer.createTransport( {
       host: "smtp-mail.outlook.com",
       port: 587,
       secure: false,
@@ -338,25 +351,27 @@ const sendEmail = async (req, res) => {
         pass: EMAIL_PASS,
       },
     });
-    transporter.sendMail(transport, function (error, info) {
-      if (error) {
-        return console.log(error);
+    transporter.sendMail(transport, function(error, info){
+      if(error){
+          return console.log(error);
       }
+      console.log('Message sent: ' + info.response);
       return res.status(200).send("Message sent correctly");
-    });
+    })
   } catch (error) {
-    res.status(500).send(error.message);
-  }
+    res.status(500).send(error.message)
+     }
 };
 
 // Esta ruta es para los admins
-const getFeedback = async (req, res) => {
+const getFeedback = async (req , res) => {
   try {
     const allFeedback = await Feedback.findAll();
+    
+    return res.status(200).json(allFeedback) 
 
-    return res.status(200).json(allFeedback);
   } catch (error) {
-    res.status(404).send(error);
+    res.status(404).send(error)
   }
 };
 
@@ -373,7 +388,6 @@ const postFeedback = async (req, res) => {
     const user = await User.findOne({
       where: { id: id },
     });
-
     if (!user) {
       throw { status: 404, message: `User with id: ${id}, does not exists` };
     }

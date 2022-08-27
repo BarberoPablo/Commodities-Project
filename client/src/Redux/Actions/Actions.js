@@ -99,3 +99,8 @@ export const getPlans = () => (dispatch) => {
     })
     .catch((e) => console.log(e));
 };
+
+//mail to us
+export const mailTous = (input) => () => {
+  axios.post(`${url}/mail`, input);
+};
