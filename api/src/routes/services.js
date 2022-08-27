@@ -355,6 +355,15 @@ const getUserPosts = async (req, res) => {
   }
 };
 
+const getAllPlans = async (req, res) => {
+  try {
+    const plans = await Plan.findAll();
+    res.status(200).json(plans);
+  } catch (error) {
+    return res.status(404).send(error.message);
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
@@ -369,4 +378,5 @@ module.exports = {
   getUserDetail,
   getAllUsers,
   getUserPosts,
+  getAllPlans,
 };

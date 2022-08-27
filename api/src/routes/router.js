@@ -15,6 +15,7 @@ const {
   getUserDetail,
   getAllUsers,
   getUserPosts,
+  getAllPlans,
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -42,5 +43,7 @@ router.post("/user", modifyOrCreateUser);
 router.get("/user/:email", getUserDetail);
 
 router.get("/users", getAllUsers);
+
+router.get("/plans", getAllPlans);
 
 module.exports = { router };
