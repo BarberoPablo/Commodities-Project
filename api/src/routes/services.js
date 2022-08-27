@@ -52,8 +52,8 @@ const createPost = async (req, res) => {
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (!email) {
-      throw { status: 400, message: "email required" };
+    if (!email || !title || !description || !shipping[0] || !payment[0] || !subCategory || !country || !categoryName) {
+      throw { status: 400, message: "missing data" };
     }
     const user = await User.findOne({
       where: { email: email },
