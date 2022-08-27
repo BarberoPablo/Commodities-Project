@@ -2,11 +2,7 @@ const { Category, Feedback, Plan, Post, ReviewUser, User } = require("../db");
 //const axios = require("axios");
 const { users, categories, posts, plans } = require("./jsons.js");
 const nodemailer = require("nodemailer");
-<<<<<<< HEAD
 const { EMAIL_USER, EMAIL_PASS } = process.env;
-=======
-const { EMAIL_USER, EMAIL_PASS} = process.env;
->>>>>>> dev
 
 //Funcion anónima que se ejecuta al levantarse el back para cargar informacion en la base de datos:
 (async () => {
@@ -52,10 +48,6 @@ const createPost = async (req, res) => {
   try {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
-<<<<<<< HEAD
-=======
-    console.log(email);
->>>>>>> dev
     //Category es un id (integer)
     const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
@@ -90,10 +82,7 @@ const createPost = async (req, res) => {
       throw { status: 400, message: "Category id not found" };
     }
     // const categoryId = categoryInDb.id; // .toJSON?
-<<<<<<< HEAD
-=======
-    console.log("Llega");
->>>>>>> dev
+    
     const newPost = await Post.create({
       title,
       description,
