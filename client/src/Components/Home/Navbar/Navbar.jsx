@@ -81,7 +81,7 @@ const Navbarr = ({ setCurrentPage }) => {
             <h2 >B2B Commodities</h2>
           </Navbar.Brand>
          <Navbar.Brand href="/memberships">
-            <button>By membership</button>
+            <button>Buy membership</button>
           </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
