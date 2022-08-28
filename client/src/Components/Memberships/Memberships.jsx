@@ -12,8 +12,10 @@ const Memberships = () => {
 
   useEffect(() => {
     dispatch(getPlans());
+    dispatch(getUser());
     // Tal vez no sea necesario preguntar por el user:
     if (user) {
+      console.log("entro 1");
       dispatch(getUserDetails(user.email));
     }
     console.log("1:", user);
@@ -28,7 +30,7 @@ const Memberships = () => {
   */
   return (
     <div>
-      {console.log("1:", user)}
+      {console.log("2:", user)}
       {console.log(memberships)}
       {memberships?.map((plan, index) => {
         return (
