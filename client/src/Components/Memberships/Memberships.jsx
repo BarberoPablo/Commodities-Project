@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import Plan from "./Plan";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlans } from "../../Redux/Actions/Actions";
-import { getUserDetails } from "../../Redux/Actions/Actions";
+import { getPlans, getUserDetails, getUser } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Memberships = () => {
