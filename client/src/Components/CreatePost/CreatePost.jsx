@@ -9,6 +9,8 @@ import {
 } from "../../Redux/Actions/Actions";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import s from './CreatePost.module.css'
+
 
 export default function CreatePost() {
   const dispatch = useDispatch();
@@ -192,7 +194,7 @@ export default function CreatePost() {
   }
 
   return (
-    <div>
+    <div className={s.container} >
       <Link to="/">
         <button className="boton" id="btna">
           Go Back

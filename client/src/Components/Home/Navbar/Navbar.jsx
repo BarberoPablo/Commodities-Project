@@ -80,6 +80,9 @@ const Navbarr = ({ setCurrentPage }) => {
           <Navbar.Brand href="/" style={{textDecoration:'none'}}>
             <h2 >B2B Commodities</h2>
           </Navbar.Brand>
+         <Navbar.Brand href="/memberships">
+            <button>By membership</button>
+          </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
 
