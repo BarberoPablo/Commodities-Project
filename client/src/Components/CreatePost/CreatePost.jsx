@@ -40,7 +40,6 @@ export default function CreatePost() {
     image: "",
   });
 
-
   //console.log(input);
   //handles
   function handleChange(e) {
@@ -57,7 +56,6 @@ export default function CreatePost() {
       //userId: user?.email,
     });
   }
-
 
   function handleChange2(e) {
     if (e.target.checked) {
@@ -101,11 +99,11 @@ export default function CreatePost() {
 
   function handleSubmit(e) {
     e.preventDefault();
-        if (!user) {
+    if (!user) {
       alert("plaese login to create a post");
       return;
     }
-    console.log(input)
+    console.log(input);
     let val = validacion(input);
     setErrors(val);
     console.log(val);
@@ -366,19 +364,18 @@ export default function CreatePost() {
             }}
           />
           <br />
-          <img style={{ width: 200 }} src={img} />
+          <img style={{ width: 200 }} src={img} alt="a" />
           <br />
-{img !== "" ?
-          <button
-          type="button"
-          onClick={() => {
-            aceptar();
-          }}
-          >
-            confrim image
-          </button>:null
-          }
-
+          {img !== "" ? (
+            <button
+              type="button"
+              onClick={() => {
+                aceptar();
+              }}
+            >
+              confrim image
+            </button>
+          ) : null}
         </div>
 
         <button type="submit" className="boton">
