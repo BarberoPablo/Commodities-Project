@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./Filter.module.css";
+import s from "./Filter.module.css";
 import {
   getAllCountries,
   filterByPayment,
@@ -61,29 +61,27 @@ const Filters = ({ setCurrentPage }) => {
   };
 
   return (
-    <Container className={style.container}>
-      <div className={style.filters}>
+    <Container className={s.container} >
         <Select
-          className={style.select}
+          className={s.container_select}
           defaultValue={{ label: "SHIPPING" }}
           onChange={sortShippment}
           options={shipping.map((e) => ({ label: e, value: e }))}
           isSearchable={false}
         />
         <Select
-          className={style.select}
+          className={s.container_select}
           defaultValue={{ label: "PAYMENT" }}
           onChange={sortPayment}
           options={payment.map((e) => ({ label: e, value: e }))}
           isSearchable={false}
         />
         <Select
-          className={style.select}
+          className={s.container_select}
           defaultValue={{ label: "COUNTRY" }}
           onChange={sortCountry}
           options={countrysToMap.map((e) => ({ label: e, value: e }))}
         />
-      </div>
     </Container> 
   );
 };

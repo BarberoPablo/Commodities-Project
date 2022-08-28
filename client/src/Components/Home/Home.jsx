@@ -39,12 +39,12 @@ const Home = ({ currentPage, setCurrentPage }) => {
 
   return (
     <div className={s.container}>
-      <div className={s.container2}>
+      <div className={s.container_home}>
         <DrawerCategories
           allCategories={allCategories}
           setCurrentPage={setCurrentPage}
         />
-        <div className={s.container3}>
+        <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
           <Cards currentPost={currentPost} />
         </div>
