@@ -1,21 +1,10 @@
 .container{
-  padding: 15px;
-}
-
-.filters{
+  border: 2px solid blue;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.select{
-  /* border: 2px solid blue; */
-  margin: 0px 10px;
-  width: 100px;
-}
-
-@media screen and (max-width:420px){
-  .select{
-    width:80px
-  }
+.container_select{
+  margin: 1% 3%;
 }

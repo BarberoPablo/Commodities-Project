@@ -16,7 +16,7 @@ const Drawer = ({ allCategories, setCurrentPage }) => {
   };
 
   return (
-    <div className={s.container}>
+    <div className={s.container} >
       {allCategories?.map((e, i) => (
         <div key={i} className={s.container_subcategories}>
           <label>{e.name}</label>

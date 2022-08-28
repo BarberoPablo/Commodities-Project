@@ -9,8 +9,8 @@ const Cards = ({ currentPost }) => {
   const { allUsers } = useSelector((state) => state.users);
 
   return (
-    <Container fluid="md">
-      <Row>
+    <Container fluid="md" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+      <Row style={{width:'80%'}} >
         {currentPost?.map((e, i) => {
           return (
             <CardDetail
