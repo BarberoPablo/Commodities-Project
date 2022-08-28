@@ -193,18 +193,17 @@ const getPlanDetail = async (req, res) => {
 };
 
 const assignPlanToUser = async (req, res) => {
-  const { PlanId, id } = req.body;
   try {
+    const { planName, email } = req.body;
     const planExists = await Plan.findOne({
-      where: { id: PlanId },
+      where: { name: planName },
     });
     const userExists = await User.findOne({
-      where: { id: id },
+      where: { email: email },
     });
     if (planExists && userExists) {
-      let planId = planExists.toJSON().id;
       await userExists.update({
-        planId,
+        planName,
       });
       res.status(201).json(userExists);
     } else {
@@ -272,7 +271,7 @@ const modifyOrCreateUser = async (req, res) => {
         where: { name: "Free" },
       });
       await user.update({
-        planId: plan.id,
+        planName: plan.name,
         remainingContacts: plan.contacts,
       });
 

@@ -8,7 +8,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
     posts: BOOLEAN
     reviews: BOOLEAN,
 */
-const Plan = ({ name, cost, contacts, posts, reviews }) => {
+const Plan = ({ name, cost, contacts, posts, reviews, bought }) => {
   // Crea una orden de PayPal
   const createOrder = (data, actions) => {
     return actions.order
@@ -38,6 +38,7 @@ const Plan = ({ name, cost, contacts, posts, reviews }) => {
     return actions.order.capture().then(function (details) {
       const { payer } = details;
       setSuccess(true);
+      bought(name);
     });
   };
   //capture likely error

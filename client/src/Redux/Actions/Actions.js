@@ -6,7 +6,7 @@ import {
   filteredCountry,
   filteredShippment,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, } from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
@@ -102,4 +102,8 @@ export const getPlans = () => (dispatch) => {
 //mail to us
 export const mailTous = (input) => () => {
   axios.post(`${url}/mail`, input);
+};
+
+export const asignPlanToUser = (emailAndPlanName) => () => {
+  axios.post(`${url}/planUser`, emailAndPlanName);
 };
