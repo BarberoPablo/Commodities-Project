@@ -8,14 +8,14 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
     posts: BOOLEAN
     reviews: BOOLEAN,
 */
-const Plan = ({ name, cost, contacts, posts, reviews, bought }) => {
+const Plan = ({ name, cost, contacts, posts, reviews, bought, setPaymentConfirmed }) => {
   // Crea una orden de PayPal
   const createOrder = (data, actions) => {
     return actions.order
       .create({
         purchase_units: [
           {
-            description: "Sunflower",
+            description: "Membership",
             amount: {
               currency_code: "USD",
               value: cost,
@@ -39,11 +39,13 @@ const Plan = ({ name, cost, contacts, posts, reviews, bought }) => {
       const { payer } = details;
       setSuccess(true);
       bought(name);
+      setPaymentConfirmed("approved");
     });
   };
   //capture likely error
   const onError = (data, actions) => {
     setErrorMessage("An Error occured with your payment ");
+    setPaymentConfirmed("rejected");
   };
 
   const [show, setShow] = useState(false);

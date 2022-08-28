@@ -202,8 +202,10 @@ const assignPlanToUser = async (req, res) => {
       where: { email: email },
     });
     if (planExists && userExists) {
+      console.log("@@:", planExists.contacts);
       await userExists.update({
         planName,
+        remainingContacts: userExists.remainingContacts + planExists.contacts,
       });
       res.status(201).json(userExists);
     } else {

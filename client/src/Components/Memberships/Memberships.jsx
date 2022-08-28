@@ -6,9 +6,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Memberships = () => {
   const { memberships } = useSelector((state) => state.plans);
-  const dispatch = useDispatch();
+  const userLog = useSelector((state) => state.users.user);
   const { user } = useAuth0();
   const [planBought, setPlanBought] = useState("");
+  const [paymentConfirmed, setPaymentConfirmed] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPlans());
@@ -18,7 +20,6 @@ const Memberships = () => {
       dispatch(getUserDetails(user.email));
     }
     if (planBought) {
-      //http://localhost:3001/planUser
       dispatch(
         asignPlanToUser({
           planName: planBought,
@@ -28,6 +29,7 @@ const Memberships = () => {
     }
     //Sacar user:
   }, [dispatch, user, planBought]);
+
   /* Estructura de un plan:
   name: STRING,
   cost: INTEGER,
@@ -37,17 +39,34 @@ const Memberships = () => {
   */
   return (
     <div>
+      <div>
+        <h1>
+          Remaining contacts:{" "}
+          {userLog?.remainingContacts +
+          (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
+            ? userLog?.remainingContacts +
+              (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
+            : userLog?.remainingContacts}
+        </h1>
+        {paymentConfirmed ? (
+          paymentConfirmed === "approved" ? (
+            <h1 color="green">Payment {paymentConfirmed}</h1>
+          ) : (
+            <h1 color="red">Payment {paymentConfirmed}</h1>
+          )
+        ) : null}
+      </div>
       {memberships?.map((plan, index) => {
         return (
           <Plan
             key={index}
             name={plan.name}
-            //cost={plan.cost}
-            cost={1}
+            cost={plan.cost}
             contacts={plan.contacts}
             posts={plan.posts}
             reviews={plan.reviews}
             bought={setPlanBought}
+            setPaymentConfirmed={setPaymentConfirmed}
           />
         );
       })}

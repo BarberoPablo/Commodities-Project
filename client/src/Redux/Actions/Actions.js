@@ -13,7 +13,8 @@ import { getAllPlans } from "../Slices/plansSlice";
 
 import axios from "axios";
 
-const url = "https://b2b-01.herokuapp.com";
+//const url = "https://b2b-01.herokuapp.com";
+const url = "http://localhost:3001";
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
