@@ -58,7 +58,6 @@ const createPost = async (req, res) => {
     const user = await User.findOne({
       where: { email: email },
     });
-    console.log("@@@", user);
     //Si no existe un usuario con ese id ocurre un error
     if (!user) {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
@@ -194,18 +193,19 @@ const getPlanDetail = async (req, res) => {
 };
 
 const assignPlanToUser = async (req, res) => {
-  const { PlanId, id } = req.body;
   try {
+    const { planName, email } = req.body;
     const planExists = await Plan.findOne({
-      where: { id: PlanId },
+      where: { name: planName },
     });
     const userExists = await User.findOne({
-      where: { id: id },
+      where: { email: email },
     });
     if (planExists && userExists) {
-      let planId = planExists.toJSON().id;
+      console.log("@@:", planExists.contacts);
       await userExists.update({
-        planId,
+        planName,
+        remainingContacts: userExists.remainingContacts + planExists.contacts,
       });
       res.status(201).json(userExists);
     } else {
@@ -273,8 +273,8 @@ const modifyOrCreateUser = async (req, res) => {
         where: { name: "Free" },
       });
       await user.update({
-        planId: plan.id,
-        remainingContacts: 0,
+        planName: plan.name,
+        remainingContacts: plan.contacts,
       });
 
       let newReview = await ReviewUser.create({

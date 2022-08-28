@@ -3,31 +3,33 @@ import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
 import {
   userPosts,
-  userLogin,
   createNewUser,
   getUserDetails,
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
-
 import { useFormik } from "formik";
 
 const validate = (values) => {
   const errors = {};
-  if (values.name.length > 20) {
-    errors.name = "Must be 15 characters or less";
+  if (values.name.length > 30) {
+    errors.name = "Must be 30 characters or less";
   }
-  if (values.country.length > 15) {
-    errors.country = "Must be 15 characters or less";
+  if (!values.country) {
+    errors.country = "*";
+  } else if (values.country.length > 20) {
+    errors.country = "Must be 20 characters or less";
   }
-  if (values.phone.length > 15) {
-    errors.phone = "Must be 15 characters or less";
+  if (!values.phone) {
+    errors.phone = "*";
+  } else if (values.phone.length > 20) {
+    errors.phone = "Must be 20 characters or less";
   }
 
   return errors;
 };
 
 const Profile = () => {
-  const { posts } = useSelector((state) => state.posts);
+  const { userPost } = useSelector((state) => state.users);
   const { user } = useAuth0();
   const userLog = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
@@ -35,9 +37,12 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(userPosts());
-    dispatch(getUserDetails(user?.email));
+    if (user) {
+      dispatch(userPosts());
+      dispatch(getUserDetails(user.email));
+    }
   }, [dispatch, user]);
-
+  
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -48,15 +53,12 @@ const Profile = () => {
     },
     validate,
     onSubmit: (values) => {
-      values.name = values.name ? values.name : userLog.name;
+      values.name = values.name ? values.name : user.nickname;
       values.country = values.country ? values.country : userLog.country;
       values.phone = values.phone ? values.phone : userLog.phone;
       values.email = user.email;
-      values.image = values.image ? values.image : userLog.image;
-      //dispatch(userLogin(values));
+      values.image = values.image ? values.image : user.picture;
       dispatch(createNewUser(values));
-      // console.log(JSON.stringify(values))
-      // alert("user creado correctamente con los datos: " + JSON.stringify(values));
     },
   });
 
@@ -81,8 +83,12 @@ const Profile = () => {
                     alt="a"
                   />
                 </div>
+                {!userLog.country?
+                  <p>Complete the required fields to validate your profile</p> : null
+                }
+                
                 <button className={s.btnactive} onClick={handleClick}>
-                  🖋️
+                  modify data
                 </button>
                 <div className={!active ? `${s.oculto}` : ``}>
                   <form className={s.form} onSubmit={formik.handleSubmit}>
@@ -140,8 +146,8 @@ const Profile = () => {
             </div>
           </div>
           <div className={s.containerPost}>
-            {posts &&
-              posts.map((e) => {
+            {userPost &&
+              userPost.map((e) => {
                 return (
                   <div className={s.post}>
                     <div className={s.info}>
@@ -153,6 +159,12 @@ const Profile = () => {
                     </div>
                     <b>{e.title}</b>
                     <p>{e.description}</p>
+                    {e.image?
+                    <img
+                      src={e.image}
+                      alt={e.name}
+                      style={{ width: 100, height: 100}}
+                    />: null}
                     <hr />
                   </div>
                 );

@@ -9,7 +9,7 @@ const ContactUs = () => {
       <h1>Have a question about our services? Need Help?</h1>
       {/*<a href="/feedback">📧Click here to email us.</a>*/}
       <h5>Send us a quick email and we will be glad to help you. You can contact us at the following address:</h5>
-      <p>📧<a href='/feedback'>b2bcommodities@hotmail.com</a></p>
+      <p>📧<a href='/feedback'>commoditiesb2b@hotmail.com</a></p>
       <div>
         <b>Argentina:</b><br /><br />
         <address>

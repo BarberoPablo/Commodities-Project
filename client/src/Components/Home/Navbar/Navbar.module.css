@@ -1,46 +1,45 @@
 .container{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background-color: #303347 ;
-}
-.logo{
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-
-}
-.logo p{
-  color: white;
-  font-weight: bold;
-  font-size:1.3rem;
+  background-color: #151e22;
+  height: 70px;
 }
 
 .container_logo{
-  width: 60px;
-  height: 45px;
-  margin: 15px;
+  width: 40px;
+  height: 40px;
 }
 
-.container_a{
-  border: 2px solid white;
-  background-color: white;
-  border-radius: 10px;
-  padding: 4px ;
-  color: #303347;
-  text-decoration: none;
-  margin: 0px 5px;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  cursor: pointer;
+.container_nav{
+  z-index: 1;
 }
-.container_a:hover{
-  background-color: #515464;
-}
-.a{
-  text-decoration: none;
-  color: #fff;
+
+.container_desktop{
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.container_desktop h2{
+  color: white;
+  text-decoration: none;
+}
+
+@media screen and (max-width:1000px){
+  .container_desktop{
+    display: none;
+  }
+}
+
+.mobile{
+  display: none;
+}
+
+@media screen and (max-width:1000px){
+  .mobile{
+    display: inline;
+  }
+}
+
+.actions button{
+  border:none;
+  background-color: transparent;
+  color: white;
 }

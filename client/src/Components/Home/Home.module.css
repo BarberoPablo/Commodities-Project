@@ -1,3 +1,13 @@
 .container{
-  display:flex;
+  display: flex;
+  flex-direction: column;
+}
+
+.container_home{
+  display: flex;
+  width: 100%
+}
+
+.container_filters{
+  width: 84%;
 }

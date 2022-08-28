@@ -1,19 +1,16 @@
 import { React, useEffect, useState } from "react";
-//import Navbar from './Navbar/Navbar'
 import DrawerCategories from "./DrawerCategories/DrawerCategories";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getCategoriesByName, getUserDetails } from "../../Redux/Actions/Actions";
+import { getPost, getCategoriesByName, getUserDetails, getUser } from "../../Redux/Actions/Actions";
 import Cards from "./Card/Cards";
 import Paginado from "./Paginado/Paginado";
 import s from "./Home.module.css";
 import Filters from "./Filters/Filters";
 import { useAuth0 } from "@auth0/auth0-react";
+import Container from 'react-bootstrap/esm/Container'
+
 
 const Home = ({ currentPage, setCurrentPage }) => {
-  const product = {
-    planName: "Premium",
-    price: 10,
-  };
 
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
@@ -23,6 +20,7 @@ const Home = ({ currentPage, setCurrentPage }) => {
   useEffect(() => {
     dispatch(getPost());
     dispatch(getCategoriesByName());
+    dispatch(getUser())
     if (user) {
       dispatch(getUserDetails(user.email));
     }
@@ -30,7 +28,7 @@ const Home = ({ currentPage, setCurrentPage }) => {
 
   //paginado
   //pagina actual
-  const [postPerPage, setPostPerPage] = useState(3); //cantidad de cards por paginas
+  const [postPerPage, setPostPerPage] = useState(4); //cantidad de cards por paginas
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -40,11 +38,16 @@ const Home = ({ currentPage, setCurrentPage }) => {
   };
 
   return (
-    <div>
-      <div className={s.container}>
-        <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage} />
-        <Cards currentPost={currentPost} />
-        <Filters setCurrentPage={setCurrentPage} />
+    <div className={s.container}>
+      <div className={s.container_home}>
+        <DrawerCategories
+          allCategories={allCategories}
+          setCurrentPage={setCurrentPage}
+        />
+        <div className={s.container_filters}>
+          <Filters setCurrentPage={setCurrentPage} />
+          <Cards currentPost={currentPost} />
+        </div>
       </div>
       {}
       <Paginado

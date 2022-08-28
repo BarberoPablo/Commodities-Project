@@ -1,52 +1,22 @@
+/* MEEEE */
+
+/* //#ffffff #c5c8c8 #001920 #2ecb72  */
+/* // #1b65a7 #040615 #f2f4f5 #ffffff */
+
 .container{
   display: flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  background-color: #2c2c2c;
-  width: 60%;
-  height: 100vh;
-  margin: 15px auto;
-  padding:15px;
-  border-radius: 10px;
-  color: #fff;
-  
-  
-}
-
-.card{
-  display: flex;
   flex-direction: column;
-  background-color: white;
-  width: 60%;
-  height:200px;
-  border-radius: 10px;
-  color: #000;
-  margin: 7px;
+  background-color: #151e22;
+  margin-bottom: 1%;
+  color: white;
 }
 
-.info{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem;
-  color: #808080;
-  font-size: 0.7rem;
-}
-.post{
-  font-size:1rem;
-}
-.userDate{
+.container_a{
   display: flex;
   align-items: center;
 }
-.userDate > p{
-  color: #808080;
-  font-size: 0.8rem;
-  text-align: end;
-  width: 80%;
-}
-.userDate .imgProfile {
+
+.container_logo{
   margin:10px;
   width: 2rem;
   height: 2rem;
@@ -55,7 +25,20 @@
   display: flex;
   overflow: hidden;
   box-shadow: 1px 1px 10px #404040;
+  color: white;
 }
-.userDate img {
-  object-fit: cover;
+
+.container_time{
+  flex-grow: 1;
+  text-align: end;
+}
+
+.container_b{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container_b p{
+  margin: 0px 10px;
 }

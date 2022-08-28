@@ -2,12 +2,11 @@ import {
   getAllPosts,
   getPosts,
   filteredSubcategory,
-  getUserPosts,
   filteredPayment,
   filteredCountry,
   filteredShippment,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog, createUser } from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
@@ -15,6 +14,7 @@ import { getAllPlans } from "../Slices/plansSlice";
 import axios from "axios";
 
 const url = "https://b2b-01.herokuapp.com";
+//const url = "http://localhost:3001";
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
@@ -63,8 +63,8 @@ export const filterShippment = (value) => (dispatch) => {
 // FUNCTIONS USERS
 
 export const getUser = () => (dispatch) => {
-  axios("https://rickandmortyapi.com/api/character") // end-point del back /users
-    .then((data) => dispatch(getAllUsers(data.data.results)))
+  axios(`${url}/users`) // end-point del back /users
+    .then((data) => dispatch(getAllUsers(data.data)))
     .catch((e) => console.log(e));
 };
 //get counties
@@ -88,8 +88,8 @@ export const getUserDetails = (email) => (dispatch) => {
     .catch((e) => console.log(e));
 };
 //postPost
-export const postPost = (input) => () => {
-  axios.post(`${url}/post/`, input);
+export const postPost = (email, input) => () => {
+  axios.post(`${url}/post/${email}`, input);
 };
 
 export const getPlans = () => (dispatch) => {
@@ -103,4 +103,8 @@ export const getPlans = () => (dispatch) => {
 //mail to us
 export const mailTous = (input) => () => {
   axios.post(`${url}/mail`, input);
+};
+
+export const asignPlanToUser = (emailAndPlanName) => () => {
+  axios.post(`${url}/planUser`, emailAndPlanName);
 };

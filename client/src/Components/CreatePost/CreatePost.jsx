@@ -9,6 +9,8 @@ import {
 } from "../../Redux/Actions/Actions";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import s from './CreatePost.module.css'
+
 
 export default function CreatePost() {
   const dispatch = useDispatch();
@@ -38,9 +40,7 @@ export default function CreatePost() {
     subCategory: "",
     country: "",
     image: "",
-    userId: "",
   });
-
 
   //console.log(input);
   //handles
@@ -48,7 +48,14 @@ export default function CreatePost() {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-      userId: user?.email,
+      //userId: user?.email,
+    });
+  }
+  function handleChangeArray(e) {
+    setInput({
+      ...input,
+      [e.target.name]: [e.target.value],
+      //userId: user?.email,
     });
   }
 
@@ -71,7 +78,7 @@ export default function CreatePost() {
   function handleChange3(e) {
     setInput({
       ...input,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     });
     setIdCategory(e.target.value);
   }
@@ -94,14 +101,15 @@ export default function CreatePost() {
 
   function handleSubmit(e) {
     e.preventDefault();
-        if (!user) {
+    if (!user) {
       alert("plaese login to create a post");
       return;
     }
+    console.log(input);
     let val = validacion(input);
     setErrors(val);
     console.log(val);
-    dispatch(postPost(input));
+    dispatch(postPost(user.email, input));
     if (Object.keys(val).length > 0) {
       alert("Fix errors");
       val = {};
@@ -123,7 +131,6 @@ export default function CreatePost() {
       subCategory: "",
       country: "",
       image: "",
-      userId: "",
     });
   }
 
@@ -187,7 +194,7 @@ export default function CreatePost() {
   }
 
   return (
-    <div>
+    <div className={s.container} >
       <Link to="/">
         <button className="boton" id="btna">
           Go Back
@@ -210,7 +217,7 @@ export default function CreatePost() {
         <select
           value={input.shipping}
           name="shipping"
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => handleChangeArray(e)}
         >
           <option hidden value="">
             Shipping method
@@ -359,16 +366,18 @@ export default function CreatePost() {
             }}
           />
           <br />
-          <img style={{ width: 200 }} src={img} />
+          <img style={{ width: 200 }} src={img} alt="a" />
           <br />
-          <button
-            type="button"
-            onClick={() => {
-              aceptar();
-            }}
-          >
-            confrim image
-          </button>
+          {img !== "" ? (
+            <button
+              type="button"
+              onClick={() => {
+                aceptar();
+              }}
+            >
+              confrim image
+            </button>
+          ) : null}
         </div>
 
         <button type="submit" className="boton">

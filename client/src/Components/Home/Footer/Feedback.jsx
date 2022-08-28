@@ -4,9 +4,6 @@ import { mailTous } from '../../../Redux/Actions/Actions';
 
 export function validate(input) {
     let errors = {};
-    if (!/^([da-z_.-]+)@([da-z.-]+).([a-z.]{2,6})$/g.test(input.to)) {
-      errors.to = 'Your email is required. Has to ve a valid email.';
-    } 
     if (!input.subject) {
       errors.subject = 'Please send us a subject for better organization.';
     } else if (!input.text) {
@@ -20,7 +17,7 @@ export function validate(input) {
 const Feedback = () => {
 
     const [input, setInput] = useState({
-        from: "b2bcommodities@hotmail.com",
+        from: "commoditiesb2b@hotmail.com",
         to: "",
         subject: "",
         text: "",
@@ -36,7 +33,7 @@ const Feedback = () => {
             ...input,
             [e.target.name]: e.target.value
         })
-    
+        
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value
@@ -44,9 +41,15 @@ const Feedback = () => {
     
     }
 
-    const handleSubmit = () => {
-        if(!errors.text && !errors.to && !errors.subject && !errors.text && errors.length){
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if(!errors.text && !errors.to && !errors.subject && !errors.text && !errors.length){
             alert("Email sent successfully.");
+            input.to = "commoditiesb2b@hotmail.com" + "," + input.to
+            input.subject = "REPLY FROM B2B: " + input.subject;
+            input.text = `Your message has already reached our team and we will respond as soon as possible. 
+            ||This is the email you sent to us:    ` 
+            + input.text;
             dispatch(mailTous(input));
             setInput({
                 ...input,
@@ -65,7 +68,7 @@ const Feedback = () => {
             <h4>Have a Suggestion? Found a Bug? or Simply looking for Help? Drop us email.</h4>
             <br />
             <form onSubmit={(e) => handleSubmit(e)}>
-                <input onChange={(e) => handleChange(e)} name="to" value={input.to} placeholder="Your email"></input>
+                <input onChange={(e) => handleChange(e)} name="to" value={input.to} type="email" placeholder="Your email"></input>
                 {errors.to ? <p>{errors.to}</p> : false}
                 <br/>
                 <br/>
