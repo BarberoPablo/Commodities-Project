@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchPosts } from "../../../Redux/Actions/Actions";
 
-
 const Search = ({setCurrentPage}) => {
 
   const dispatch = useDispatch();
@@ -29,9 +28,9 @@ const Search = ({setCurrentPage}) => {
 
   return (
     <div>
-      <input onChange={handleChange} type="text" value={input} />
-      <button onClick={handleClick}>Buyers</button>
-      <button onClick={handleClick}>Sellers</button>
+      <input onChange={handleChange} type="text" value={input} style={{borderRadius:'10px',border:'none'}} />
+      <button onClick={handleClick} style={{border:'none',marginLeft:'5px',borderRadius:'6px'}} >Buyers</button>
+      <button onClick={handleClick} style={{border:'none',marginLeft:'5px',borderRadius:'6px'}}>Sellers</button>
     </div>
   );
 };
