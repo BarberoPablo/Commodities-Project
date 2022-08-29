@@ -42,7 +42,7 @@ const Profile = () => {
       dispatch(getUserDetails(user.email));
     }
   }, [dispatch, user]);
-  
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -83,10 +83,10 @@ const Profile = () => {
                     alt="a"
                   />
                 </div>
-                {!userLog.country?
-                  <p>Complete the required fields to validate your profile</p> : null
-                }
-                
+                {!userLog.country ? (
+                  <p>Complete the required fields to validate your profile</p>
+                ) : null}
+
                 <button className={s.boton} onClick={handleClick}>
                   modify data
                 </button>
@@ -149,23 +149,63 @@ const Profile = () => {
             {userPost &&
               userPost.map((e) => {
                 return (
-                  <div className={s.post}>
-                    <div className={s.info}>
-                      <p>Category: {e.categoryName}</p>
-                      <p>Sub Category: {e.subCategory}</p>
-                      <p>Country: {e.country}</p>
-                      <p>Payment: {e.payment}</p>
-                      <p>Shipping: {e.shipping}</p>
+                  <div className={s.container}>
+                    <div className={s.container_a}>
+                      {e.sell ? (
+                        <p
+                          style={{
+                            color: "red",
+                            marginTop: "20px",
+                            marginLeft: "15px",
+                          }}
+                        >
+                          Seller
+                        </p>
+                      ) : (
+                        <p
+                          style={{
+                            color: "green",
+                            marginTop: "20px",
+                            marginLeft: "15px",
+                          }}
+                        >
+                          Buyer
+                        </p>
+                      )}
+                      <p className={s.container_time}>
+                        {e.createdAt
+                          .slice(0, 10)
+                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                      </p>
                     </div>
-                    <b>{e.title}</b>
-                    <p>{e.description}</p>
-                    {e.image?
-                    <img
-                      src={e.image}
-                      alt={e.name}
-                      style={{ width: 100, height: 100}}
-                    />: null}
-                    <hr />
+                    <div className={s.container_b}>
+                      <p>
+                        Category: <b>{e.categoryName}</b>
+                      </p>
+                      <p>
+                        Sub Category: <b>{e.subCategory}</b>
+                      </p>
+                      <p>
+                        Country: <b>{e.country}</b>
+                      </p>
+                      <p>
+                        payment:{" "}
+                        {e.payment?.map((e) => {
+                          return <b>{e} </b>;
+                        })}
+                      </p>
+                      <p>
+                        Shipping: <b>{e.shipping}</b>
+                      </p>
+                    </div>
+                    <div>
+                      <hr />
+                      <b>{e.title}</b>
+                      <p>{e.description}</p>
+                      {e.image ?
+                      <img src={e.image} alt={e.title} style={{width: '30%', height: '30%'}}/>
+                      : null}
+                    </div>
                   </div>
                 );
               })}

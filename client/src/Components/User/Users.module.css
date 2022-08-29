@@ -5,9 +5,9 @@
 }
 .frame {
   max-width: 730px;
-  margin: auto;
+  margin: 0 auto 30px;
   overflow: hidden;
-  height: 100vh;
+  
 }
 .horizontal_center {
   position: relative;
@@ -141,4 +141,36 @@
   color: #fff;
   font-size: 0.9rem;
 
+}
+.containerPost{
+  color: #fff;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  background-color: #151e22;
+  margin-bottom: 1%;
+  color: white;
+  width: 50%;
+  margin: 5% auto;
+}
+
+.container_a{
+  display: flex;
+  align-items: center;
+}
+
+.container_time{
+  flex-grow: 1;
+  text-align: end;
+}
+
+.container_b{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container_b p{
+  margin: 0px 10px;
 }
