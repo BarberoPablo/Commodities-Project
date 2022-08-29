@@ -82,6 +82,7 @@ const Navbarr = ({ setCurrentPage }) => {
           </Navbar.Brand>
          <Navbar.Brand href="/memberships">
             <button  className={s.boton}>Memberships</button>
+
           </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
@@ -127,5 +128,3 @@ const Navbarr = ({ setCurrentPage }) => {
 };
 
 export default Navbarr;
-
-
