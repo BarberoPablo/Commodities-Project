@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Plan from "./Plan";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlans, getUserDetails, getUser, asignPlanToUser } from "../../Redux/Actions/Actions";
+import {
+  getPlans,
+  getUserDetails,
+  getUser,
+  asignPlanToUser,
+} from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import s from "./membership.module.css";
 
 const Memberships = () => {
   const { memberships } = useSelector((state) => state.plans);
@@ -39,37 +45,47 @@ const Memberships = () => {
   */
   return (
     <div>
-      <div>
-        <h1>
-          Remaining contacts:{" "}
-          {userLog?.remainingContacts +
-          (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
-            ? userLog?.remainingContacts +
-              (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
-            : userLog?.remainingContacts}
-        </h1>
-        {paymentConfirmed ? (
-          paymentConfirmed === "approved" ? (
-            <h1 color="green">Payment {paymentConfirmed}</h1>
-          ) : (
-            <h1 color="red">Payment {paymentConfirmed}</h1>
-          )
-        ) : null}
+      <h1>
+        Remaining contacts:{" "}
+        {userLog?.remainingContacts +
+        (memberships
+          ? memberships[
+              memberships.findIndex((plan) => plan.name === planBought)
+            ]?.contacts
+          : 0)
+          ? userLog?.remainingContacts +
+            (memberships
+              ? memberships[
+                  memberships.findIndex((plan) => plan.name === planBought)
+                ]?.contacts
+              : 0)
+          : userLog?.remainingContacts}
+      </h1>
+      <div className={s.containerCard}>
+        {memberships?.map((plan, index) => {
+          return (
+            <Plan
+              key={index}
+              name={plan.name}
+              cost={plan.cost}
+              contacts={plan.contacts}
+              posts={plan.posts}
+              reviews={plan.reviews}
+              bought={setPlanBought}
+              setPaymentConfirmed={setPaymentConfirmed}
+            />
+          );
+        })}
       </div>
-      {memberships?.map((plan, index) => {
-        return (
-          <Plan
-            key={index}
-            name={plan.name}
-            cost={plan.cost}
-            contacts={plan.contacts}
-            posts={plan.posts}
-            reviews={plan.reviews}
-            bought={setPlanBought}
-            setPaymentConfirmed={setPaymentConfirmed}
-          />
-        );
-      })}
+        <div className={s.approved}>
+          {paymentConfirmed ? (
+            paymentConfirmed === "approved" ? (
+              <h1 color="green">Payment {paymentConfirmed}</h1>
+            ) : (
+              <h1 color="red">Payment {paymentConfirmed}</h1>
+            )
+          ) : null}
+        </div>
     </div>
   );
 };

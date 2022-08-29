@@ -1,0 +1,10 @@
+.container{
+  text-align:justify;
+  line-height: 1.8rem;
+  padding: 30px;
+  color: #fff;
+}
+.container h1{
+  text-align:center;
+  color: #fff
+}

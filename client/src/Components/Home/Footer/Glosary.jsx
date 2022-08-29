@@ -1,8 +1,9 @@
 import React from 'react'
-
+import s from './css/TermsPolicy.module.css'
 const Glosary = () => {
     return (
-        <div>
+        <div className={s.container}>
+          <h1>Glosary</h1>
             <ul>
                 <li><b>Commodities: </b> A product that is indistinguishable from ones manufactured or provided by competing companies and that therefore sells primarily on the basis of price rather than quality or style.</li>
                 <li><b>Categories:</b> The categories into which commodities are divided.</li>
