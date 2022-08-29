@@ -1,16 +1,71 @@
 .container{
   color: white;
-  height: 88vh;
   display: flex;
+  padding:20px;
   justify-content: center;
   flex-direction: column;
+  background-color: #151e22;
+  width:50%;
+  margin: 10px auto;
+  border-radius:10px;
 }
-
-.container form{
+.buy{
+  display: flex;
+  flex-direction: row;
+}
+.form{
   margin: 0 auto;
   width: 50%;
   display: flex;
+  gap: 0.3rem;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
+.form input{
+  margin: 7px;
+  border-radius:4px;
+  border: none;
+}
+.form select{
+  border-radius:4px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.178);
+  color: #fff;
+}
+.form option{
+  color: rgb(0, 0, 0);
+}
+.description{
+  resize: none;
+  width: 100%;
+  overflow: hidden;
+  min-height: 100px;
+}
+.boton{
+  border-radius:4px;
+  border: none;
+  padding: 3px;
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.178);
+  color: #fff;
+}
+.category{
+  margin: 5px;
+}
+h1{
+  background-color: rgba(255, 255, 255, 0.178);
+  color: #fff;
+  border-radius: 5px;
+  padding: 3px;
+}
+.payment{
+  display: flex;
+  flex-direction: row;
+}
+.uploadImage{
+  border-radius:4px;
+  border: none;
+  padding: 3px;
+  color: #fff;
 }

@@ -81,7 +81,7 @@ const Navbarr = ({ setCurrentPage }) => {
             <h2 >B2B Commodities</h2>
           </Navbar.Brand>
          <Navbar.Brand href="/memberships">
-            <button>By membership</button>
+            <button  className={s.boton}>Memberships</button>
           </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
@@ -92,8 +92,8 @@ const Navbarr = ({ setCurrentPage }) => {
               id="nav-dropdown-dark-example"
               title={
                 <img
-                  src={user?.picture}
-                  style={{ width: "50px", height: "50px" }}
+                  src={userLog.image ? userLog.image : user.picture}
+                  style={{ width: "50px", height: "50px", borderRadius: "50px" }}
                 />
               }
               menuVariant="dark"
@@ -129,39 +129,3 @@ const Navbarr = ({ setCurrentPage }) => {
 export default Navbarr;
 
 
-{/* <div className={s.logo} onClick={(e) => goFor(e)}>
-        <img src={Logo} alt="Logo" className={s.container_logo} />
-        <p>B2B Commodities</p>
-      </div>
-      <Search setCurrentPage={setCurrentPage} />
-      <a href="create-post" className={s.container_a}>
-        {" "}
-        CREATE POST
-      </a>
-      <div>
-        {user ? (
-          <>
-            <span style={{ color: "white" }}>
-              <a href="http://localhost:3000/profile" className={s.a}>
-                {userLog.name ? userLog.name : user.nickname}{" "}
-                <img
-                  width={40}
-                  height={40}
-                  src= {userLog.image ? userLog.image : user.picture}
-                  alt=""
-                />
-              </a>
-            </span>
-          </>
-        ) : (
-          false
-        )}
-        {isAuthenticated ? null : (
-          <button className={s.container_a} onClick={loginWithRedirect}>
-            LogIn
-          </button>
-        )}
-        <button className={s.container_a} onClick={logout}>
-          Logout
-        </button>
-      </div> */}

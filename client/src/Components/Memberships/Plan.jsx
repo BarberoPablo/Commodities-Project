@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import s from "./membership.module.css";
+import {
+  BsCheck2Circle,
+  BsFillPersonCheckFill,
+  BsFillStarFill,
+  BsXCircle
+} from "react-icons/bs";
 
 /* Estructura de un plan:
     name: STRING,
@@ -8,7 +15,15 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
     posts: BOOLEAN
     reviews: BOOLEAN,
 */
-const Plan = ({ name, cost, contacts, posts, reviews, bought, setPaymentConfirmed }) => {
+const Plan = ({
+  name,
+  cost,
+  contacts,
+  posts,
+  reviews,
+  bought,
+  setPaymentConfirmed,
+}) => {
   // Crea una orden de PayPal
   const createOrder = (data, actions) => {
     return actions.order
@@ -63,41 +78,80 @@ const Plan = ({ name, cost, contacts, posts, reviews, bought, setPaymentConfirme
     >
       <PayPalScriptProvider
         options={{
-          "client-id": "AQmAOKkaooq3WRmt-zUyck2qmSVYykzLUOhUfHPFDEFfDGY92Pn_ExDZCdG2zmreMqCBN3tGJta5vEBT",
+          "client-id":
+            "AQmAOKkaooq3WRmt-zUyck2qmSVYykzLUOhUfHPFDEFfDGY92Pn_ExDZCdG2zmreMqCBN3tGJta5vEBT",
         }}
       >
         <div>
-          <div className="wrapper">
-            <div className="product-info">
-              <div className="product-text">
-                {/*Plan name*/}
-                <h1>{name.toUpperCase()} Membership </h1>
+          <div>
+            <div className={s.card}>
+              <div className={s.product}>
+                <div className={s.infoPlan}>
+                  {/*Plan name*/}
 
-                {/*Plan cost*/}
-                <h2>Price: ${cost} USD</h2>
+                  <h2>{name.toUpperCase()}</h2>
+                  {/*Plan cost*/}
+                  <h3>${cost} USD</h3>
+                  <hr />
+                </div>
 
                 {/*Plan description*/}
-                <p>
-                  {contacts ? `✔ Contacts: ${contacts}` : "❌ Contacts"}
-                  <br />
-                  {posts ? "✔" : "❌"}
-                  Posts
-                  <br />
-                  {reviews ? "✔" : "❌"}
-                  Reviews
-                  <br />
-                </p>
-              </div>
-            </div>
-          </div>
+                {contacts ? (
+                  <>
+                    <p>Contacts</p>
+                    <BsFillPersonCheckFill />
+                  </>
+                ) : (
+                  <>
+                    <p>Contacts</p>
+                    <BsXCircle />
+                  </>
+                )}
 
-          {show ? (
+                {posts ? (
+                  <>
+                    <p>Posts</p>
+                    <BsCheck2Circle />
+                  </>
+                ) : (
+                  <>
+                    <p>Posts</p>
+                    <BsXCircle />
+                  </>
+                )}
+
+                {reviews ? (
+                  <>
+                    <p>Reviews</p>
+                    <BsFillStarFill />
+                  </>
+                ) : (
+                  <>
+                    <p>Reviews</p>
+                    <BsXCircle />
+                    
+                  </>
+                )}
+              </div>
+              <br/>
+              {show ? (
             <PayPalButtons
-              style={{ shape: "pill", color: "white", layout: "horizontal", label: "subscribe" }}
+              style={{
+                tagline: "false",
+                shape: "rect",
+                color: "white",
+                layout: "horizontal",
+                label: "subscribe",
+              }}
               createOrder={createOrder}
               onApprove={onApprove}
             />
           ) : null}
+          </div>
+            </div>
+            
+
+          
         </div>
       </PayPalScriptProvider>
     </div>
