@@ -9,8 +9,7 @@ import {
 } from "../../Redux/Actions/Actions";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import s from './CreatePost.module.css'
-
+import s from "./CreatePost.module.css";
 
 export default function CreatePost() {
   const dispatch = useDispatch();
@@ -194,15 +193,15 @@ export default function CreatePost() {
   }
 
   return (
-    <div className={s.container} >
-      <Link to="/">
+    <div className={s.container}>
+      {/* <Link to="/">
         <button className="boton" id="btna">
           Go Back
         </button>
-      </Link>
+      </Link> */}
       <h1>Create new post</h1>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label>title: </label>
+      <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
+        <div className={s.tittle}>
         <input
           type="text"
           value={input.title}
@@ -211,9 +210,8 @@ export default function CreatePost() {
           name="title"
           onChange={(e) => handleChange(e)}
         />
-        <br />
+        </div>
         {errors.title && <p className="err">{errors.title}</p>}
-
         <select
           value={input.shipping}
           name="shipping"
@@ -226,11 +224,9 @@ export default function CreatePost() {
           <option value={["FOB"]}>FOB</option>
           <option value={["CIF", "FOB"]}>CIF or FOB</option>
         </select>
-        <br />
         {errors.shipping && <p className="err">{errors.shipping}</p>}
-        <div>
-          <label>Payment method:</label>
-          <br />
+        <label>Payment method:</label>
+        <div className={s.payment}>
           <label>
             <input
               type="checkbox"
@@ -240,7 +236,6 @@ export default function CreatePost() {
             />{" "}
             LC
           </label>
-          <br />
           <label>
             <input
               type="checkbox"
@@ -250,7 +245,6 @@ export default function CreatePost() {
             />{" "}
             DLC
           </label>
-          <br />
           <label>
             <input
               type="checkbox"
@@ -260,14 +254,15 @@ export default function CreatePost() {
             />{" "}
             SBLC
           </label>
-          <br />
+
           {errors.payment && <p className="err">{errors.payment}</p>}
         </div>
-
+      
         <select
           value={input.categoryName}
           name="categoryName"
           onChange={(e) => handleChange3(e)}
+          className={s.category}
         >
           <option hidden value="">
             Select category
@@ -280,7 +275,7 @@ export default function CreatePost() {
             );
           })}
         </select>
-        <br />
+
         {errors.categoryName && <p className="err">{errors.categoryName}</p>}
 
         {idCategory === 0 ? (
@@ -304,22 +299,21 @@ export default function CreatePost() {
                   ));
               })}
             </select>
-            <br />
+
             {errors.subCategory && <p className="err">{errors.subCategory}</p>}
           </div>
         )}
-
-        <label>Description: </label>
-        <textarea
+        <textarea className={s.description}
+          
           value={input.description}
           autoComplete="off"
           placeholder="Please write a description..."
           name="description"
           onChange={(e) => handleChange(e)}
         />
-        <br />
-        {errors.description && <p className="err">{errors.description}</p>}
 
+        {errors.description && <p className="err">{errors.description}</p>}
+        <div className={s.buy}>
         <label>
           <input
             onChange={(e) => handleCheck(e)}
@@ -338,11 +332,8 @@ export default function CreatePost() {
           />
           sell
         </label>
-        <br />
+        </div>
         {errors.sell && <p className="err">{errors.sell}</p>}
-
-        <label>country:</label>
-        <br />
         <select
           value={input.country}
           name="country"
@@ -355,7 +346,7 @@ export default function CreatePost() {
             <option value={c.name.common}>{c.name.common}</option>
           ))}
         </select>
-        <br />
+
         {errors.country && <p className="err">{errors.country}</p>}
 
         <div>
@@ -364,23 +355,26 @@ export default function CreatePost() {
             onChange={(e) => {
               uploadImage(e.target.files);
             }}
+            
           />
-          <br />
-          <img style={{ width: 200 }} src={img} alt="a" />
-          <br />
+
+          <img style={{ width: 200 }} src={img} alt="" />
+
           {img !== "" ? (
             <button
               type="button"
               onClick={() => {
                 aceptar();
               }}
+              className={s.boton}
+              style={{ marginTop:"5px"}}
             >
-              confrim image
+              confirm image
             </button>
           ) : null}
         </div>
 
-        <button type="submit" className="boton">
+        <button type="submit" className={s.boton}>
           Create Post
         </button>
       </form>

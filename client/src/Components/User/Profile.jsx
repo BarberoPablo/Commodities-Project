@@ -87,7 +87,7 @@ const Profile = () => {
                   <p>Complete the required fields to validate your profile</p> : null
                 }
                 
-                <button className={s.btnactive} onClick={handleClick}>
+                <button className={s.boton} onClick={handleClick}>
                   modify data
                 </button>
                 <div className={!active ? `${s.oculto}` : ``}>

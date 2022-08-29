@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { mailTous } from '../../../Redux/Actions/Actions';
-
+import s from "./css/Feed.module.css";
 export function validate(input) {
     let errors = {};
     if (!input.subject) {
@@ -63,7 +63,7 @@ const Feedback = () => {
     };
 
     return (
-        <div>
+        <div className={s.container}>
             <h1>We want your feedback!</h1>
             <h4>Have a Suggestion? Found a Bug? or Simply looking for Help? Drop us email.</h4>
             <br />
@@ -81,7 +81,7 @@ const Feedback = () => {
                 {errors.text ? <p>{errors.text}</p> : false}
                 <br/>
                 <br/> 
-                <button type="submit">Send us!</button>
+                <button className={s.boton} type="submit">Send us!</button>
             </form>
         </div>
     )

@@ -1,0 +1,11 @@
+.container{
+  color:#fff;
+}
+.map{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.containerMap{
+  display: flex;
+}

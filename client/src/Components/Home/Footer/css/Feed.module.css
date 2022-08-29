@@ -1,0 +1,17 @@
+.container{
+  color: #fff;
+  height: 100vh;
+}
+.container input{
+  margin: 2px;
+  border-radius:4px;
+  border: none;
+}
+.boton{
+  border-radius:4px;
+  border: none;
+  padding: 3px;
+  width: 20%;
+  background-color: rgba(255, 255, 255, 0.178);
+  color: #fff;
+}

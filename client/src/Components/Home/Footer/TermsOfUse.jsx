@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
-
+import s from './css/TermsPolicy.module.css'
 const TermsOfUse = () => {
 
   return (
-    <div>
+    <div className={s.container}>
       <h1> Terms of use - Please read </h1>
       <p>
         This website requires consideration for and as a condition of allowing you register.
@@ -34,7 +34,7 @@ const TermsOfUse = () => {
         </li>
       <ol>
         <li>
-          <b> Definitions </b>
+          <b>Definitions </b>
           <ol>
             <li>
               <b> Website Content: </b> Any information and/or data published at the website is website content.
@@ -63,7 +63,7 @@ const TermsOfUse = () => {
               if this website doesn't accept the payment, a registered member can't be termed as Paid Member.
               After expiry of term of subscription, a Paid Member becomes a Registered Free Member,
               if he does not renew his membership.
-              Memberships: Basic and Premium.
+              Memberships: Trial, Basic, Premium.
             </li>
             <li>
               <b> Services: </b> Any service or subscription offered or provided by this website, right to view or
