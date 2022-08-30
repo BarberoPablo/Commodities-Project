@@ -19,6 +19,7 @@ const {
   sendEmail,
   getFeedback,
   postFeedback,
+  modifyReview,
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -56,5 +57,7 @@ router.post("/mail", sendEmail);
 router.get("/feedback", getFeedback);
 
 router.post("/feedback/:id", postFeedback);
+
+router.put("/admin-panel/review/:id")
 
 module.exports = { router };
