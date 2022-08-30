@@ -8,7 +8,7 @@ import {
 } from "../Slices/postsSlice";
 import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
-import { getCountries } from "../Slices/countriesSlice";
+import { getCountries, sortCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
 
 import axios from "axios";
@@ -108,3 +108,10 @@ export const mailTous = (input) => () => {
 export const asignPlanToUser = (emailAndPlanName) => () => {
   axios.post(`${url}/planUser`, emailAndPlanName);
 };
+
+// countries sort
+
+export const sortCountriesName = (value) => (dispatch) => {
+  dispatch(sortCountries(value))
+}
+
