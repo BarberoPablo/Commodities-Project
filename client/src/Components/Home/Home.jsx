@@ -10,7 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Container from 'react-bootstrap/esm/Container'
 
 
-const Home = ({ currentPage, setCurrentPage }) => {
+const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
 
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
@@ -46,7 +46,7 @@ const Home = ({ currentPage, setCurrentPage }) => {
         />
         <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
-          <Cards currentPost={currentPost} />
+          <Cards currentPost={currentPost} setFav={setFav} Fav={Fav} />
         </div>
       </div>
       {}
