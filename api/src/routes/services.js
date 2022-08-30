@@ -482,6 +482,43 @@ const modifyReview = async (req, res) => {
   }
 };
 
+const addUserContact = async (req ,res) => {
+  const { idSearcher , idPoster } = req.params
+
+  try {
+    const userSearcher = await User.findOne({
+      where: {id:idSearcher}
+    });
+
+    const userPoster = await User.findOne({
+      where: {id:idPoster}
+    });
+ 
+    if (!userSearcher) {
+      throw { status: 400, message: `User searcher with id ${idSearcher} is not found` }
+    }
+
+    if (!userPoster) {
+      throw { status: 400, message: `User poster with id ${idPoster} is not found` }
+    }
+
+    //Si las remainingContacts son mayores a 0 ingresa al IF y descuenta 1 mientras que 
+    // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
+    if (userSearcher.remainingContacts >= 1) {
+      await userSearcher.update({ 
+        contactsIds: userSearcher.contactsIds.concat(userPoster.id),
+        remainingContacts: userSearcher.remainingContacts - 1
+      })
+      res.status(201).json(userSearcher)
+    }
+    else {
+      throw { status: 401, message: `You don't have remaining contacts available` }
+    }
+
+  } catch (error) {
+    res.status(error.status). send(error.message)
+  }
+};
 
 module.exports = {
   createPost,
@@ -502,4 +539,5 @@ module.exports = {
   getUserPosts,
   getAllPlans,
   modifyReview,
+  addUserContact
 };

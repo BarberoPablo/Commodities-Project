@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
-const Cards = ({ currentPost }) => {
+const Cards = ({ currentPost, setFav, Fav }) => {
   const { allUsers } = useSelector((state) => state.users);
 
   return (
@@ -14,6 +14,8 @@ const Cards = ({ currentPost }) => {
         {currentPost?.map((e, i) => {
           return (
             <CardDetail
+              Fav={Fav}
+              setFav={setFav}
               e={e}
               key={i}
               user={allUsers.find((c) => e.userId === c.id)}
