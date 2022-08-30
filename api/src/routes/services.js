@@ -127,7 +127,7 @@ const createReview = async (req, res) => {
       if (userAlreadyExists) {
         const newReview = userAlreadyExists.toJSON();
         let scoreSum = newReview.scoreSum + score;
-        newReview.reviews.push({ comment: comment, score: score, idReviewer: idReviewer });
+        newReview.reviews.push({ comment: comment, score: score, idReviewer: idReviewer, idReport: null });
         let reviews = newReview.reviews;
         let average = scoreSum / reviews.length;
         await userAlreadyExists.update({
@@ -436,6 +436,53 @@ const getAllPlans = async (req, res) => {
   }
 };
 
+const modifyReview = async (req, res) => {
+  //Ruta pensada para que los Admin puedan ocultar un review reportado
+  //y para recibir un review reportado.
+  //llega por params el id del user reportado, y el id del user que reporta.
+  //Cuando se reporta un review, se agrega el id del que reporta al correspondiente review
+  //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.  
+  const { userId, idReview } = req.params;//userId el del usuario que recibió la review y el otro es el del user que hizo la review
+  const { display, position } = req.body;// display es false or true si hay que borrar y id indica la poasición del review en el array
+  try {
+    if (!userId) {
+      throw {status: 404, message: "Id is required"};
+    }
+    const user = await ReviewUser.findOne({
+      where: { userId: userId },
+    });
+    if (!user) {
+      throw { status: 404, message: `User with id: ${userId}, does not exists` };
+    }
+    const newReview = user.toJSON();
+    if(!display) {// si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
+    
+      var scoreSum = newReview.scoreSum - newReview.reviews[position].score;
+      newReview.reviews.splice(position, 1);
+      var reviews = newReview.reviews;
+      var average = scoreSum / reviews.length;
+      console.log(newReview);
+      // console.log(scoreSum);
+    } else {
+      newReview.reviews[position].idReport=idReview;
+      var reviews = newReview.reviews;
+      var scoreSum = newReview.scoreSum;
+      var average = newReview.average;
+      console.log(newReview);
+    }
+      await ReviewUser.upsert({
+        id: userId,
+        scoreSum,
+        reviews,
+        average,
+      });
+    return res.status(201).json("Review Updated");
+  } catch (error) {
+    return res.status(error.status).send(error.message);
+  }
+};
+
+
 module.exports = {
   createPost,
   getPosts,
@@ -454,4 +501,5 @@ module.exports = {
   postFeedback,
   getUserPosts,
   getAllPlans,
+  modifyReview,
 };

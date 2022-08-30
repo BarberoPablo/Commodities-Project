@@ -58,6 +58,6 @@ router.get("/feedback", getFeedback);
 
 router.post("/feedback/:id", postFeedback);
 
-router.put("/admin-panel/review/:id")
+router.put("/admin-panel/review/:userId/:idReview", modifyReview)
 
 module.exports = { router };
