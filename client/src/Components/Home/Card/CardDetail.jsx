@@ -1,5 +1,21 @@
 import s from "./Card.module.css";
-const CardDetail = ({ e, user }) => {
+import Alert from 'react-bootstrap/Alert';
+import { useState } from "react";
+
+const CardDetail = ({ e, user, setFav, Fav }) => {
+
+  const [active,setActive] = useState(false)
+
+  const handleClick = (event) => {
+    const filter = Fav.filter((posts) => posts.id === e.id);
+    if (filter.length > 0 ) {
+      alert('no')
+    } else {
+      setFav([...Fav, e]);
+      setActive(true);
+    }
+  };
+
   return (
     <div className={s.container}>
       <div className={s.container_a}>
@@ -53,7 +69,14 @@ const CardDetail = ({ e, user }) => {
         <hr />
         <b>{e.title}</b>
         <p>{e.description}</p>
+        <button onClick={() => handleClick(e)}>❤</button>
       </div>
+      {active ? (
+        <Alert variant="primary" onClose={() => setActive(true)}>
+          Successfully saved.{" "}
+          <Alert.Link href="/favorites">Ir a favoritos</Alert.Link>.
+        </Alert>
+      ) : null}
     </div>
   );
 };
