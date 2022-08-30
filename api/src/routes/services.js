@@ -463,14 +463,14 @@ const addUserContact = async (req ,res) => {
         contactsIds: userSearcher.contactsIds.concat(userPoster.id),
         remainingContacts: userSearcher.remainingContacts - 1
       })
-      res.status(201).send(userSearcher)
+      res.status(201).json(userSearcher)
     }
     else {
       throw { status: 401, message: `You don't have remaining contacts available` }
     }
 
   } catch (error) {
-    res.status(400). send(error)
+    res.status(error.status). send(error.message)
   }
 }
 
