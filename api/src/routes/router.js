@@ -19,6 +19,7 @@ const {
   sendEmail,
   getFeedback,
   postFeedback,
+  modifyReview,
   addUserContact
 } = require("./services");
 
@@ -58,6 +59,9 @@ router.get("/feedback", getFeedback);
 
 router.post("/feedback/:id", postFeedback);
 
+router.put("/admin-panel/review/:userId/:idReview", modifyReview)
+
 router.put("/user/:idSearcher/:idPoster", addUserContact);
+
 
 module.exports = { router };
