@@ -23,6 +23,7 @@ export const countriesSlice = createSlice({
     countrysSet.forEach((e) => {
       countrysToMap.push(e);
     });
+    countrysToMap.unshift("ALL")
     state.countriesSorted = countrysToMap;
     }
   },
