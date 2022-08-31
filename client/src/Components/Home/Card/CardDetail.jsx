@@ -1,15 +1,30 @@
-
+import { React, useState } from "react";
 import { useDispatch } from "react-redux";
 import s from "./Card.module.css";
 import { getProfileDetails } from "../../../Redux/Actions/Actions";
 import {Link} from "react-router-dom"
-const CardDetail = ({ e, user }) => {
+import ToastHide from "./ToastHide";
 
-  const dispatch = useDispatch();
+const CardDetail = ({ e, user, setFav, Fav }) => {
 
-  const handleClick = () => {
+ const dispatch = useDispatch();
+
+  const handle = () => {
     dispatch(getProfileDetails(user.email))  
   }
+  
+  const [show, setShow] = useState(false);
+
+  const handleClick = (event) => {
+    const favFiltered = Fav.filter((posts) => posts.id === e.id);
+    if (favFiltered.length > 0) {
+      return;
+    } else {
+      setFav([...Fav, e]);
+    }
+    setShow(true);
+  };
+
 
   return (
     <div className={s.container}>
@@ -26,7 +41,7 @@ const CardDetail = ({ e, user }) => {
         </div>
 
           <Link to='/profile-user'>
-            <b onClick={handleClick}>{user?.name}</b>
+            <b onClick={handle}>{user?.name}</b>
           </Link>
       
 
@@ -69,6 +84,13 @@ const CardDetail = ({ e, user }) => {
         <hr />
         <b>{e.title}</b>
         <p>{e.description}</p>
+        <ToastHide
+          show={show}
+          setShow={setShow}
+          handleClick={handleClick}
+          e={e}
+          Fav={Fav}
+        />
       </div>
     </div>
   );

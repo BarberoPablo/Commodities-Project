@@ -45,7 +45,8 @@ export const postSlice = createSlice({
           : state.postsCategory.filter((e) => e.payment[0] === action.payload);
     },
     filteredCountry: (state, action) => {
-      state.posts = state.postsCategory.filter((e) => e.country === action.payload);
+      state.posts =
+        action.payload === "ALL" ? state.allPosts : state.postsCategory.filter((e) => e.country === action.payload);
     },
     filteredShippment: (state, action) => {
       state.posts =
