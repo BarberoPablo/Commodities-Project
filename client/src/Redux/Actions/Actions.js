@@ -5,6 +5,7 @@ import {
   filteredPayment,
   filteredCountry,
   filteredShippment,
+  setSearch
 } from "../Slices/postsSlice";
 import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, getProfileDetail } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
@@ -120,3 +121,8 @@ export const sortCountriesName = (value) => (dispatch) => {
   dispatch(sortCountries(value))
 }
 
+//Search or Categories
+
+export const Searching = (value) => (dispatch) => {
+  dispatch(setSearch(value))
+};
