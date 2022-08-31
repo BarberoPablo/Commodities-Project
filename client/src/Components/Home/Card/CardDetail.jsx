@@ -1,19 +1,18 @@
 import s from "./Card.module.css";
-import Alert from 'react-bootstrap/Alert';
 import { useState } from "react";
+import ToastHide from "./ToastHide";
 
 const CardDetail = ({ e, user, setFav, Fav }) => {
-
-  const [active,setActive] = useState(false)
+  const [show, setShow] = useState(false);
 
   const handleClick = (event) => {
-    const filter = Fav.filter((posts) => posts.id === e.id);
-    if (filter.length > 0 ) {
-      alert('no')
+    const favFiltered = Fav.filter((posts) => posts.id === e.id);
+    if (favFiltered.length > 0) {
+      return;
     } else {
       setFav([...Fav, e]);
-      setActive(true);
     }
+    setShow(true);
   };
 
   return (
@@ -69,14 +68,14 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
         <hr />
         <b>{e.title}</b>
         <p>{e.description}</p>
-        <button onClick={() => handleClick(e)}>❤</button>
+        <ToastHide
+          show={show}
+          setShow={setShow}
+          handleClick={handleClick}
+          e={e}
+          Fav={Fav}
+        />
       </div>
-      {active ? (
-        <Alert variant="primary" onClose={() => setActive(true)}>
-          Successfully saved.{" "}
-          <Alert.Link href="/favorites">Ir a favoritos</Alert.Link>.
-        </Alert>
-      ) : null}
     </div>
   );
 };
