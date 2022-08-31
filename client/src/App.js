@@ -51,10 +51,10 @@ function App() {
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
       <Route path={"/profile-user"} component={ProfileUser} />
-      <Route path={"/"} component={Footer} />
       <Route path={"/favorites"}>
         <Favorites Fav={Fav} setFav={setFav} /> 
       </Route>
+      <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
   );
