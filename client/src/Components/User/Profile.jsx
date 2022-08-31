@@ -111,7 +111,7 @@ const Profile = () => {
                 id="name"
                 name="name"
                 type="text"
-                placeholder="Name"
+                placeholder={userLog.name ? userLog.name : user.nickname}
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
@@ -123,7 +123,7 @@ const Profile = () => {
                 id="country"
                 name="country"
                 type="text"
-                placeholder="Country"
+                placeholder={userLog.country ? userLog.country : "Complete country *"}
                 onChange={formik.handleChange}
                 value={formik.values.country}
               />
@@ -135,14 +135,13 @@ const Profile = () => {
                 id="phone"
                 name="phone"
                 type="text"
-                placeholder="Phone"
+                placeholder={userLog.phone ? userLog.phone : "Complete phone *"}
                 onChange={formik.handleChange}
                 value={formik.values.phone}
               />
               {formik.errors.phone ? (
                 <div className={s.error}>{formik.errors.phone}</div>
-              ) : null}
-
+              ) : null}               
               <input
                 id="image"
                 name="image"

@@ -6,7 +6,7 @@ import {
   filteredCountry,
   filteredShippment,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts } from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, getProfileDetail } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
@@ -86,7 +86,12 @@ export const getUserDetails = (email) => (dispatch) => {
   axios(`${url}/user/${email}`)
     .then((data) => dispatch(getUserDetail(data.data)))
     .catch((e) => console.log(e));
-};
+}
+export const getProfileDetails = (email) => (dispatch) => {
+  axios(`${url}/user/${email}`)
+    .then((data) => dispatch(getProfileDetail(data.data)))
+    .catch((e) => console.log(e));
+}
 //postPost
 export const postPost = (email, input) => () => {
   axios.post(`${url}/post/${email}`, input);

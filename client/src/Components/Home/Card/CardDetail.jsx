@@ -1,5 +1,16 @@
+
+import { useDispatch } from "react-redux";
 import s from "./Card.module.css";
+import { getProfileDetails } from "../../../Redux/Actions/Actions";
+import {Link} from "react-router-dom"
 const CardDetail = ({ e, user }) => {
+
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(getProfileDetails(user.email))  
+  }
+
   return (
     <div className={s.container}>
       <div className={s.container_a}>
@@ -13,7 +24,12 @@ const CardDetail = ({ e, user }) => {
             alt="profile"
           />
         </div>
-        <b>{user?.name}</b>
+
+          <Link to='/profile-user'>
+            <b onClick={handleClick}>{user?.name}</b>
+          </Link>
+      
+
         {e.sell ? (
           <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>
             Seller
@@ -41,8 +57,8 @@ const CardDetail = ({ e, user }) => {
         </p>
         <p>
           payment:{" "}
-          {e.payment?.map((e) => {
-            return <b>{e} </b>;
+          {e.payment?.map((e, i) => {
+            return <b key={i}>{e.payment} </b>;
           })}
         </p>
         <p>

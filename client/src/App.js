@@ -14,6 +14,7 @@ import Profile from "./Components/User/Profile";
 import { useState } from "react";
 import Memberships from "./Components/Memberships/Memberships";
 import Feedback from "./Components/Home/Footer/Feedback.jsx";
+import ProfileUser from "./Components/User/ProfileUser";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +36,7 @@ function App() {
       <Route path={"/profile"} component={Profile} />
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
+      <Route path={"/profile-user"} component={ProfileUser} />
       <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
