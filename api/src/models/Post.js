@@ -36,6 +36,10 @@ module.exports = (sequelize) => {
     },
     country: {
       type: DataTypes.STRING,
+    },
+    reportedIds: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: [],
     }
   });
 };

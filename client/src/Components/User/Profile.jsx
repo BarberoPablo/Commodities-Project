@@ -8,25 +8,9 @@ import {
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
-
-const validate = (values) => {
-  const errors = {};
-  if (values.name.length > 30) {
-    errors.name = "Must be 30 characters or less";
-  }
-  if (!values.country) {
-    errors.country = "*";
-  } else if (values.country.length > 20) {
-    errors.country = "Must be 20 characters or less";
-  }
-  if (!values.phone) {
-    errors.phone = "*";
-  } else if (values.phone.length > 20) {
-    errors.phone = "Must be 20 characters or less";
-  }
-
-  return errors;
-};
+import Button from "react-bootstrap/Button";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 const Profile = () => {
   const { userPost } = useSelector((state) => state.users);
@@ -35,6 +19,21 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
 
+  const validate = (values) => {
+    const errors = {};
+    if (values.name.length > 30) {
+      errors.name = "Must be 30 characters or less";
+    }
+    if (values.country.length > 20) {
+      errors.country = "Must be 20 characters or less";
+    }
+    if (values.phone.length > 20) {
+      errors.phone = "Must be 20 characters or less";
+    }
+
+    return errors;
+  };
+
   useEffect(() => {
     dispatch(userPosts());
     if (user) {
@@ -42,7 +41,7 @@ const Profile = () => {
       dispatch(getUserDetails(user.email));
     }
   }, [dispatch, user]);
-  
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -68,104 +67,159 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className={s.container}>
       {user ? (
         <>
-          <div className={`${s.frame}`}>
-            <div className={s.card}>
-              <div className={s.details}>
-                <div
-                  className={`${s.user_photo} ${s.horizontal_center}`}
-                  id="user_photo"
-                >
-                  <img
-                    src={userLog.image ? userLog.image : user.picture}
-                    alt="a"
-                  />
-                </div>
-                {!userLog.country?
-                  <p>Complete the required fields to validate your profile</p> : null
-                }
-                
-                <button className={s.boton} onClick={handleClick}>
-                  modify data
-                </button>
-                <div className={!active ? `${s.oculto}` : ``}>
-                  <form className={s.form} onSubmit={formik.handleSubmit}>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Name"
-                      onChange={formik.handleChange}
-                      value={formik.values.name}
-                    />
-                    {formik.errors.name ? (
-                      <div>{formik.errors.name}</div>
-                    ) : null}
-
-                    <input
-                      id="country"
-                      name="country"
-                      type="text"
-                      placeholder="Country"
-                      onChange={formik.handleChange}
-                      value={formik.values.country}
-                    />
-                    {formik.errors.country ? (
-                      <div>{formik.errors.country}</div>
-                    ) : null}
-
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="text"
-                      placeholder="Phone"
-                      onChange={formik.handleChange}
-                      value={formik.values.phone}
-                    />
-                    {formik.errors.phone ? (
-                      <div>{formik.errors.phone}</div>
-                    ) : null}
-
-                    <input
-                      id="image"
-                      name="image"
-                      type="text"
-                      placeholder="image"
-                      onChange={formik.handleChange}
-                      value={formik.values.image}
-                    />
-                    {formik.errors.image ? (
-                      <div>{formik.errors.image}</div>
-                    ) : null}
-                    <button type="submit">Submit</button>
-                  </form>
-                </div>
-              </div>
+          <div className={s.card}>
+            <div className={s.user_photo} id="user_photo">
+              <img src={userLog.image ? userLog.image : user.picture} alt="a" />
+              {userLog.name ? <p>{userLog.name}</p> : <p>{user?.nickname}</p>}
             </div>
+            {!userLog.country ? (
+              <ToastContainer position="top-end">
+                <Toast bg="warning">
+                  <Toast.Header>
+                    <img
+                      src="holder.js/20x20?text=%20"
+                      className="rounded me-2"
+                      alt=""
+                    />
+                    <strong className="me-auto">Required!</strong>
+                    <small className="text-muted">just now</small>
+                  </Toast.Header>
+                  <Toast.Body>
+                    {" "}
+                    Complete the required fields to validate your profile <br />{" "}
+                    <b>*Email </b>and<b> *Phone</b>
+                  </Toast.Body>
+                </Toast>
+              </ToastContainer>
+            ) : null}
+            <Button
+              variant="outline-light"
+              className={s.btn}
+              size="sm"
+              onClick={handleClick}
+            >
+              edit profile
+            </Button>
           </div>
+
+          <div className={!active ? `${s.oculto}` : `${s.active}`}>
+            <form className={s.form} onSubmit={formik.handleSubmit}>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder={userLog.name ? userLog.name : user.nickname}
+                onChange={formik.handleChange}
+                value={formik.values.name}
+              />
+              {formik.errors.name ? (
+                <div className={s.error}>{formik.errors.name}</div>
+              ) : null}
+
+              <input
+                id="country"
+                name="country"
+                type="text"
+                placeholder={userLog.country ? userLog.country : "Complete country *"}
+                onChange={formik.handleChange}
+                value={formik.values.country}
+              />
+              {formik.errors.country ? (
+                <div className={s.error}>{formik.errors.country}</div>
+              ) : null}
+
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                placeholder={userLog.phone ? userLog.phone : "Complete phone *"}
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+              />
+              {formik.errors.phone ? (
+                <div className={s.error}>{formik.errors.phone}</div>
+              ) : null}               
+              <input
+                id="image"
+                name="image"
+                type="text"
+                placeholder="image"
+                onChange={formik.handleChange}
+                value={formik.values.image}
+              />
+              {formik.errors.image ? <div>{formik.errors.image}</div> : null}
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+
           <div className={s.containerPost}>
             {userPost &&
               userPost.map((e) => {
                 return (
-                  <div className={s.post}>
-                    <div className={s.info}>
-                      <p>Category: {e.categoryName}</p>
-                      <p>Sub Category: {e.subCategory}</p>
-                      <p>Country: {e.country}</p>
-                      <p>Payment: {e.payment}</p>
-                      <p>Shipping: {e.shipping}</p>
+                  <div className={s.container}>
+                    <div className={s.container_a}>
+                      {e.sell ? (
+                        <p
+                          style={{
+                            color: "red",
+                            marginTop: "20px",
+                            marginLeft: "15px",
+                          }}
+                        >
+                          Seller
+                        </p>
+                      ) : (
+                        <p
+                          style={{
+                            color: "green",
+                            marginTop: "20px",
+                            marginLeft: "15px",
+                          }}
+                        >
+                          Buyer
+                        </p>
+                      )}
+                      <p className={s.container_time}>
+                        {e.createdAt
+                          .slice(0, 10)
+                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                      </p>
                     </div>
-                    <b>{e.title}</b>
-                    <p>{e.description}</p>
-                    {e.image?
-                    <img
-                      src={e.image}
-                      alt={e.name}
-                      style={{ width: 100, height: 100}}
-                    />: null}
-                    <hr />
+                    <div className={s.container_b}>
+                      <p>
+                        Category: <b>{e.categoryName}</b>
+                      </p>
+                      <p>
+                        Sub Category: <b>{e.subCategory}</b>
+                      </p>
+                      <p>
+                        Country: <b>{e.country}</b>
+                      </p>
+                      <p>
+                        payment:{" "}
+                        {e.payment?.map((e) => {
+                          return <b>{e} </b>;
+                        })}
+                      </p>
+                      <p>
+                        Shipping: <b>{e.shipping}</b>
+                      </p>
+                    </div>
+                    <div>
+                      <hr />
+                      <b>{e.title}</b>
+                      <p>{e.description}</p>
+                      {e.image ? (
+                        <img
+                          src={e.image}
+                          alt={e.title}
+                          style={{ width: "30%", height: "30%" }}
+                        />
+                      ) : null}
+                    </div>
                   </div>
                 );
               })}

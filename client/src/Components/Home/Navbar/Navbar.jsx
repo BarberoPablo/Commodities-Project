@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "../../../Img/LogoB2B.png";
 import Search from "./Search";
 import s from "./Navbar.module.css";
-import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import { useSelector,useDispatch } from "react-redux";
@@ -16,12 +15,7 @@ import {BsPersonCircle, BsFillChatLeftTextFill} from 'react-icons/bs'
 
 const Navbarr = ({ setCurrentPage }) => {
   const userLog = useSelector((state) => state.users.user);
-  const history = useHistory();
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
-  const goFor = (e) => {
-    history.push("/");
-    history.go(0);
-  };
 
   //BOOTSTRAP
   const {allCategories} = useSelector(state => state.categories)

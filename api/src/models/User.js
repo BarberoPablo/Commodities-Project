@@ -26,11 +26,12 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     contactsIds: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       defaultValue: [],
     },
     remainingContacts: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,

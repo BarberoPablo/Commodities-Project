@@ -1,13 +1,93 @@
-.details{
+.container {
+  min-height:calc(100vh - 70px - 7vh) ;
+  width: 100%;
+}
+.card { 
+  margin: 0 auto;
+  max-width: 50%;
+  display: flex;
+  justify-content:space-between;
+  position: relative;
+  padding: 2rem 0;
+  background: #151e22;
+  z-index: 0;
+}
+.card:after {
+  content: '';
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: #f5f5f5;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  z-index: -1;
+}
+.user_photo{
+  padding:0.7rem;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-weight: bold;
+}
+.user_photo p{
+  text-align: center;
+}
+.user_photo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid #151e22;
+}
+.oculto{
+  display: none;
+}
+.active{
+  width: 50%;
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+  background-color: #151e22;
+  margin: 0 auto;
+}
+.form{
+  display:flex;
+  flex-direction: column;
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+}
+.form input{
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+}
+
+.form button{
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  width: 40%;
+  margin: 5px auto;
+}
+.btn{
+  height: 30px;
+  margin-top: 90px;
+  margin-right: 5px;
+  color: #fff;
+}
+.error{
+  color:red;
+}
+/* .details{
   display: block;
   color: rgb(255, 255, 255);
   font-size:2rem;
 }
 .frame {
   max-width: 730px;
-  margin: auto;
+  margin: 0 auto 30px;
   overflow: hidden;
-  height: 100vh;
+  
 }
 .horizontal_center {
   position: relative;
@@ -111,7 +191,7 @@
   background-position: -270px -48px;
 }
 /* s */
-.form{
+/* .form{
   display: flex;
   flex-direction: column;
   max-width: 50%;
@@ -140,5 +220,37 @@
   background-color: rgba(255, 255, 255, 0.178);
   color: #fff;
   font-size: 0.9rem;
-
+  
 }
+*/ 
+.containerPost{
+  color: #fff;
+}
+.container_x{
+  display: flex;
+  flex-direction: column;
+  background-color: #151e22;
+  margin-bottom: 1%;
+  color: white;
+  width: 50%;
+  margin: 5% auto;
+}
+
+.container_a{
+  display: flex;
+  align-items: center;
+}
+
+.container_time{
+  flex-grow: 1;
+  text-align: end;
+}
+
+.container_b{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container_b p{
+  margin: 0px 10px;}
