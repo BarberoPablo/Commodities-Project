@@ -220,12 +220,13 @@
   background-color: rgba(255, 255, 255, 0.178);
   color: #fff;
   font-size: 0.9rem;
-
+  
 }
+*/ 
 .containerPost{
   color: #fff;
 }
-.container{
+.container_x{
   display: flex;
   flex-direction: column;
   background-color: #151e22;
@@ -252,5 +253,4 @@
 }
 
 .container_b p{
-  margin: 0px 10px;
-} */ 
+  margin: 0px 10px;}

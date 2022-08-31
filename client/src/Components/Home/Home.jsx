@@ -1,13 +1,12 @@
 import { React, useEffect, useState } from "react";
 import DrawerCategories from "./DrawerCategories/DrawerCategories";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getCategoriesByName, getUserDetails, getUser } from "../../Redux/Actions/Actions";
+import { getPost, getCategoriesByName, getUserDetails, getUser, getProfileDetails } from "../../Redux/Actions/Actions";
 import Cards from "./Card/Cards";
 import Paginado from "./Paginado/Paginado";
 import s from "./Home.module.css";
 import Filters from "./Filters/Filters";
 import { useAuth0 } from "@auth0/auth0-react";
-import Container from 'react-bootstrap/esm/Container'
 
 
 const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
