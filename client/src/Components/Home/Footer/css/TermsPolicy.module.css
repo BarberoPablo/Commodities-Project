@@ -3,6 +3,7 @@
   line-height: 1.8rem;
   padding: 30px;
   color: #fff;
+  min-height:calc(100vh - 70px - 7vh) ;
 }
 .container h1{
   text-align:center;
