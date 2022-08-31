@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategoriesByName,
@@ -202,14 +201,14 @@ export default function CreatePost() {
       <h1>Create new post</h1>
       <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
         <div className={s.tittle}>
-        <input
-          type="text"
-          value={input.title}
-          autoComplete="off"
-          placeholder="Please write a title..."
-          name="title"
-          onChange={(e) => handleChange(e)}
-        />
+          <input
+            type="text"
+            value={input.title}
+            autoComplete="off"
+            placeholder="Please write a title..."
+            name="title"
+            onChange={(e) => handleChange(e)}
+          />
         </div>
         {errors.title && <p className="err">{errors.title}</p>}
         <select
@@ -257,7 +256,7 @@ export default function CreatePost() {
 
           {errors.payment && <p className="err">{errors.payment}</p>}
         </div>
-      
+
         <select
           value={input.categoryName}
           name="categoryName"
@@ -291,20 +290,21 @@ export default function CreatePost() {
                 Select sub category
               </option>
               {allCategories?.map((e, i) => {
-                if (e.name === idCategory)
-                  return e.subcategories?.map((e) => (
-                    <option value={e} key={i}>
-                      {e}
-                    </option>
-                  ));
+                return e.name === idCategory
+                  ? e.subcategories?.map((e) => (
+                      <option value={e} key={i}>
+                        {e}
+                      </option>
+                    ))
+                  : null;
               })}
             </select>
 
             {errors.subCategory && <p className="err">{errors.subCategory}</p>}
           </div>
         )}
-        <textarea className={s.description}
-          
+        <textarea
+          className={s.description}
           value={input.description}
           autoComplete="off"
           placeholder="Please write a description..."
@@ -314,24 +314,24 @@ export default function CreatePost() {
 
         {errors.description && <p className="err">{errors.description}</p>}
         <div className={s.buy}>
-        <label>
-          <input
-            onChange={(e) => handleCheck(e)}
-            type="radio"
-            name="check"
-            value="buy"
-          />
-          Buy
-        </label>
-        <label>
-          <input
-            onChange={(e) => handleCheck(e)}
-            type="radio"
-            name="check"
-            value="sell"
-          />
-          sell
-        </label>
+          <label>
+            <input
+              onChange={(e) => handleCheck(e)}
+              type="radio"
+              name="check"
+              value="buy"
+            />
+            Buy
+          </label>
+          <label>
+            <input
+              onChange={(e) => handleCheck(e)}
+              type="radio"
+              name="check"
+              value="sell"
+            />
+            sell
+          </label>
         </div>
         {errors.sell && <p className="err">{errors.sell}</p>}
         <select
@@ -355,7 +355,6 @@ export default function CreatePost() {
             onChange={(e) => {
               uploadImage(e.target.files);
             }}
-            
           />
 
           <img style={{ width: 200 }} src={img} alt="" />
@@ -367,7 +366,7 @@ export default function CreatePost() {
                 aceptar();
               }}
               className={s.boton}
-              style={{ marginTop:"5px"}}
+              style={{ marginTop: "5px" }}
             >
               confirm image
             </button>
