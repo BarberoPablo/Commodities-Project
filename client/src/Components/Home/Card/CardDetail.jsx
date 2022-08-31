@@ -72,8 +72,8 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
         </p>
         <p>
           payment:{" "}
-          {e.payment?.map((e, i) => {
-            return <b key={i}>{e.payment} </b>;
+          {e.payment.map((e, i) => {
+            return <b key={i}> {e}</b>;
           })}
         </p>
         <p>

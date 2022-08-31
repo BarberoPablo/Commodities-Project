@@ -8,13 +8,11 @@ export const postSlice = createSlice({
     postsCategory: [],
   },
   reducers: {
-    //trae todos los posteos
     getAllPosts: (state, action) => {
       state.allPosts = action.payload;
       state.posts = action.payload;
       state.postsCategory = action.payload;
     },
-    //traerme los posteos que se busca en el search
     getPosts: (state, action) => {
       const filtered = state.allPosts.filter(
         (e) =>
@@ -42,11 +40,15 @@ export const postSlice = createSlice({
       state.posts =
         action.payload === "ALL"
           ? state.allPosts
-          : state.postsCategory.filter((e) => e.payment[0] === action.payload);
+          : state.postsCategory.filter((e) =>
+              e.payment.includes(action.payload)
+            );
     },
     filteredCountry: (state, action) => {
       state.posts =
-        action.payload === "ALL" ? state.allPosts : state.postsCategory.filter((e) => e.country === action.payload);
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.postsCategory.filter((e) => e.country === action.payload);
     },
     filteredShippment: (state, action) => {
       state.posts =
