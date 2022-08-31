@@ -5,9 +5,14 @@ export const postSlice = createSlice({
   initialState: {
     allPosts: [],
     posts: [],
+    postsSearch:[],
     postsCategory: [],
+    search:true
   },
   reducers: {
+    setSearch:(state,action)=>{
+      state.search=action.payload
+    },
     getAllPosts: (state, action) => {
       state.allPosts = action.payload;
       state.posts = action.payload;
@@ -26,6 +31,7 @@ export const postSlice = createSlice({
             e.categoryName.toLowerCase().includes(action.payload.input))
       );
       state.posts = filtered;
+      state.postsSearch=filtered
     },
     filteredSubcategory: (state, action) => {
       state.postsCategory = state.allPosts.filter((e) =>
@@ -37,24 +43,50 @@ export const postSlice = createSlice({
     },
 
     filteredPayment: (state, action) => {
-      state.posts =
+      if(state.search){
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.postsSearch.filter((e) =>
+              e.payment.includes(action.payload)
+            );
+      }else{
+        state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsCategory.filter((e) =>
               e.payment.includes(action.payload)
             );
+      }
+      
     },
     filteredCountry: (state, action) => {
-      state.posts =
+      if(state.search){
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.postsSearch.filter((e) => e.country === action.payload);
+      }else{
+        state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsCategory.filter((e) => e.country === action.payload);
+      }
+     
     },
     filteredShippment: (state, action) => {
-      state.posts =
+      if(state.search){
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.postsSearch.filter((e) => e.shipping[0] === action.payload);
+      }else{
+        state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsCategory.filter((e) => e.shipping[0] === action.payload);
+      }
+      
     },
     //more actions
   },
@@ -66,6 +98,7 @@ export const {
   filteredPayment,
   filteredCountry,
   filteredShippment,
+  setSearch
 } = postSlice.actions;
 export default postSlice.reducer;
 
