@@ -441,12 +441,12 @@ const modifyReview = async (req, res) => {
   //y para recibir un review reportado.
   //llega por params el id del user reportado, y el id del user que reporta.
   //Cuando se reporta un review, se agrega el id del que reporta al correspondiente review
-  //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.  
-  const { userId, idReview } = req.params;//userId el del usuario que recibió la review y el otro es el del user que hizo la review
-  const { display, position } = req.body;// display es false or true si hay que borrar y id indica la poasición del review en el array
+  //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.
+  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo la review
+  const { display, position } = req.body; // display es false or true si hay que borrar y id indica la poasición del review en el array
   try {
     if (!userId) {
-      throw {status: 404, message: "Id is required"};
+      throw { status: 404, message: "Id is required" };
     }
     const user = await ReviewUser.findOne({
       where: { userId: userId },
@@ -455,8 +455,9 @@ const modifyReview = async (req, res) => {
       throw { status: 404, message: `User with id: ${userId}, does not exists` };
     }
     const newReview = user.toJSON();
-    if(!display) {// si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
-    
+    if (!display) {
+      // si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
+
       var scoreSum = newReview.scoreSum - newReview.reviews[position].score;
       newReview.reviews.splice(position, 1);
       var reviews = newReview.reviews;
@@ -464,59 +465,67 @@ const modifyReview = async (req, res) => {
       console.log(newReview);
       // console.log(scoreSum);
     } else {
-      newReview.reviews[position].idReport=idReview;
+      newReview.reviews[position].idReport = idReview;
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
       var average = newReview.average;
       console.log(newReview);
     }
-      await ReviewUser.upsert({
-        id: userId,
-        scoreSum,
-        reviews,
-        average,
-      });
+    await ReviewUser.upsert({
+      id: userId,
+      scoreSum,
+      reviews,
+      average,
+    });
     return res.status(201).json("Review Updated");
   } catch (error) {
     return res.status(error.status).send(error.message);
   }
 };
 
-const addUserContact = async (req ,res) => {
-  const { idSearcher , idPoster } = req.params
+const addUserContact = async (req, res) => {
+  const { idSearcher, idPoster } = req.params;
 
   try {
     const userSearcher = await User.findOne({
-      where: {id:idSearcher}
+      where: { id: idSearcher },
     });
 
     const userPoster = await User.findOne({
-      where: {id:idPoster}
+      where: { id: idPoster },
     });
- 
+
     if (!userSearcher) {
-      throw { status: 400, message: `User searcher with id ${idSearcher} is not found` }
+      throw { status: 400, message: `User searcher with id ${idSearcher} is not found` };
     }
 
     if (!userPoster) {
-      throw { status: 400, message: `User poster with id ${idPoster} is not found` }
+      throw { status: 400, message: `User poster with id ${idPoster} is not found` };
     }
 
-    //Si las remainingContacts son mayores a 0 ingresa al IF y descuenta 1 mientras que 
+    //Si las remainingContacts son mayores a 0 ingresa al IF y descuenta 1 mientras que
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
     if (userSearcher.remainingContacts >= 1) {
-      await userSearcher.update({ 
-        contactsIds: userSearcher.contactsIds.concat(userPoster.id),
-        remainingContacts: userSearcher.remainingContacts - 1
-      })
-      res.status(201).json(userSearcher)
+      if (userSearcher.contactsIds.includes(userPoster.id)) {
+        console.log("Entramos");
+        throw { status: 404, message: "You are already connected with that user" };
+      } else {
+        await userSearcher.update({
+          contactsIds: userSearcher.contactsIds.concat(userPoster.id),
+          remainingContacts: userSearcher.remainingContacts - 1,
+        });
+        if (userSearcher.remainingContacts === 0) {
+          await userSearcher.update({
+            planName: plans[0].name,
+          });
+        }
+        res.status(201).json(userSearcher);
+      }
+    } else {
+      throw { status: 401, message: `You don't have remaining contacts available` };
     }
-    else {
-      throw { status: 401, message: `You don't have remaining contacts available` }
-    }
-
   } catch (error) {
-    res.status(error.status). send(error.message)
+    res.status(error.status).send(error.message);
   }
 };
 
@@ -539,5 +548,5 @@ module.exports = {
   getUserPosts,
   getAllPlans,
   modifyReview,
-  addUserContact
+  addUserContact,
 };
