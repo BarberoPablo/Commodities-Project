@@ -63,11 +63,6 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
         <p>
           Shipping: <b>{e.shipping}</b>
         </p>
-      </div>
-      <div>
-        <hr />
-        <b>{e.title}</b>
-        <p>{e.description}</p>
         <ToastHide
           show={show}
           setShow={setShow}
@@ -75,6 +70,11 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           e={e}
           Fav={Fav}
         />
+      </div>
+      <div>
+        <hr />
+        <b>{e.title}</b>
+        <p>{e.description}</p>
       </div>
     </div>
   );

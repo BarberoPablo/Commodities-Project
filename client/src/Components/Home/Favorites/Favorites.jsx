@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import s from './Favorites.module.css'
 
 const Favorites = ({Fav, setFav}) => {
   
@@ -9,15 +9,17 @@ const Favorites = ({Fav, setFav}) => {
   }
 
   return (
-    <div>
+    <div className={s.container} >
       {
+        Fav.length > 0 ?
         Fav?.map((e)=>(
           <div>
             <h1>{e.title}</h1>
             <p>{e.categoryName}</p>
             <button onClick={()=>handleDelete({e})}>x</button>
           </div>
-        ))
+        )):
+        <h1>You have no favorites</h1>
       }
     </div>
   )
