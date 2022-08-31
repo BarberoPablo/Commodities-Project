@@ -1,6 +1,5 @@
 import React from "react";
 import CardDetail from "./CardDetail";
-import s from "./Card.module.css"
 import { useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";

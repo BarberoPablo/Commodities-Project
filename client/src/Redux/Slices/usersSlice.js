@@ -7,15 +7,17 @@ export const userSlice = createSlice({
     userPost: [],
     allUsers: [],
     logUser: {},
+    profileUser: {},
   },
   reducers: {
     getUserDetail: (state, action) => {
       state.user = action.payload;
     },
+    getProfileDetail: (state, action) => {
+      state.profileUser = action.payload
+    },
     getUserPosts: (state, action) => {
-      
       const info = action.payload.filter((e) => e.userId === state.user.id);
-      console.log(info)
       state.userPost = info;
     },
     getAllUsers: (state, action) => {
@@ -32,5 +34,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { getUserDetail, getAllUsers, createUser, userLog, getUserPosts } = userSlice.actions;
+export const { getUserDetail, getAllUsers, createUser, userLog, getUserPosts, getProfileDetail } = userSlice.actions;
 export default userSlice.reducer;

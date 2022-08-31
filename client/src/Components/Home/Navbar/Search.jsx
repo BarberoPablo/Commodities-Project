@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchPosts } from "../../../Redux/Actions/Actions";
+import { searchPosts,Searching } from "../../../Redux/Actions/Actions";
 
 const Search = ({setCurrentPage}) => {
 
@@ -18,10 +18,12 @@ const Search = ({setCurrentPage}) => {
     if (e.target.innerHTML === "Buyers" && input !== '') {
       console.log("Buyers", input);
       dispatch(searchPosts({ input, sell: true }));
+      dispatch(Searching(true))
     }
     if (e.target.innerHTML === "Sellers" && input !== '') {
       console.log("Sellers", input);
       dispatch(searchPosts({ input, sell }));
+      dispatch(Searching(true))
     }
     setCurrentPage(1)
   };

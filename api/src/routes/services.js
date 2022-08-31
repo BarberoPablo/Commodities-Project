@@ -511,7 +511,6 @@ const modifyReview = async (req, res) => {
       // console.log(scoreSum);
     } else {
       //Aca marcamos el review para revisión
-      console.log(newReview.reviews[position]);
       newReview.reviews[position].idReport.push(idReview);
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
@@ -559,16 +558,23 @@ const addUserContact = async (req, res) => {
     //Si las remainingContacts son mayores a 0 ingresa al IF y descuenta 1 mientras que
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
     if (userSearcher.remainingContacts >= 1) {
-      await userSearcher.update({
-        contactsIds: userSearcher.contactsIds.concat(userPoster.id),
-        remainingContacts: userSearcher.remainingContacts - 1,
-      });
-      res.status(201).json(userSearcher);
+      if (userSearcher.contactsIds.includes(userPoster.id)) {
+        console.log("Entramos");
+        throw { status: 404, message: "You are already connected with that user" };
+      } else {
+        await userSearcher.update({
+          contactsIds: userSearcher.contactsIds.concat(userPoster.id),
+          remainingContacts: userSearcher.remainingContacts - 1,
+        });
+        if (userSearcher.remainingContacts === 0) {
+          await userSearcher.update({
+            planName: plans[0].name,
+          });
+        }
+        res.status(201).json(userSearcher);
+      }
     } else {
-      throw {
-        status: 401,
-        message: `You don't have remaining contacts available`,
-      };
+      throw { status: 401, message: `You don't have remaining contacts available` };
     }
   } catch (error) {
     res.status(error.status).send(error.message);

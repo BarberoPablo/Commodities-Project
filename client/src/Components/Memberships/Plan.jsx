@@ -98,8 +98,9 @@ const Plan = ({
                 {/*Plan description*/}
                 {contacts ? (
                   <>
-                    <p>Contacts</p>
-                    <BsFillPersonCheckFill />
+                    {name === "Basic" ? <p>Contacts {contacts}</p> : <p>Unlimited contacts</p>}
+                    <BsFillPersonCheckFill /> 
+                    
                   </>
                 ) : (
                   <>
