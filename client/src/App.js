@@ -53,6 +53,7 @@ function App() {
       <Route path={"/admin-panel"} component={AdminPanel} />
       <Route path={"/profile-user"} component={ProfileUser} />
       <Route path={"/favorites"} component={Favorites} />
+      <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
   );
