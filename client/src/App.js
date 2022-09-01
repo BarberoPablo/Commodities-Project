@@ -20,18 +20,18 @@ import Favorites from "./Components/Home/Favorites/Favorites";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [Fav,setFav] = useState(()=>{
+  const [Fav, setFav] = useState(() => {
     const savedFav = window.localStorage.getItem("Fav");
-    if(savedFav){
-      return JSON.parse(savedFav)
-    }else{
-      return []
+    if (savedFav) {
+      return JSON.parse(savedFav);
+    } else {
+      return [];
     }
-  })
+  });
 
-  useEffect(()=>{
-    window.localStorage.setItem("Fav",JSON.stringify(Fav))
-  },[Fav])
+  useEffect(() => {
+    window.localStorage.setItem("Fav", JSON.stringify(Fav));
+  }, [Fav]);
 
   return (
     <div className="App">
@@ -52,10 +52,7 @@ function App() {
       <Route path={"/feedback"} component={Feedback} />
       <Route path={"/admin-panel"} component={AdminPanel} />
       <Route path={"/profile-user"} component={ProfileUser} />
-      <Route path={"/favorites"}>
-        <Favorites Fav={Fav} setFav={setFav} /> 
-      </Route>
-      <Route path={"/"} component={Footer} />
+      <Route path={"/favorites"} component={Favorites} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
   );
