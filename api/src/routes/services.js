@@ -490,14 +490,14 @@ const modifyReview = async (req, res) => {
   //llega por params el id del user reportado, y el id del user que reporta.
   //Cuando se reporta un review, se agrega el id del que reporta al correspondiente review
   //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.
-  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo la review
+  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo el reporte
   const { display, position } = req.body; // display es false or true si hay que borrar y id indica la poasición del review en el array
   try {
     if (!userId) {
       throw { status: 404, message: "Id is required" };
     }
     const user = await ReviewUser.findOne({
-      where: { userId: userId },
+      where: { userId },
     });
     if (!user) {
       throw {
@@ -506,18 +506,26 @@ const modifyReview = async (req, res) => {
       };
     }
     const newReview = user.toJSON();
-    if (!display) {
+    if (display === "Erase") {
+      console.log("Erase");
       // si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
-      //borrado del review cuestionado
+      //borrado del review cuestionado 
       var scoreSum = newReview.scoreSum - newReview.reviews[position].score;
       newReview.reviews.splice(position, 1);
       var reviews = newReview.reviews;
       var average = scoreSum / reviews.length;
       console.log(newReview);
       // console.log(scoreSum);
-    } else {
+    } else if(display === "Report"){
       //Aca marcamos el review para revisión
       newReview.reviews[position].idReport.push(idReview);
+      var reviews = newReview.reviews;
+      var scoreSum = newReview.scoreSum;
+      var average = newReview.average;
+      console.log(newReview);
+    } else {
+      //Aca eliminamos el reporte para confirmar que el review esta correcto
+      newReview.reviews[position].idReport = [];
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
       var average = newReview.average;
