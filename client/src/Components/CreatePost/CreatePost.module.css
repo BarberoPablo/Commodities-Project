@@ -6,8 +6,9 @@
   flex-direction: column;
   background-color: #151e22;
   width:50%;
-  margin: 10px auto;
+  margin: 0px auto;
   border-radius:10px;
+  min-height:calc(100vh - 70px - 7vh) ;
 }
 .buy{
   display: flex;

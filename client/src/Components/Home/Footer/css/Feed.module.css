@@ -1,6 +1,6 @@
 .container{
   color: #fff;
-  height: 100vh;
+  min-height:calc(100vh - 70px - 7vh) ;
 }
 .container input{
   margin: 2px;

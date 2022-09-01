@@ -1,8 +1,18 @@
+import { React, useState } from "react";
+import { useDispatch } from "react-redux";
 import s from "./Card.module.css";
-import { useState } from "react";
+import { getProfileDetails } from "../../../Redux/Actions/Actions";
+import {Link} from "react-router-dom"
 import ToastHide from "./ToastHide";
 
 const CardDetail = ({ e, user, setFav, Fav }) => {
+
+ const dispatch = useDispatch();
+
+  const handle = () => {
+    dispatch(getProfileDetails(user.email))  
+  }
+  
   const [show, setShow] = useState(false);
 
   const handleClick = (event) => {
@@ -14,6 +24,7 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
     }
     setShow(true);
   };
+
 
   return (
     <div className={s.container}>
@@ -28,7 +39,12 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
             alt="profile"
           />
         </div>
-        <b>{user?.name}</b>
+
+          <Link to='/profile-user'>
+            <b onClick={handle}>{user?.name}</b>
+          </Link>
+      
+
         {e.sell ? (
           <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>
             Seller
@@ -56,18 +72,13 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
         </p>
         <p>
           payment:{" "}
-          {e.payment?.map((e) => {
-            return <b>{e} </b>;
+          {e.payment.map((e, i) => {
+            return <b key={i}> {e}</b>;
           })}
         </p>
         <p>
           Shipping: <b>{e.shipping}</b>
         </p>
-      </div>
-      <div>
-        <hr />
-        <b>{e.title}</b>
-        <p>{e.description}</p>
         <ToastHide
           show={show}
           setShow={setShow}
@@ -75,6 +86,11 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           e={e}
           Fav={Fav}
         />
+      </div>
+      <div>
+        <hr />
+        <b>{e.title}</b>
+        <p>{e.description}</p>
       </div>
     </div>
   );

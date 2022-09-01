@@ -1,5 +1,6 @@
 .container{
   color:#fff;
+  min-height:calc(100vh - 70px - 7vh) ;
 }
 .map{
   display: flex;
