@@ -11,13 +11,27 @@ import Glosary from "./Components/Home/Footer/Glosary";
 import CreatePost from "./Components/CreatePost/CreatePost.jsx";
 import Navbar from "./Components/Home/Navbar/Navbar";
 import Profile from "./Components/User/Profile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Memberships from "./Components/Memberships/Memberships";
 import Feedback from "./Components/Home/Footer/Feedback.jsx";
 import AdminPanel from "./Components/AdminPanel/AdminPanel";
+import ProfileUser from "./Components/User/ProfileUser";
+import Favorites from "./Components/Home/Favorites/Favorites";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [Fav,setFav] = useState(()=>{
+    const savedFav = window.localStorage.getItem("Fav");
+    if(savedFav){
+      return JSON.parse(savedFav)
+    }else{
+      return []
+    }
+  })
+
+  useEffect(()=>{
+    window.localStorage.setItem("Fav",JSON.stringify(Fav))
+  },[Fav])
 
   return (
     <div className="App">
@@ -25,7 +39,7 @@ function App() {
         <Navbar setCurrentPage={setCurrentPage} />
       </Route>
       <Route exact path={"/"}>
-        <Home currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <Home currentPage={currentPage} setCurrentPage={setCurrentPage} setFav={setFav} Fav={Fav} />
       </Route>
       <Route path="/create-post" component={CreatePost} />
       <Route path={"/about-us"} component={AboutUs} />
@@ -37,6 +51,10 @@ function App() {
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
       <Route path={"/admin-panel"} component={AdminPanel} />
+      <Route path={"/profile-user"} component={ProfileUser} />
+      <Route path={"/favorites"}>
+        <Favorites Fav={Fav} setFav={setFav} /> 
+      </Route>
       <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>

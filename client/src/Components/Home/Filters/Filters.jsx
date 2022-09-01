@@ -6,6 +6,7 @@ import {
   filterByPayment,
   filterCountry,
   filterShippment,
+  sortCountriesName
 } from "../../.././Redux/Actions/Actions";
 import Select from "react-select";
 import Container from "react-bootstrap/esm/Container";
@@ -17,31 +18,14 @@ const payment = ["DLC", "LC", "SBLC"];
 const Filters = ({ setCurrentPage }) => {
   const dispatch = useDispatch();
 
-  const { allCountries } = useSelector((state) => state.countries);
-  const { posts } = useSelector((state) => state.posts);
-
-  const countrysWithPost = posts.map((e) => e.country).sort();
-  const countrysSet = new Set(countrysWithPost);
-  const countrysToMap = [];
+  const { countriesSorted } = useSelector((state) => state.countries);
+  const { allPosts } = useSelector((state) => state.posts);
 
   // COUNTRIES
   useEffect(() => {
-    dispatch(getAllCountries());
-  }, [dispatch]);
+    dispatch(sortCountriesName(allPosts));
+  }, [dispatch, allPosts]);
 
-  countrysSet.forEach((e) => {
-    let point = "";
-    if (e === "") {
-      countrysSet.delete(point);
-    }
-  });
-
-  countrysSet.forEach((e) => {
-    countrysToMap.push(e);
-  });
-
-  const allCountriesNames = allCountries.map((e) => e.name.common);
-  allCountriesNames.sort();
 
   //FILTERS
   const sortPayment = (e) => {
@@ -80,7 +64,7 @@ const Filters = ({ setCurrentPage }) => {
           className={s.container_select}
           defaultValue={{ label: "COUNTRY" }}
           onChange={sortCountry}
-          options={countrysToMap.map((e) => ({ label: e, value: e }))}
+          options={countriesSorted.map((e) => ({ label: e, value: e }))}
         />
     </Container> 
   );
