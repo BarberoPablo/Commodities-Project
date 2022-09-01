@@ -51,9 +51,9 @@ function App() {
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
       <Route path={"/admin-panel"} component={AdminPanel} />
-      <Route path={"/profile-user"} component={ProfileUser} />
+      <Route path={"/profile-user/:id"} component={ProfileUser} />
       <Route path={"/favorites"} component={Favorites} />
-        <Route path={"/"} component={Footer} />
+      <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
   );
