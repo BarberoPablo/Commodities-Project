@@ -350,10 +350,10 @@ const modifyOrCreateUser = async (req, res) => {
 };
 
 const getUserDetail = async (req, res) => {
-  const { email } = req.params;
+  const { id } = req.params;
   try {
     let user = await User.findOne({
-      where: { email: email },
+      where: { id: id },
     });
     if (user) {
       res.status(200).send(user);
