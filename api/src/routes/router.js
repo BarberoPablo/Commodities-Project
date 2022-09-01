@@ -22,7 +22,8 @@ const {
   modifyReview,
   addUserContact,
   userBan,
-  reportOrBannPost
+  reportOrBannPost,
+  getUserId
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -49,7 +50,9 @@ router.post("/category/:name", modifyOrCreateCategory);
 
 router.post("/user", modifyOrCreateUser);
 
-router.get("/user/:id", getUserDetail);
+router.get("/user/:email", getUserDetail);
+
+router.get("/userId/:id", getUserId);
 
 router.get("/users", getAllUsers);
 
