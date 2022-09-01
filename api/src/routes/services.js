@@ -49,29 +49,10 @@ const createPost = async (req, res) => {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
     //Category es un id (integer)
-    const {
-      title,
-      description,
-      sell,
-      shipping,
-      payment,
-      subCategory,
-      image,
-      country,
-      categoryName,
-    } = req.body;
+    const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (
-      !email ||
-      !title ||
-      !description ||
-      !shipping[0] ||
-      !payment[0] ||
-      !subCategory ||
-      !country ||
-      !categoryName
-    ) {
+    if (!email || !title || !description || !shipping[0] || !payment[0] || !subCategory || !country || !categoryName) {
       throw { status: 400, message: "missing data" };
     }
     const user = await User.findOne({
@@ -82,18 +63,10 @@ const createPost = async (req, res) => {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
     }
 
-    if (
-      !description ||
-      !shipping ||
-      !payment ||
-      !categoryName ||
-      !country ||
-      !subCategory
-    ) {
+    if (!description || !shipping || !payment || !categoryName || !country || !subCategory) {
       throw {
         status: 400,
-        message:
-          "Parameters error, check description, shipping, paymend, country, category and subCategory",
+        message: "Parameters error, check description, shipping, paymend, country, category and subCategory",
       };
     }
 
@@ -148,9 +121,9 @@ const createReview = async (req, res) => {
   const { comment, score, userId, idReviewer } = req.body;
   try {
     const reviewerExists = await ReviewUser.findOne({
-      where: { userId: idReviewer}
+      where: { userId: idReviewer },
     });
-    if (comment.length < 512 ) {
+    if (comment.length < 512) {
       const userAlreadyExists = await ReviewUser.findOne({
         where: { userId: userId },
       });
@@ -290,8 +263,7 @@ const modifyOrCreateUser = async (req, res) => {
     if (!country || !email || !image || !name || !phone) {
       throw {
         status: 400,
-        message:
-          "Please send all the properties of the new user, even the old ones",
+        message: "Please send all the properties of the new user, even the old ones",
       };
     }
     // Si el usuario no existe, se crea
@@ -583,31 +555,32 @@ const addUserContact = async (req, res) => {
 
 const userBan = async (req, res) => {
   // Al ser una ruta para el admin, no seria necesario ocultar los usuarios banneados, si se requiere traer solo a los
-  // usuarios habilitados, tendria que ser mediante un filter que deje solo a los que tienen isBanned en false  
-  const { id } = req.params
-  
+  // usuarios habilitados, tendria que ser mediante un filter que deje solo a los que tienen isBanned en false
+  const { id } = req.params;
+
   try {
-    const banUser= await User.findOne(
-      {where: {id: id}}
-    ) 
+    const banUser = await User.findOne({ where: { id: id } });
     if (!banUser) {
       throw { status: 400, message: `User searcher with id ${id} is not found` };
-    }
-    else if (banUser.isBanned) {
+    } else if (banUser.isBanned) {
       await banUser.update({
-        isBanned: false
-      })
-    }
-    else {
+        isBanned: false,
+      });
+    } else {
       await banUser.update({
-        isBanned: true
-      })
+        isBanned: true,
+      });
     }
-    return res.status(201).send(`User's ban has been modificated`)
-
+    return res.status(201).send(`User's ban has been modificated`);
   } catch (error) {
-    res.status(error.status).send(error.message)
+    res.status(error.status).send(error.message);
   }
+};
+
+const deleteOrCreateFavorite = (req, res) => {
+  try {
+    const { id, create } = req.query;
+  } catch (error) {}
 };
 
 module.exports = {
@@ -630,5 +603,6 @@ module.exports = {
   getAllPlans,
   modifyReview,
   addUserContact,
-  userBan
+  userBan,
+  deleteOrCreateFavorite,
 };
