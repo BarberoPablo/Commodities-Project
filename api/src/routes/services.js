@@ -133,10 +133,16 @@ const createPost = async (req, res) => {
 const getReviews = async (req, res) => {
   try {
     const { id } = req.params;
-    let reviews = await ReviewUser.findOne({
-      where: { id: id },
-    });
+    console.log(id);
+    if(id === "All") {
+      var reviews = await ReviewUser.findAll();
+    } else {
+      var reviews = await ReviewUser.findOne({
+        where: { userId: id },
+      });
+    }
     return res.status(200).send(reviews);
+
   } catch (error) {
     return res.status(404).send("The reviews selected are no longer available");
   }
