@@ -21,7 +21,8 @@ const {
   postFeedback,
   modifyReview,
   addUserContact,
-  userBan
+  userBan,
+  reportOrBannPost
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -65,5 +66,7 @@ router.put("/admin-panel/review/:userId/:idReview", modifyReview);
 router.put("/user/:idSearcher/:idPoster", addUserContact);
 
 router.put("/userBan/:id", userBan);
+
+router.put("/admin-panel/post/:postId/:idReview", reportOrBannPost);
 
 module.exports = { router };
