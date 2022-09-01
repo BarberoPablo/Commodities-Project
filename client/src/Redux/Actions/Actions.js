@@ -89,7 +89,7 @@ export const getUserDetails = (email) => (dispatch) => {
     .catch((e) => console.log(e));
 }
 export const getProfileDetails = (id) => (dispatch) => {
-  axios(`${url}/user/` + id)
+  axios(`${url}/userId/` + id)
     .then((data) => dispatch(getProfileDetail(data.data)))
     .catch((e) => console.log(e));
 };
