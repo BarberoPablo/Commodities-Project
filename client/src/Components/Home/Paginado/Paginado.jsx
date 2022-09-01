@@ -43,7 +43,7 @@ export default function Paginado({
           <li key={number}>
             <a
               onClick={() => handlePaginado(number)}
-              className={number === currentPage && s.number}
+              className={number === currentPage ? s.number : s.number2}
             >
               {number}
             </a>
