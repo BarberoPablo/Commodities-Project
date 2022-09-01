@@ -350,22 +350,14 @@ const modifyOrCreateUser = async (req, res) => {
 };
 
 const getUserDetail = async (req, res) => {
-  const { idOrEmail } = req.params;
+  const { email } = req.params;
   try {
-
     const user = await User.findOne({
-      where: { email: idOrEmail },
+      where: { email: email },
     });
     if (user) {
       return res.status(200).send(user);
     } 
-
-    const userId = await User.findOne({
-      where: { id: idOrEmail },
-    });
-    if(userId) {
-      return res.status(201).send(userId)
-    }
 
     else {
       res.status(404).send("User not found");
@@ -374,6 +366,26 @@ const getUserDetail = async (req, res) => {
     res.status(error.status).send(error.message);
   }
 };
+
+const getUserId = async (req ,res ) => {
+  const { id } = req.params
+  try {
+
+    const userId = await User.findOne({
+      where: { id: id },
+    });
+    if(userId) {
+      return res.status(200).send(userId)
+    }
+  
+    else {
+      res.status(404).send("User not found");
+    }
+  
+} catch (error) {
+  res.status(error.status).send(error.message);
+}
+}
 
 const getAllUsers = async (req, res) => {
   //Ruta util para el panel de usuario
@@ -654,5 +666,6 @@ module.exports = {
   getAllPlans,
   modifyReview,
   addUserContact,
-  userBan
+  userBan,
+  getUserId
 };
