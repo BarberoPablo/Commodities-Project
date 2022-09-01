@@ -48,7 +48,7 @@ router.post("/category/:name", modifyOrCreateCategory);
 
 router.post("/user", modifyOrCreateUser);
 
-router.get("/user/:email", getUserDetail);
+router.get("/user/:id", getUserDetail);
 
 router.get("/users", getAllUsers);
 
