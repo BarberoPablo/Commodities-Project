@@ -14,24 +14,24 @@ import Profile from "./Components/User/Profile";
 import { useEffect, useState } from "react";
 import Memberships from "./Components/Memberships/Memberships";
 import Feedback from "./Components/Home/Footer/Feedback.jsx";
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import ProfileUser from "./Components/User/ProfileUser";
 import Favorites from "./Components/Home/Favorites/Favorites";
 
-
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [Fav,setFav] = useState(()=>{
+  const [Fav, setFav] = useState(() => {
     const savedFav = window.localStorage.getItem("Fav");
-    if(savedFav){
-      return JSON.parse(savedFav)
-    }else{
-      return []
+    if (savedFav) {
+      return JSON.parse(savedFav);
+    } else {
+      return [];
     }
-  })
+  });
 
-  useEffect(()=>{
-    window.localStorage.setItem("Fav",JSON.stringify(Fav))
-  },[Fav])
+  useEffect(() => {
+    window.localStorage.setItem("Fav", JSON.stringify(Fav));
+  }, [Fav]);
 
   return (
     <div className="App">
@@ -50,11 +50,10 @@ function App() {
       <Route path={"/profile"} component={Profile} />
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
+      <Route path={"/admin-panel"} component={AdminPanel} />
       <Route path={"/profile-user"} component={ProfileUser} />
-      <Route path={"/favorites"}>
-        <Favorites Fav={Fav} setFav={setFav} /> 
-      </Route>
-      <Route path={"/"} component={Footer} />
+      <Route path={"/favorites"} component={Favorites} />
+        <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
   );

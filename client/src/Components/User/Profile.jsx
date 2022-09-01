@@ -1,11 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import {
-  userPosts,
-  createNewUser,
-  getUserDetails,
-} from "../../Redux/Actions/Actions";
+import { userPosts, createNewUser, getUserDetails } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
@@ -36,9 +32,16 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(userPosts());
+    console.log("Usuario conectado?", !!user);
     if (user) {
       dispatch(userPosts());
       dispatch(getUserDetails(user.email));
+      dispatch(getUserDetails(user.email));
+      //Aca iría la logica para poner los favoritos en la DB SIEMPRE Y CUANDO TENGA FAVORITOS:
+      console.log("Usuario logeado, cargar favoritos a DB:");
+      console.log("Favoritos a agregar:", window.localStorage.getItem("Fav"));
+      window.localStorage.setItem("Fav", JSON.stringify([]));
+      console.log("Favoritos ahora:", window.localStorage.getItem("Fav"));
     }
   }, [dispatch, user]);
 
@@ -79,28 +82,18 @@ const Profile = () => {
               <ToastContainer position="top-end">
                 <Toast bg="warning">
                   <Toast.Header>
-                    <img
-                      src="holder.js/20x20?text=%20"
-                      className="rounded me-2"
-                      alt=""
-                    />
+                    <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
                     <strong className="me-auto">Required!</strong>
                     <small className="text-muted">just now</small>
                   </Toast.Header>
                   <Toast.Body>
                     {" "}
-                    Complete the required fields to validate your profile <br />{" "}
-                    <b>*Email </b>and<b> *Phone</b>
+                    Complete the required fields to validate your profile <br /> <b>*Email </b>and<b> *Phone</b>
                   </Toast.Body>
                 </Toast>
               </ToastContainer>
             ) : null}
-            <Button
-              variant="outline-light"
-              className={s.btn}
-              size="sm"
-              onClick={handleClick}
-            >
+            <Button variant="outline-light" className={s.btn} size="sm" onClick={handleClick}>
               edit profile
             </Button>
           </div>
@@ -115,9 +108,7 @@ const Profile = () => {
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
-              {formik.errors.name ? (
-                <div className={s.error}>{formik.errors.name}</div>
-              ) : null}
+              {formik.errors.name ? <div className={s.error}>{formik.errors.name}</div> : null}
 
               <input
                 id="country"
@@ -127,9 +118,7 @@ const Profile = () => {
                 onChange={formik.handleChange}
                 value={formik.values.country}
               />
-              {formik.errors.country ? (
-                <div className={s.error}>{formik.errors.country}</div>
-              ) : null}
+              {formik.errors.country ? <div className={s.error}>{formik.errors.country}</div> : null}
 
               <input
                 id="phone"
@@ -139,9 +128,7 @@ const Profile = () => {
                 onChange={formik.handleChange}
                 value={formik.values.phone}
               />
-              {formik.errors.phone ? (
-                <div className={s.error}>{formik.errors.phone}</div>
-              ) : null}               
+              {formik.errors.phone ? <div className={s.error}>{formik.errors.phone}</div> : null}
               <input
                 id="image"
                 name="image"
@@ -183,9 +170,7 @@ const Profile = () => {
                         </p>
                       )}
                       <p className={s.container_time}>
-                        {e.createdAt
-                          .slice(0, 10)
-                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                        {e.createdAt.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
                     <div className={s.container_b}>
@@ -212,13 +197,7 @@ const Profile = () => {
                       <hr />
                       <b>{e.title}</b>
                       <p>{e.description}</p>
-                      {e.image ? (
-                        <img
-                          src={e.image}
-                          alt={e.title}
-                          style={{ width: "30%", height: "30%" }}
-                        />
-                      ) : null}
+                      {e.image ? <img src={e.image} alt={e.title} style={{ width: "30%", height: "30%" }} /> : null}
                     </div>
                   </div>
                 );

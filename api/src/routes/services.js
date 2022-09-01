@@ -133,10 +133,16 @@ const createPost = async (req, res) => {
 const getReviews = async (req, res) => {
   try {
     const { id } = req.params;
-    let reviews = await ReviewUser.findOne({
-      where: { id: id },
-    });
+    console.log(id);
+    if(id === "All") {
+      var reviews = await ReviewUser.findAll();
+    } else {
+      var reviews = await ReviewUser.findOne({
+        where: { userId: id },
+      });
+    }
     return res.status(200).send(reviews);
+
   } catch (error) {
     return res.status(404).send("The reviews selected are no longer available");
   }
@@ -344,10 +350,10 @@ const modifyOrCreateUser = async (req, res) => {
 };
 
 const getUserDetail = async (req, res) => {
-  const { email } = req.params;
+  const { id } = req.params;
   try {
     let user = await User.findOne({
-      where: { email: email },
+      where: { id: id },
     });
     if (user) {
       res.status(200).send(user);
@@ -581,6 +587,35 @@ const addUserContact = async (req, res) => {
   }
 };
 
+const userBan = async (req, res) => {
+  // Al ser una ruta para el admin, no seria necesario ocultar los usuarios banneados, si se requiere traer solo a los
+  // usuarios habilitados, tendria que ser mediante un filter que deje solo a los que tienen isBanned en false  
+  const { id } = req.params
+  
+  try {
+    const banUser= await User.findOne(
+      {where: {id: id}}
+    ) 
+    if (!banUser) {
+      throw { status: 400, message: `User searcher with id ${id} is not found` };
+    }
+    else if (banUser.isBanned) {
+      await banUser.update({
+        isBanned: false
+      })
+    }
+    else {
+      await banUser.update({
+        isBanned: true
+      })
+    }
+    return res.status(201).send(`User's ban has been modificated`)
+
+  } catch (error) {
+    res.status(error.status).send(error.message)
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
@@ -601,4 +636,5 @@ module.exports = {
   getAllPlans,
   modifyReview,
   addUserContact,
+  userBan
 };

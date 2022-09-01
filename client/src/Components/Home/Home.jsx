@@ -46,18 +46,21 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
         <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
           <Cards currentPost={currentPost} setFav={setFav} Fav={Fav} />
+          {/* more components in HOME */}
+          {
+            posts.length ? 
+            <Paginado
+              setPostPerPage={setPostPerPage}
+              setCurrentPage={setCurrentPage}
+              postPerPage={postPerPage}
+              posts={posts.length}
+              paginado={paginado}
+              currentPage={currentPage}
+            />
+            :null
+          }
         </div>
       </div>
-      {}
-      <Paginado
-        setPostPerPage={setPostPerPage}
-        setCurrentPage={setCurrentPage}
-        postPerPage={postPerPage}
-        posts={posts.length}
-        paginado={paginado}
-        currentPage={currentPage}
-      />
-      {/* more components in HOME */}
     </div>
   );
 };
