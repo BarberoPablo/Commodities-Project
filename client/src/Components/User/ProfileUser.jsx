@@ -1,21 +1,25 @@
-import { React, useState } from "react";
-import { useSelector } from "react-redux";
+import { React, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import { getProfileDetails, getPost } from "../../Redux/Actions/Actions";
 
-const ProfileUser = () => {
+const ProfileUser = ({ match }) => {
+  const id = match.params.id;
+
   const { profileUser } = useSelector((state) => state.users);
   const { posts } = useSelector((state) => state.posts);
   const filter = posts.filter((e) => e.userId === profileUser.id);
   const [showA, setShowA] = useState(false);
-
+  const dispatch = useDispatch();
   const toggleShowA = () => setShowA(!showA);
 
-  const handleClick = (e) => {
-    e.preventDefault();
-  };
+  useEffect(() => {
+    dispatch(getProfileDetails(id));
+    dispatch(getPost());
+  }, [dispatch]);
 
   return (
     <>
@@ -37,13 +41,10 @@ const ProfileUser = () => {
             <ToastContainer position="bottom-center">
               <Toast show={showA} onClose={toggleShowA} bg="secondary">
                 <Toast.Body>
-                  By accepting, one of your contacts will be deducted, are you sure?
+                  By accepting, one of your contacts will be deducted, are you
+                  sure?
                 </Toast.Body>
-                <Button
-                  variant="warning"
-                  size="sm"
-                  onClick={toggleShowA}
-                >
+                <Button variant="warning" size="sm" onClick={toggleShowA}>
                   ok
                 </Button>
               </Toast>
@@ -54,6 +55,7 @@ const ProfileUser = () => {
               filter.map((e) => {
                 return (
                   <div className={s.container_x}>
+                    <b>{e.title}</b>
                     <div className={s.container_a}>
                       {e.sell ? (
                         <p
@@ -62,7 +64,7 @@ const ProfileUser = () => {
                             marginTop: "20px",
                             marginLeft: "15px",
                           }}
-                        >
+                          >
                           Seller
                         </p>
                       ) : (
@@ -103,7 +105,6 @@ const ProfileUser = () => {
                       </p>
                     </div>
                     <div>
-                      <b>{e.title}</b>
                       <p>{e.description}</p>
                       <hr />
                       {e.image ? (

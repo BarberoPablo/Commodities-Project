@@ -5,7 +5,7 @@ import { getProfileDetails } from "../../../Redux/Actions/Actions";
 import {Link} from "react-router-dom"
 import ToastHide from "./ToastHide";
 
-const CardDetail = ({ e, user, setFav, Fav }) => {
+const CardDetail = ({ e, user, setFav, Fav}) => {
 
  const dispatch = useDispatch();
 
@@ -25,7 +25,6 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
     setShow(true);
   };
 
-
   return (
     <div className={s.container}>
       <div className={s.container_a}>
@@ -40,10 +39,9 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           />
         </div>
 
-          <Link to='/profile-user'>
+          <Link to= {`/profile-user/`+ e.id}>
             <b onClick={handle}>{user?.name}</b>
           </Link>
-      
 
         {e.sell ? (
           <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>

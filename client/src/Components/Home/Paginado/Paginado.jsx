@@ -5,7 +5,6 @@ export default function Paginado({
   postPerPage,
   posts,
   paginado,
-  setPostPerPage,
   currentPage,
   setCurrentPage,
 }) {
@@ -28,13 +27,10 @@ export default function Paginado({
   }
 
   return (
-    <div className={s.container}>
-      <ul className={s.paginado}>
-      {currentPage === 1 ? (
-        <div className={s.diva} />
-      ) : (
+    <div className={s.Container}>
+      {currentPage === 1 ? null : (
         <button
-          className={s.btnpn}
+          className={s.btn}
           id="pn"
           value="prev"
           onClick={(e) => handleClick2(e)}
@@ -42,23 +38,21 @@ export default function Paginado({
           «{" "}
         </button>
       )}
+      <div className={s.container}>
         {pageNumbers?.map((number) => (
-          <li className={s.number} key={number}>
-            <p
+          <li key={number}>
+            <a
               onClick={() => handlePaginado(number)}
-              className={number === currentPage ? s.numerito : s.notnumerito}
+              className={number === currentPage ? s.number : s.number2}
             >
               {number}
-            </p>
+            </a>
           </li>
         ))}
-      </ul>
-      
-      {currentPage >= Math.ceil(posts / postPerPage) ? (
-        <div className={s.diva} />
-      ) : (
+      </div>
+      {currentPage >= Math.ceil(posts / postPerPage) ? null : (
         <button
-          className={s.btnpn}
+          className={s.btn}
           id="pn"
           value="next"
           onClick={(e) => handleClick2(e)}

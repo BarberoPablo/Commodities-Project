@@ -14,6 +14,7 @@ import Profile from "./Components/User/Profile";
 import { useEffect, useState } from "react";
 import Memberships from "./Components/Memberships/Memberships";
 import Feedback from "./Components/Home/Footer/Feedback.jsx";
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import ProfileUser from "./Components/User/ProfileUser";
 import Favorites from "./Components/Home/Favorites/Favorites";
 
@@ -49,8 +50,10 @@ function App() {
       <Route path={"/profile"} component={Profile} />
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
-      <Route path={"/profile-user"} component={ProfileUser} />
+      <Route path={"/admin-panel"} component={AdminPanel} />
+      <Route path={"/profile-user/:id"} component={ProfileUser} />
       <Route path={"/favorites"} component={Favorites} />
+      <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>
   );

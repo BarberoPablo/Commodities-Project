@@ -23,6 +23,8 @@ const {
   addUserContact,
   userBan,
   deleteOrAddFavorite,
+  reportOrBannPost,
+  getUserId
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -51,6 +53,8 @@ router.post("/user", modifyOrCreateUser);
 
 router.get("/user/:email", getUserDetail);
 
+router.get("/userId/:id", getUserId);
+
 router.get("/users", getAllUsers);
 
 router.get("/plans", getAllPlans);
@@ -68,5 +72,7 @@ router.put("/user/:idSearcher/:idPoster", addUserContact);
 router.put("/userBan/:id", userBan);
 
 router.put("/favorite", deleteOrAddFavorite);
+
+router.put("/admin-panel/post/:postId/:idReview", reportOrBannPost);
 
 module.exports = { router };

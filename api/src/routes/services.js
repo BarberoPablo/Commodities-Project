@@ -106,10 +106,16 @@ const createPost = async (req, res) => {
 const getReviews = async (req, res) => {
   try {
     const { id } = req.params;
-    let reviews = await ReviewUser.findOne({
-      where: { id: id },
-    });
+    console.log(id);
+    if(id === "All") {
+      var reviews = await ReviewUser.findAll();
+    } else {
+      var reviews = await ReviewUser.findOne({
+        where: { userId: id },
+      });
+    }
     return res.status(200).send(reviews);
+
   } catch (error) {
     return res.status(404).send("The reviews selected are no longer available");
   }
@@ -318,18 +324,40 @@ const modifyOrCreateUser = async (req, res) => {
 const getUserDetail = async (req, res) => {
   const { email } = req.params;
   try {
-    let user = await User.findOne({
+    const user = await User.findOne({
       where: { email: email },
     });
     if (user) {
-      res.status(200).send(user);
-    } else {
+      return res.status(200).send(user);
+    } 
+
+    else {
       res.status(404).send("User not found");
     }
   } catch (error) {
-    res.status(400).send(error);
+    res.status(error.status).send(error.message);
   }
 };
+
+const getUserId = async (req ,res ) => {
+  const { id } = req.params
+  try {
+
+    const userId = await User.findOne({
+      where: { id: id },
+    });
+    if(userId) {
+      return res.status(200).send(userId)
+    }
+  
+    else {
+      res.status(404).send("User not found");
+    }
+  
+} catch (error) {
+  res.status(error.status).send(error.message);
+}
+}
 
 const getAllUsers = async (req, res) => {
   //Ruta util para el panel de usuario
@@ -456,14 +484,14 @@ const modifyReview = async (req, res) => {
   //llega por params el id del user reportado, y el id del user que reporta.
   //Cuando se reporta un review, se agrega el id del que reporta al correspondiente review
   //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.
-  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo la review
-  const { display, position } = req.body; // display es false or true si hay que borrar y id indica la poasición del review en el array
+  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo el reporte
+  const { display, position } = req.body; // display es false or true si hay que borrar y id indica la posición del review en el array
   try {
     if (!userId) {
       throw { status: 404, message: "Id is required" };
     }
     const user = await ReviewUser.findOne({
-      where: { userId: userId },
+      where: { userId },
     });
     if (!user) {
       throw {
@@ -472,22 +500,25 @@ const modifyReview = async (req, res) => {
       };
     }
     const newReview = user.toJSON();
-    if (!display) {
+    if (display === "Erase") {
       // si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
-      //borrado del review cuestionado
+      //borrado del review cuestionado 
       var scoreSum = newReview.scoreSum - newReview.reviews[position].score;
       newReview.reviews.splice(position, 1);
       var reviews = newReview.reviews;
       var average = scoreSum / reviews.length;
-      console.log(newReview);
-      // console.log(scoreSum);
-    } else {
+    } else if(display === "Report"){     //"Report"
       //Aca marcamos el review para revisión
       newReview.reviews[position].idReport.push(idReview);
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
       var average = newReview.average;
-      console.log(newReview);
+    } else {                  //"Confirm"
+      //Aca eliminamos el reporte para confirmar que el review esta correcto
+      newReview.reviews[position].idReport = [];
+      var reviews = newReview.reviews;
+      var scoreSum = newReview.scoreSum;
+      var average = newReview.average;
     }
     await ReviewUser.upsert({
       id: userId,
@@ -629,6 +660,65 @@ const deleteOrAddFavorite = async (req, res) => {
   }
 };
 
+const reportOrBannPost = async (req, res) => {
+  //Ruta pensada para que los Admin puedan ocultar un post reportado
+  //y para que otro usuario reporte un post inapropiado.
+  //llega por params el id del post reportado, y el id del user que reporta.
+  //Cuando se reporta un post, se agrega el id del user que reporta al correspondiente post
+  //Si el admin coincide en dar de baja el review este se oculta.
+  //Ruta: "/admin-panel/post/:postId/:idReview",
+  const { postId, idReview } = req.params; //postId el del post reportado y el otro es el del user que hizo el reporte
+  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Bann") o desestimar ("Dismiss").
+  try {
+    if (!postId || !idReview) {
+      throw { status: 404, message: "Id is required" };
+    }
+    const post = await Post.findOne({
+      where: { id : postId },
+    });
+    if (!post) {
+      throw {
+        status: 404,
+        message: `Post with id: ${postId}, does not exists`,
+      };
+    }
+    const newPost = post.toJSON();
+    if (event === "Bann") {
+      // si event === Bann entonces oculto el post comentado.
+      //Ocultado del post cuestionado 
+      var reportedIds = newPost.reportedIds;
+      var display = false;
+    } else if(event === "Report"){     //"Report"
+      //Aca marcamos el post para revisión, agregando el Id de quien lo reporta
+      newPost.reportedIds.push(idReview);
+      var reportedIds = newPost.reportedIds;
+      var display = true;
+    } else {                  //"Dismiss"
+      //Aca eliminamos el reporte para confirmar que el post esta correcto y revertimos el Display
+      newPost.reportedIds = [];
+      var reportedIds = newPost.reportedIds;
+      var display = true;
+    }
+    await Post.upsert({         //actualizo el regsitro en base de datos
+      id: postId,
+      title: newPost.title,
+      description: newPost.description,
+      sell: newPost.sell,
+      shipping: newPost.shipping,
+      payment: newPost.payment,
+      subCategory: newPost.subCategory,
+      image:newPost.image,
+      display,
+      country:newPost.country,
+      reportedIds,
+      categoryName:newPost.categoryName,
+    });
+    return res.status(201).json("Post has been Updated");
+  } catch (error) {
+    return res.status(error.status).send(error.message);
+  }
+};
+
 module.exports = {
   createPost,
   getPosts,
@@ -651,4 +741,6 @@ module.exports = {
   addUserContact,
   userBan,
   deleteOrAddFavorite,
+  reportOrBannPost,
+  getUserId
 };

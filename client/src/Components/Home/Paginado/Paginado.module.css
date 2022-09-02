@@ -1,72 +1,54 @@
-.container {
+.Container{
+  display: flex;
+  width: 60%;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.container{
   max-width: 100%;
   border-radius: 10px;
-  margin: 20px auto;
+  margin: 3% 1%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.paginado {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.number {
-  text-align: center;
-  display: inline-block;
-  vertical-align: top;
+.container li{
+  color: white;
+  margin: 0px 0.3%;
+  background-color: #151E22;
+  border-radius: 10px;
+  width: 50px;
   list-style: none;
-}
-.notnumerito {
-  margin: 5px;
-  color: rgba(255, 255, 255, 0.905);
-  background-color: #1d1d1d;
-  font-size: 1.2em;
-  padding: 9px;
-  border-radius: 5px;
+  line-height: 50px;
+  text-align: center;
 }
 
-.notnumerito:hover {
-  background-color: rgba(10, 10, 10, 0.643);
+.container li a{
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 10px;
   cursor: pointer;
 }
 
-.numerito {
-  margin: 6px;
-  background-color: #373378;
-  color: rgb(255, 255, 255);
-  font-size: 1.2em;
-  padding: 9px;
-  border-radius: 5px;
-  transition: all 0.8s;
-  font-weight: bold;
+.container li:hover a{
+  background:#acacac ;
+  color: #fff;
 }
-.numerito:hover {
-  cursor: pointer;
-  background-color: #373378;
-}
-.btnpn {
-  min-width: 40px;
-  height: 40px;
-  padding: 5px;
-  outline: none;
-  border-radius: 5px;
+
+.btn{
+  color: white;
+  height: 15%;
+  width: 4%;
   border: none;
-  background-color: #373378;
-  color: #fff;
-  font-weight: bold;
-  transition: all 0.8s;
-  margin: 10px;
-  font-size: 1.5rem;
-  font-weight: bold;
+  background-color: #151E22;
 }
-.btnpn:hover {
-  cursor: pointer;
-  color: #fff;
-  background-color: #373378;
-}
-.btnpn:active {
-  height: 5vmin;
+
+.number{
+  background-color: rgb(61, 65, 106);
   color: black;
 }
