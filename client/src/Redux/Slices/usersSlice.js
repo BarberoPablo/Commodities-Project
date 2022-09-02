@@ -8,6 +8,7 @@ export const userSlice = createSlice({
     allUsers: [],
     logUser: {},
     profileUser: {},
+    contacts:[]
   },
   reducers: {
     getUserDetail: (state, action) => {
@@ -29,10 +30,12 @@ export const userSlice = createSlice({
     createUser: (state, action) => {
       state.user = action.payload;
     },
-
+    getContacts: (state,action) => {
+      state.contacts = action.payload
+    }
     //more actions
   },
 });
 
-export const { getUserDetail, getAllUsers, createUser, userLog, getUserPosts, getProfileDetail } = userSlice.actions;
+export const { getUserDetail, getAllUsers, createUser, userLog, getUserPosts, getProfileDetail, getContacts } = userSlice.actions;
 export default userSlice.reducer;

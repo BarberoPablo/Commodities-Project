@@ -32,14 +32,14 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(userPosts());
-    console.log("Usuario conectado?", !!user);
+    console.log("Usuario conectado?", user);
     if (user) {
       dispatch(userPosts());
-      dispatch(getUserDetails(user.email));
+      dispatch(getUserDetails(user?.email));
       //Aca iría la logica para poner los favoritos en la DB SIEMPRE Y CUANDO TENGA FAVORITOS:
       // Agregar favoritos a la base de datos:
       const favoritesToAdd = JSON.parse(window.localStorage.getItem("Fav"));
-      if (favoritesToAdd.length > 0 && userLog.id) {
+      if (favoritesToAdd.length > 0 && userLog?.id) {
         let favoritesIds = [];
         favoritesToAdd.forEach((post) => favoritesIds.push(post.id));
         /* console.log("favoritesIds", favoritesIds);
@@ -53,7 +53,9 @@ const Profile = () => {
     }
   }, [dispatch, user, userLog.id]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    console.log(user)
+  },[user]);
 
   const formik = useFormik({
     initialValues: {
@@ -85,10 +87,10 @@ const Profile = () => {
         <>
           <div className={s.card}>
             <div className={s.user_photo} id="user_photo">
-              <img src={userLog.image ? userLog.image : user.picture} alt="a" />
-              {userLog.name ? <p>{userLog.name}</p> : <p>{user?.nickname}</p>}
+              <img src={userLog?.image ? userLog?.image : user?.picture} alt="a" />
+              {userLog?.name ? <p>{userLog?.name}</p> : <p>{user?.nickname}</p>}
             </div>
-            {!userLog.country ? (
+            {!userLog?.country ? (
               <ToastContainer position="top-end">
                 <Toast bg="warning">
                   <Toast.Header>
@@ -114,7 +116,7 @@ const Profile = () => {
                 id="name"
                 name="name"
                 type="text"
-                placeholder={userLog.name ? userLog.name : user.nickname}
+                placeholder={userLog?.name ? userLog?.name : user?.nickname}
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
@@ -124,7 +126,7 @@ const Profile = () => {
                 id="country"
                 name="country"
                 type="text"
-                placeholder={userLog.country ? userLog.country : "Complete country *"}
+                placeholder={userLog?.country ? userLog?.country : "Complete country *"}
                 onChange={formik.handleChange}
                 value={formik.values.country}
               />
@@ -134,7 +136,7 @@ const Profile = () => {
                 id="phone"
                 name="phone"
                 type="text"
-                placeholder={userLog.phone ? userLog.phone : "Complete phone *"}
+                placeholder={userLog?.phone ? userLog?.phone : "Complete phone *"}
                 onChange={formik.handleChange}
                 value={formik.values.phone}
               />

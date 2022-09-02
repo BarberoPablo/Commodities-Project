@@ -94,12 +94,12 @@ const Navbarr = ({ setCurrentPage }) => {
               menuVariant="dark"
               align="end"
             >
-              <NavDropdown.Item href="profile">
+               <NavDropdown.Item href="/profile">
                 <div >
                   <BsPersonCircle /> Profile
                 </div>
               </NavDropdown.Item>
-              <NavDropdown.Item href="create-post">
+              <NavDropdown.Item href="/create-post">
                 <BsFillChatLeftTextFill /> Create post
               </NavDropdown.Item>
               <NavDropdown.Item className={s.actions}>
