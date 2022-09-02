@@ -17,6 +17,7 @@ import Feedback from "./Components/Home/Footer/Feedback.jsx";
 import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import ProfileUser from "./Components/User/ProfileUser";
 import Favorites from "./Components/Home/Favorites/Favorites";
+import Report from "./Components/Home/Report/Report"
 
 function App() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,6 +56,7 @@ function App() {
       <Route path={"/feedback"} component={Feedback} />
       <Route path={"/admin-panel"} component={AdminPanel} />
       <Route path={"/favorites"} component={Favorites} />
+      <Route path={"/report/:postId/:idReview"} component={Report} />
       <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}
     </div>

@@ -143,5 +143,8 @@ export const Searching = (value) => (dispatch) => {
 export const addFavoritesOnLogin = (favorites) => () => {
   console.log("action", favorites);
   axios.put(`${url}/favorite`, favorites);
-
 };
+
+export const reportTo = (postId, idReview, event) => () => {
+  axios.put(`${url}/admin-panel/post/${postId}/${idReview}`, event)
+}
