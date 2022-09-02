@@ -660,7 +660,7 @@ const deleteOrAddFavorite = async (req, res) => {
   }
 };
 
-const reportOrBannPost = async (req, res) => {
+const reportOrBanPost = async (req, res) => {
   //Ruta pensada para que los Admin puedan ocultar un post reportado
   //y para que otro usuario reporte un post inapropiado.
   //llega por params el id del post reportado, y el id del user que reporta.
@@ -741,6 +741,6 @@ module.exports = {
   addUserContact,
   userBan,
   deleteOrAddFavorite,
-  reportOrBannPost,
+  reportOrBanPost,
   getUserId
 };
