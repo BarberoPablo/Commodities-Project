@@ -486,7 +486,6 @@ const modifyReview = async (req, res) => {
   //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.
   const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo el reporte
   const { display, position } = req.body; // display es false or true si hay que borrar y id indica la posición del review en el array
-
   try {
     if (!userId) {
       throw { status: 404, message: "Id is required" };
