@@ -33,7 +33,7 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           />
         </div>
 
-        <Link to={`/profile-user/` + e.id}>
+        <Link to={`/profile-user/` + e.userId}>
           <b>{user?.name}</b>
         </Link>
 

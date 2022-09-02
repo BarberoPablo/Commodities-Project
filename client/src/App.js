@@ -29,9 +29,11 @@ function App() {
     }
   });
 
+
   useEffect(() => {
     window.localStorage.setItem("Fav", JSON.stringify(Fav));
   }, [Fav]);
+
 
   return (
     <div className="App">
@@ -41,17 +43,17 @@ function App() {
       <Route exact path={"/"}>
         <Home currentPage={currentPage} setCurrentPage={setCurrentPage} setFav={setFav} Fav={Fav} />
       </Route>
+      <Route exact path={"/profile-user/:id"} component={ProfileUser} />
       <Route path="/create-post" component={CreatePost} />
       <Route path={"/about-us"} component={AboutUs} />
       <Route path={"/contact-us"} component={ContactUs} />
       <Route path={"/privacy-policy"} component={PrivacyPolicy} />
       <Route path={"/terms-of-use"} component={TermsOfUse} />
       <Route path={"/glosary"} component={Glosary} />
-      <Route path={"/profile"} component={Profile} />
+      <Route exact path={"/profile"} component={Profile} />
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/feedback"} component={Feedback} />
       <Route path={"/admin-panel"} component={AdminPanel} />
-      <Route path={"/profile-user/:id"} component={ProfileUser} />
       <Route path={"/favorites"} component={Favorites} />
       <Route path={"/"} component={Footer} />
       {/* More routes eje: Profile, Post, UserProfile  */}

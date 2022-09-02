@@ -7,7 +7,7 @@ import {
   filteredShippment,
   setSearch,
 } from "../Slices/postsSlice";
-import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, getProfileDetail } from "../Slices/usersSlice";
+import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, getProfileDetail, getContacts} from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries, sortCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
@@ -15,7 +15,7 @@ import { getAllPlans } from "../Slices/plansSlice";
 import axios from "axios";
 
 const url = "https://b2b-01.herokuapp.com";
-//const url = "http://localhost:3001";
+// const url = "http://localhost:3001";
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
@@ -74,6 +74,7 @@ export const getAllCountries = () => (dispatch) => {
     .then((data) => dispatch(getCountries(data.data)))
     .catch((e) => console.log(e));
 };
+
 export const userLogin = (payload) => (dispatch) => {
   axios(`${url}/user`);
   dispatch(userLog(payload));
@@ -83,17 +84,27 @@ export const createNewUser = (value) => (dispatch) => {
   axios.post(`${url}/user`, value);
   dispatch(createUser(value));
 };
+
+//trae los datos del usuario logeado
 export const getUserDetails = (email) => (dispatch) => {
   axios(`${url}/user/${email}`)
     .then((data) => dispatch(getUserDetail(data.data)))
     .catch((e) => console.log(e));
 };
+
+//Trae los datos del usuario en especifico 
 export const getProfileDetails = (id) => (dispatch) => {
-  console.log("que es? ", id);
   axios(`${url}/userId/` + id)
     .then((data) => dispatch(getProfileDetail(data.data)))
     .catch((e) => console.log(e));
 };
+
+export const getContactsUser = (idSearch,idPost) => (dispatch) =>{
+  axios.put(`${url}/user/${idSearch}/${idPost}`)
+  .then(data=> dispatch(getContacts(data.data)))
+  .catch((e) => console.log(e));
+}
+
 //postPost
 export const postPost = (email, input) => () => {
   axios.post(`${url}/post/${email}`, input);
