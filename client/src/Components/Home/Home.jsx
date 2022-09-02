@@ -8,9 +8,7 @@ import s from "./Home.module.css";
 import Filters from "./Filters/Filters";
 import { useAuth0 } from "@auth0/auth0-react";
 
-
 const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
-
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
   const { posts } = useSelector((state) => state.posts);
@@ -18,8 +16,9 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
 
   useEffect(() => {
     dispatch(getPost());
+    console.log(posts);
     dispatch(getCategoriesByName());
-    dispatch(getUser())
+    dispatch(getUser());
     if (user) {
       dispatch(getUserDetails(user.email));
     }
@@ -39,10 +38,7 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   return (
     <div className={s.container}>
       <div className={s.container_home}>
-        <DrawerCategories
-          allCategories={allCategories}
-          setCurrentPage={setCurrentPage}
-        />
+        <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage} />
         <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
           <Cards currentPost={currentPost} setFav={setFav} Fav={Fav} />

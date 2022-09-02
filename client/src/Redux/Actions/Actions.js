@@ -5,7 +5,7 @@ import {
   filteredPayment,
   filteredCountry,
   filteredShippment,
-  setSearch
+  setSearch,
 } from "../Slices/postsSlice";
 import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, getProfileDetail } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
@@ -14,8 +14,8 @@ import { getAllPlans } from "../Slices/plansSlice";
 
 import axios from "axios";
 
-const url = "https://b2b-01.herokuapp.com";
-//const url = "http://localhost:3001";
+//const url = "https://b2b-01.herokuapp.com";
+const url = "http://localhost:3001";
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
@@ -87,12 +87,12 @@ export const getUserDetails = (email) => (dispatch) => {
   axios(`${url}/user/${email}`)
     .then((data) => dispatch(getUserDetail(data.data)))
     .catch((e) => console.log(e));
-}
+};
 export const getProfileDetails = (email) => (dispatch) => {
   axios(`${url}/user/${email}`)
     .then((data) => dispatch(getProfileDetail(data.data)))
     .catch((e) => console.log(e));
-}
+};
 //postPost
 export const postPost = (email, input) => () => {
   axios.post(`${url}/post/${email}`, input);
@@ -118,11 +118,17 @@ export const asignPlanToUser = (emailAndPlanName) => () => {
 // countries sort
 
 export const sortCountriesName = (value) => (dispatch) => {
-  dispatch(sortCountries(value))
-}
+  dispatch(sortCountries(value));
+};
 
 //Search or Categories
 
 export const Searching = (value) => (dispatch) => {
-  dispatch(setSearch(value))
+  dispatch(setSearch(value));
+};
+
+// Guarda en base de datos los favoritos al logearse
+export const addFavoritesOnLogin = (favorites) => () => {
+  console.log("action", favorites);
+  axios.put(`${url}/favorite`, favorites);
 };

@@ -22,7 +22,7 @@ const {
   modifyReview,
   addUserContact,
   userBan,
-  deleteOrCreateFavorite,
+  deleteOrAddFavorite,
 } = require("./services");
 
 router.get("/posts/", getPosts);
@@ -67,6 +67,6 @@ router.put("/user/:idSearcher/:idPoster", addUserContact);
 
 router.put("/userBan/:id", userBan);
 
-router.put("/favorite/", deleteOrCreateFavorite);
+router.put("/favorite", deleteOrAddFavorite);
 
 module.exports = { router };

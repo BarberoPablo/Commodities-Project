@@ -531,7 +531,6 @@ const addUserContact = async (req, res) => {
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
     if (userSearcher.remainingContacts >= 1) {
       if (userSearcher.contactsIds.includes(userPoster.id)) {
-        console.log("Entramos");
         throw { status: 404, message: "You are already connected with that user" };
       } else {
         await userSearcher.update({
@@ -577,10 +576,57 @@ const userBan = async (req, res) => {
   }
 };
 
-const deleteOrCreateFavorite = (req, res) => {
+// Por body se pasa un array con los favoritos a agregar, cuando está logeado se pasa un array con una sola componente
+// Si se quiere agregar un solo favorito, se pasa por query, si se pasan muchos (como en el log-in) por body con "favoritesToAdd"
+const deleteOrAddFavorite = async (req, res) => {
   try {
-    const { id, create } = req.query;
-  } catch (error) {}
+    const { favoritesToAdd, userId, postId } = req.body;
+    console.log(favoritesToAdd, userId, postId);
+    // Busco al user con el id userId:
+    const user = await User.findOne({
+      where: { id: userId },
+    });
+
+    // Si no encuentro un user con id=userId entonces error:
+    if (!user) {
+      throw { status: 404, message: `User with id ${userId} does not exists` };
+    }
+
+    // Si me pasan muchos id, los sumo todos juntos
+
+    if (favoritesToAdd) {
+      // No puedo hacer una asignacion directa tipo: newFavorites = user.favoritesIds
+      //  porque se le asigna un objeto por referencia y hay problemas
+      const newFavorites = user.favoritesIds.length ? user.favoritesIds.map((id) => id) : [];
+      for (let i = 0; i < favoritesToAdd.length; i++) {
+        // Si no está (=== -1), lo agrego:
+        if (user.favoritesIds.indexOf(favoritesToAdd[i]) === -1) {
+          newFavorites.push(favoritesToAdd[i]);
+        }
+      }
+      await user.update({
+        favoritesIds: newFavorites,
+      });
+      return res.status(200).send(`Posts with id: ${favoritesToAdd} added to favorites`);
+    } else {
+      if (!user.favoritesIds.includes(Number(postId))) {
+        // Si no hay guardado un post en favoritos con ese id, entonces lo agrego:
+        await user.update({
+          favoritesIds: user.favoritesIds.concat(postId),
+        });
+        return res.status(200).send(`Favorite added, post id: ${postId}`);
+      } else {
+        // Si ya hay guardado un post en favoritos con ese id, entonces lo saco:
+        const newFavorites = user.favoritesIds.filter((favoriteId) => favoriteId !== Number(postId));
+        await user.update({
+          favoritesIds: newFavorites,
+        });
+        return res.status(200).send(`Favorite removed, post id: ${postId}`);
+      }
+    }
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 };
 
 module.exports = {
@@ -604,5 +650,5 @@ module.exports = {
   modifyReview,
   addUserContact,
   userBan,
-  deleteOrCreateFavorite,
+  deleteOrAddFavorite,
 };
