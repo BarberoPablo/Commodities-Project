@@ -23,7 +23,7 @@ const {
   addUserContact,
   userBan,
   deleteOrAddFavorite,
-  reportOrBannPost,
+  reportOrBanPost,
   getUserId
 } = require("./services");
 
@@ -73,6 +73,6 @@ router.put("/userBan/:id", userBan);
 
 router.put("/favorite", deleteOrAddFavorite);
 
-router.put("/admin-panel/post/:postId/:idReview", reportOrBannPost);
+router.put("/admin-panel/post/:postId/:idReview", reportOrBanPost);
 
 module.exports = { router };
