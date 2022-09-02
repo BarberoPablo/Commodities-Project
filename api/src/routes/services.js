@@ -49,10 +49,29 @@ const createPost = async (req, res) => {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
     //Category es un id (integer)
-    const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
+    const {
+      title,
+      description,
+      sell,
+      shipping,
+      payment,
+      subCategory,
+      image,
+      country,
+      categoryName,
+    } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (!email || !title || !description || !shipping[0] || !payment[0] || !subCategory || !country || !categoryName) {
+    if (
+      !email ||
+      !title ||
+      !description ||
+      !shipping[0] ||
+      !payment[0] ||
+      !subCategory ||
+      !country ||
+      !categoryName
+    ) {
       throw { status: 400, message: "missing data" };
     }
     const user = await User.findOne({
@@ -63,10 +82,18 @@ const createPost = async (req, res) => {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
     }
 
-    if (!description || !shipping || !payment || !categoryName || !country || !subCategory) {
+    if (
+      !description ||
+      !shipping ||
+      !payment ||
+      !categoryName ||
+      !country ||
+      !subCategory
+    ) {
       throw {
         status: 400,
-        message: "Parameters error, check description, shipping, paymend, country, category and subCategory",
+        message:
+          "Parameters error, check description, shipping, paymend, country, category and subCategory",
       };
     }
 
@@ -268,7 +295,8 @@ const modifyOrCreateUser = async (req, res) => {
     if (!country || !email || !image || !name || !phone) {
       throw {
         status: 400,
-        message: "Please send all the properties of the new user, even the old ones",
+        message:
+          "Please send all the properties of the new user, even the old ones",
       };
     }
     // Si el usuario no existe, se crea
@@ -559,7 +587,10 @@ const addUserContact = async (req, res) => {
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
     if (userSearcher.remainingContacts >= 1) {
       if (userSearcher.contactsIds.includes(userPoster.id)) {
-        throw { status: 404, message: "You are already connected with that user" };
+        throw {
+          status: 404,
+          message: "You are already connected with that user",
+        };
       } else {
         await userSearcher.update({
           contactsIds: userSearcher.contactsIds.concat(userPoster.id),
@@ -573,7 +604,10 @@ const addUserContact = async (req, res) => {
         res.status(201).json(userSearcher);
       }
     } else {
-      throw { status: 401, message: `You don't have remaining contacts available` };
+      throw {
+        status: 401,
+        message: `You don't have remaining contacts available`,
+      };
     }
   } catch (error) {
     res.status(error.status).send(error.message);
@@ -588,7 +622,10 @@ const userBan = async (req, res) => {
   try {
     const banUser = await User.findOne({ where: { id: id } });
     if (!banUser) {
-      throw { status: 400, message: `User searcher with id ${id} is not found` };
+      throw {
+        status: 400,
+        message: `User searcher with id ${id} is not found`,
+      };
     } else if (banUser.isBanned) {
       await banUser.update({
         isBanned: false,
@@ -625,7 +662,9 @@ const deleteOrAddFavorite = async (req, res) => {
     if (favoritesToAdd) {
       // No puedo hacer una asignacion directa tipo: newFavorites = user.favoritesIds
       //  porque se le asigna un objeto por referencia y hay problemas
-      const newFavorites = user.favoritesIds.length ? user.favoritesIds.map((id) => id) : [];
+      const newFavorites = user.favoritesIds.length
+        ? user.favoritesIds.map((id) => id)
+        : [];
       for (let i = 0; i < favoritesToAdd.length; i++) {
         // Si no está (=== -1), lo agrego:
         if (user.favoritesIds.indexOf(favoritesToAdd[i]) === -1) {
@@ -635,7 +674,9 @@ const deleteOrAddFavorite = async (req, res) => {
       await user.update({
         favoritesIds: newFavorites,
       });
-      return res.status(200).send(`Posts with id: ${favoritesToAdd} added to favorites`);
+      return res
+        .status(200)
+        .send(`Posts with id: ${favoritesToAdd} added to favorites`);
     } else {
       if (!user.favoritesIds.includes(Number(postId))) {
         // Si no hay guardado un post en favoritos con ese id, entonces lo agrego:
@@ -645,7 +686,9 @@ const deleteOrAddFavorite = async (req, res) => {
         return res.status(200).send(`Favorite added, post id: ${postId}`);
       } else {
         // Si ya hay guardado un post en favoritos con ese id, entonces lo saco:
-        const newFavorites = user.favoritesIds.filter((favoriteId) => favoriteId !== Number(postId));
+        const newFavorites = user.favoritesIds.filter(
+          (favoriteId) => favoriteId !== Number(postId)
+        );
         await user.update({
           favoritesIds: newFavorites,
         });
