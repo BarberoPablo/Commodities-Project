@@ -668,7 +668,7 @@ const reportOrBannPost = async (req, res) => {
   //Si el admin coincide en dar de baja el review este se oculta.
   //Ruta: "/admin-panel/post/:postId/:idReview",
   const { postId, idReview } = req.params; //postId el del post reportado y el otro es el del user que hizo el reporte
-  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Bann") o desestimar ("Dismiss").
+  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Ban") o desestimar ("Dismiss").
   try {
     if (!postId || !idReview) {
       throw { status: 404, message: "Id is required" };
@@ -683,8 +683,8 @@ const reportOrBannPost = async (req, res) => {
       };
     }
     const newPost = post.toJSON();
-    if (event === "Bann") {
-      // si event === Bann entonces oculto el post comentado.
+    if (event === "Ban") {
+      // si event === Ban entonces oculto el post comentado.
       //Ocultado del post cuestionado 
       var reportedIds = newPost.reportedIds;
       var display = false;
