@@ -5,7 +5,7 @@ import {
   filteredPayment,
   filteredCountry,
   filteredShippment,
-  setSearch
+  setSearch,
 } from "../Slices/postsSlice";
 import { getUserDetail, getAllUsers, userLog, createUser, getUserPosts, getProfileDetail } from "../Slices/usersSlice";
 import { getCategories } from "../Slices/categoriesSlice";
@@ -118,11 +118,18 @@ export const asignPlanToUser = (emailAndPlanName) => () => {
 // countries sort
 
 export const sortCountriesName = (value) => (dispatch) => {
-  dispatch(sortCountries(value))
-}
+  dispatch(sortCountries(value));
+};
 
 //Search or Categories
 
 export const Searching = (value) => (dispatch) => {
-  dispatch(setSearch(value))
+  dispatch(setSearch(value));
+};
+
+// Guarda en base de datos los favoritos al logearse
+export const addFavoritesOnLogin = (favorites) => () => {
+  console.log("action", favorites);
+  axios.put(`${url}/favorite`, favorites);
+
 };

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import { userPosts, createNewUser, getUserDetails } from "../../Redux/Actions/Actions";
+import { userPosts, createNewUser, getUserDetails, addFavoritesOnLogin } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
@@ -36,14 +36,24 @@ const Profile = () => {
     if (user) {
       dispatch(userPosts());
       dispatch(getUserDetails(user.email));
-      dispatch(getUserDetails(user.email));
       //Aca iría la logica para poner los favoritos en la DB SIEMPRE Y CUANDO TENGA FAVORITOS:
-      console.log("Usuario logeado, cargar favoritos a DB:");
-      console.log("Favoritos a agregar:", window.localStorage.getItem("Fav"));
-      window.localStorage.setItem("Fav", JSON.stringify([]));
-      console.log("Favoritos ahora:", window.localStorage.getItem("Fav"));
+      // Agregar favoritos a la base de datos:
+      const favoritesToAdd = JSON.parse(window.localStorage.getItem("Fav"));
+      if (favoritesToAdd.length > 0 && userLog.id) {
+        let favoritesIds = [];
+        favoritesToAdd.forEach((post) => favoritesIds.push(post.id));
+        /* console.log("favoritesIds", favoritesIds);
+        console.log("Favoritos antes:", JSON.parse(window.localStorage.getItem("Fav")));
+        console.log("Hacia el back: ", { favoritesIds, userId: userLog?.id }); 
+        console.log("Favoritos ahora:", JSON.parse(window.localStorage.getItem("Fav")));
+        */
+        dispatch(addFavoritesOnLogin({ favoritesToAdd: favoritesIds, userId: userLog.id }));
+        window.localStorage.setItem("Fav", JSON.stringify([]));
+      }
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, userLog.id]);
+
+  useEffect(() => {});
 
   const formik = useFormik({
     initialValues: {
