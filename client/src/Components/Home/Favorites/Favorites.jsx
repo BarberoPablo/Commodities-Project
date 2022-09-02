@@ -42,18 +42,6 @@ const Favorites = () => {
       ) : (
         <h1>You have no favorites</h1>
       )}
-      {/* 
-      {favorites?.length > 0 ? (
-        favorites.map((e, index) => (
-          <div key={index}>
-            <h1>{e.title}</h1>
-            <p>{e.categoryName}</p>
-            <button onClick={() => handleDelete({ e })}>x</button>
-          </div>
-        ))
-      ) : (
-        <h1>You have no favorites</h1>
-      )} */}
     </div>
   );
 };
