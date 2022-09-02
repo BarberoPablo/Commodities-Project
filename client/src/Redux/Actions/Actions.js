@@ -131,4 +131,5 @@ export const Searching = (value) => (dispatch) => {
 export const addFavoritesOnLogin = (favorites) => () => {
   console.log("action", favorites);
   axios.put(`${url}/favorite`, favorites);
+
 };
