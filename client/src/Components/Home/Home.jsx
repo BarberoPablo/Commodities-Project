@@ -1,28 +1,28 @@
 import { React, useEffect, useState } from "react";
 import DrawerCategories from "./DrawerCategories/DrawerCategories";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getCategoriesByName, getUserDetails, getUser, getProfileDetails } from "../../Redux/Actions/Actions";
+import {
+  getPost,
+  getCategoriesByName,
+  getUserDetails,
+  getUser,
+  getProfileDetails,
+} from "../../Redux/Actions/Actions";
 import Cards from "./Card/Cards";
 import Paginado from "./Paginado/Paginado";
 import s from "./Home.module.css";
 import Filters from "./Filters/Filters";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
   const { posts } = useSelector((state) => state.posts);
-  const { user } = useAuth0();
 
   useEffect(() => {
     dispatch(getPost());
-    console.log(posts);
     dispatch(getCategoriesByName());
     dispatch(getUser());
-    if (user) {
-      dispatch(getUserDetails(user.email));
-    }
-  }, [dispatch, user]);
+  }, [dispatch]);
 
   //paginado
   //pagina actual
@@ -38,13 +38,15 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   return (
     <div className={s.container}>
       <div className={s.container_home}>
-        <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage} />
+        <DrawerCategories
+          allCategories={allCategories}
+          setCurrentPage={setCurrentPage}
+        />
         <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
           <Cards currentPost={currentPost} setFav={setFav} Fav={Fav} />
           {/* more components in HOME */}
-          {
-            posts.length ? 
+          {posts.length ? (
             <Paginado
               setPostPerPage={setPostPerPage}
               setCurrentPage={setCurrentPage}
@@ -53,8 +55,7 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
               paginado={paginado}
               currentPage={currentPage}
             />
-            :null
-          }
+          ) : null}
         </div>
       </div>
     </div>
