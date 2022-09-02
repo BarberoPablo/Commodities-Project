@@ -30,12 +30,20 @@ const ProfileUser = ({ match }) => {
               <img src={profileUser.image} alt="a" />
               <p>{profileUser.name}</p>
             </div>
-            <Button variant="warning" className={s.btn} size="sm" onClick={toggleShowA}>
+            <Button
+              variant="warning"
+              className={s.btn}
+              size="sm"
+              onClick={toggleShowA}
+            >
               Contact
             </Button>
             <ToastContainer position="bottom-center">
               <Toast show={showA} onClose={toggleShowA} bg="secondary">
-                <Toast.Body>By accepting, one of your contacts will be deducted, are you sure?</Toast.Body>
+                <Toast.Body>
+                  By accepting, one of your contacts will be deducted, are you
+                  sure?
+                </Toast.Body>
                 <Button variant="warning" size="sm" onClick={toggleShowA}>
                   ok
                 </Button>
@@ -47,7 +55,6 @@ const ProfileUser = ({ match }) => {
               filter.map((e, i) => {
                 return (
                   <div key={i} className={s.container_x}>
-                    <b>{e.title}</b>
                     <div className={s.container_a}>
                       {e.sell ? (
                         <p
@@ -71,7 +78,9 @@ const ProfileUser = ({ match }) => {
                         </p>
                       )}
                       <p className={s.container_time}>
-                        {e.createdAt.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                        {e.createdAt
+                          .slice(0, 10)
+                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
                     <div className={s.container_b}>
@@ -95,9 +104,16 @@ const ProfileUser = ({ match }) => {
                       </p>
                     </div>
                     <div>
-                      <p>{e.description}</p>
                       <hr />
-                      {e.image ? <img src={e.image} alt={e.title} style={{ width: "30%", height: "30%" }} /> : null}
+                      <b>{e.title}</b>
+                      <p>{e.description}</p>
+                      {e.image ? (
+                        <img
+                          src={e.image}
+                          alt={e.title}
+                          style={{ width: "30%", height: "30%" }}
+                        />
+                      ) : null}
                     </div>
                   </div>
                 );
