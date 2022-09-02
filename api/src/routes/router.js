@@ -24,7 +24,7 @@ const {
   userBan,
   deleteOrAddFavorite,
   reportOrBanPost,
-  getUserId
+  getUserId,
 } = require("./services");
 
 router.get("/posts/", getPosts);

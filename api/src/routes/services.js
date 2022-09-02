@@ -107,7 +107,7 @@ const getReviews = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(id);
-    if(id === "All") {
+    if (id === "All") {
       var reviews = await ReviewUser.findAll();
     } else {
       var reviews = await ReviewUser.findOne({
@@ -115,7 +115,6 @@ const getReviews = async (req, res) => {
       });
     }
     return res.status(200).send(reviews);
-
   } catch (error) {
     return res.status(404).send("The reviews selected are no longer available");
   }
@@ -329,9 +328,7 @@ const getUserDetail = async (req, res) => {
     });
     if (user) {
       return res.status(200).send(user);
-    } 
-
-    else {
+    } else {
       res.status(404).send("User not found");
     }
   } catch (error) {
@@ -339,25 +336,22 @@ const getUserDetail = async (req, res) => {
   }
 };
 
-const getUserId = async (req ,res ) => {
-  const { id } = req.params
+const getUserId = async (req, res) => {
+  const { id } = req.params;
+  console.log("getUserId", id);
   try {
-
     const userId = await User.findOne({
       where: { id: id },
     });
-    if(userId) {
-      return res.status(200).send(userId)
-    }
-  
-    else {
+    if (userId) {
+      return res.status(200).send(userId);
+    } else {
       res.status(404).send("User not found");
     }
-  
-} catch (error) {
-  res.status(error.status).send(error.message);
-}
-}
+  } catch (error) {
+    res.status(error.status).send(error.message);
+  }
+};
 
 const getAllUsers = async (req, res) => {
   //Ruta util para el panel de usuario
@@ -502,18 +496,20 @@ const modifyReview = async (req, res) => {
     const newReview = user.toJSON();
     if (display === "Erase") {
       // si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
-      //borrado del review cuestionado 
+      //borrado del review cuestionado
       var scoreSum = newReview.scoreSum - newReview.reviews[position].score;
       newReview.reviews.splice(position, 1);
       var reviews = newReview.reviews;
       var average = scoreSum / reviews.length;
-    } else if(display === "Report"){     //"Report"
+    } else if (display === "Report") {
+      //"Report"
       //Aca marcamos el review para revisión
       newReview.reviews[position].idReport.push(idReview);
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
       var average = newReview.average;
-    } else {                  //"Confirm"
+    } else {
+      //"Confirm"
       //Aca eliminamos el reporte para confirmar que el review esta correcto
       newReview.reviews[position].idReport = [];
       var reviews = newReview.reviews;
@@ -668,13 +664,13 @@ const reportOrBanPost = async (req, res) => {
   //Si el admin coincide en dar de baja el review este se oculta.
   //Ruta: "/admin-panel/post/:postId/:idReview",
   const { postId, idReview } = req.params; //postId el del post reportado y el otro es el del user que hizo el reporte
-  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Ban") o desestimar ("Dismiss").
+  const { event } = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Ban") o desestimar ("Dismiss").
   try {
     if (!postId || !idReview) {
       throw { status: 404, message: "Id is required" };
     }
     const post = await Post.findOne({
-      where: { id : postId },
+      where: { id: postId },
     });
     if (!post) {
       throw {
@@ -685,21 +681,24 @@ const reportOrBanPost = async (req, res) => {
     const newPost = post.toJSON();
     if (event === "Ban") {
       // si event === Ban entonces oculto el post comentado.
-      //Ocultado del post cuestionado 
+      //Ocultado del post cuestionado
       var reportedIds = newPost.reportedIds;
       var display = false;
-    } else if(event === "Report"){     //"Report"
+    } else if (event === "Report") {
+      //"Report"
       //Aca marcamos el post para revisión, agregando el Id de quien lo reporta
       newPost.reportedIds.push(idReview);
       var reportedIds = newPost.reportedIds;
       var display = true;
-    } else {                  //"Dismiss"
+    } else {
+      //"Dismiss"
       //Aca eliminamos el reporte para confirmar que el post esta correcto y revertimos el Display
       newPost.reportedIds = [];
       var reportedIds = newPost.reportedIds;
       var display = true;
     }
-    await Post.upsert({         //actualizo el regsitro en base de datos
+    await Post.upsert({
+      //actualizo el regsitro en base de datos
       id: postId,
       title: newPost.title,
       description: newPost.description,
@@ -707,11 +706,11 @@ const reportOrBanPost = async (req, res) => {
       shipping: newPost.shipping,
       payment: newPost.payment,
       subCategory: newPost.subCategory,
-      image:newPost.image,
+      image: newPost.image,
       display,
-      country:newPost.country,
+      country: newPost.country,
       reportedIds,
-      categoryName:newPost.categoryName,
+      categoryName: newPost.categoryName,
     });
     return res.status(201).json("Post has been Updated");
   } catch (error) {
@@ -742,5 +741,5 @@ module.exports = {
   userBan,
   deleteOrAddFavorite,
   reportOrBanPost,
-  getUserId
+  getUserId,
 };

@@ -2,17 +2,11 @@ import { React, useState } from "react";
 import { useDispatch } from "react-redux";
 import s from "./Card.module.css";
 import { getProfileDetails } from "../../../Redux/Actions/Actions";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import ToastHide from "./ToastHide";
 
-const CardDetail = ({ e, user, setFav, Fav}) => {
-
- const dispatch = useDispatch();
-
-  const handle = () => {
-    dispatch(getProfileDetails(user.email))  
-  }
-  
+const CardDetail = ({ e, user, setFav, Fav }) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   const handleClick = (event) => {
@@ -39,24 +33,16 @@ const CardDetail = ({ e, user, setFav, Fav}) => {
           />
         </div>
 
-          <Link to= {`/profile-user/`+ e.id}>
-            <b onClick={handle}>{user?.name}</b>
-          </Link>
+        <Link to={`/profile-user/` + e.id}>
+          <b>{user?.name}</b>
+        </Link>
 
         {e.sell ? (
-          <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>
-            Seller
-          </p>
+          <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>Seller</p>
         ) : (
-          <p style={{ color: "green", marginTop: "20px", marginLeft: "15px" }}>
-            Buyer
-          </p>
+          <p style={{ color: "green", marginTop: "20px", marginLeft: "15px" }}>Buyer</p>
         )}
-        <p className={s.container_time}>
-          {e.createdAt
-            .slice(0, 10)
-            .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
-        </p>
+        <p className={s.container_time}>{e.createdAt.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}</p>
       </div>
       <div className={s.container_b}>
         <p>
@@ -77,13 +63,7 @@ const CardDetail = ({ e, user, setFav, Fav}) => {
         <p>
           Shipping: <b>{e.shipping}</b>
         </p>
-        <ToastHide
-          show={show}
-          setShow={setShow}
-          handleClick={handleClick}
-          e={e}
-          Fav={Fav}
-        />
+        <ToastHide show={show} setShow={setShow} handleClick={handleClick} e={e} Fav={Fav} />
       </div>
       <div>
         <hr />

@@ -30,20 +30,12 @@ const ProfileUser = ({ match }) => {
               <img src={profileUser.image} alt="a" />
               <p>{profileUser.name}</p>
             </div>
-            <Button
-              variant="warning"
-              className={s.btn}
-              size="sm"
-              onClick={toggleShowA}
-            >
+            <Button variant="warning" className={s.btn} size="sm" onClick={toggleShowA}>
               Contact
             </Button>
             <ToastContainer position="bottom-center">
               <Toast show={showA} onClose={toggleShowA} bg="secondary">
-                <Toast.Body>
-                  By accepting, one of your contacts will be deducted, are you
-                  sure?
-                </Toast.Body>
+                <Toast.Body>By accepting, one of your contacts will be deducted, are you sure?</Toast.Body>
                 <Button variant="warning" size="sm" onClick={toggleShowA}>
                   ok
                 </Button>
@@ -52,9 +44,9 @@ const ProfileUser = ({ match }) => {
           </div>
           <div className={s.containerPost}>
             {filter &&
-              filter.map((e) => {
+              filter.map((e, i) => {
                 return (
-                  <div className={s.container_x}>
+                  <div key={i} className={s.container_x}>
                     <b>{e.title}</b>
                     <div className={s.container_a}>
                       {e.sell ? (
@@ -64,7 +56,7 @@ const ProfileUser = ({ match }) => {
                             marginTop: "20px",
                             marginLeft: "15px",
                           }}
-                          >
+                        >
                           Seller
                         </p>
                       ) : (
@@ -79,9 +71,7 @@ const ProfileUser = ({ match }) => {
                         </p>
                       )}
                       <p className={s.container_time}>
-                        {e.createdAt
-                          .slice(0, 10)
-                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                        {e.createdAt.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
                     <div className={s.container_b}>
@@ -96,8 +86,8 @@ const ProfileUser = ({ match }) => {
                       </p>
                       <p>
                         payment:{" "}
-                        {e.payment?.map((e) => {
-                          return <b>{e} </b>;
+                        {e.payment?.map((e, i) => {
+                          return <b key={i}>{e} </b>;
                         })}
                       </p>
                       <p>
@@ -107,13 +97,7 @@ const ProfileUser = ({ match }) => {
                     <div>
                       <p>{e.description}</p>
                       <hr />
-                      {e.image ? (
-                        <img
-                          src={e.image}
-                          alt={e.title}
-                          style={{ width: "30%", height: "30%" }}
-                        />
-                      ) : null}
+                      {e.image ? <img src={e.image} alt={e.title} style={{ width: "30%", height: "30%" }} /> : null}
                     </div>
                   </div>
                 );
