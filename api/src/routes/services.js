@@ -49,29 +49,10 @@ const createPost = async (req, res) => {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
     //Category es un id (integer)
-    const {
-      title,
-      description,
-      sell,
-      shipping,
-      payment,
-      subCategory,
-      image,
-      country,
-      categoryName,
-    } = req.body;
+    const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (
-      !email ||
-      !title ||
-      !description ||
-      !shipping[0] ||
-      !payment[0] ||
-      !subCategory ||
-      !country ||
-      !categoryName
-    ) {
+    if (!email || !title || !description || !shipping[0] || !payment[0] || !subCategory || !country || !categoryName) {
       throw { status: 400, message: "missing data" };
     }
     const user = await User.findOne({
@@ -82,18 +63,10 @@ const createPost = async (req, res) => {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
     }
 
-    if (
-      !description ||
-      !shipping ||
-      !payment ||
-      !categoryName ||
-      !country ||
-      !subCategory
-    ) {
+    if (!description || !shipping || !payment || !categoryName || !country || !subCategory) {
       throw {
         status: 400,
-        message:
-          "Parameters error, check description, shipping, paymend, country, category and subCategory",
+        message: "Parameters error, check description, shipping, paymend, country, category and subCategory",
       };
     }
 
@@ -154,9 +127,9 @@ const createReview = async (req, res) => {
   const { comment, score, userId, idReviewer } = req.body;
   try {
     const reviewerExists = await ReviewUser.findOne({
-      where: { userId: idReviewer}
+      where: { userId: idReviewer },
     });
-    if (comment.length < 512 ) {
+    if (comment.length < 512) {
       const userAlreadyExists = await ReviewUser.findOne({
         where: { userId: userId },
       });
@@ -296,8 +269,7 @@ const modifyOrCreateUser = async (req, res) => {
     if (!country || !email || !image || !name || !phone) {
       throw {
         status: 400,
-        message:
-          "Please send all the properties of the new user, even the old ones",
+        message: "Please send all the properties of the new user, even the old ones",
       };
     }
     // Si el usuario no existe, se crea
@@ -590,7 +562,6 @@ const addUserContact = async (req, res) => {
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
     if (userSearcher.remainingContacts >= 1) {
       if (userSearcher.contactsIds.includes(userPoster.id)) {
-        console.log("Entramos");
         throw { status: 404, message: "You are already connected with that user" };
       } else {
         await userSearcher.update({
@@ -614,30 +585,78 @@ const addUserContact = async (req, res) => {
 
 const userBan = async (req, res) => {
   // Al ser una ruta para el admin, no seria necesario ocultar los usuarios banneados, si se requiere traer solo a los
-  // usuarios habilitados, tendria que ser mediante un filter que deje solo a los que tienen isBanned en false  
-  const { id } = req.params
-  
+  // usuarios habilitados, tendria que ser mediante un filter que deje solo a los que tienen isBanned en false
+  const { id } = req.params;
+
   try {
-    const banUser= await User.findOne(
-      {where: {id: id}}
-    ) 
+    const banUser = await User.findOne({ where: { id: id } });
     if (!banUser) {
       throw { status: 400, message: `User searcher with id ${id} is not found` };
-    }
-    else if (banUser.isBanned) {
+    } else if (banUser.isBanned) {
       await banUser.update({
-        isBanned: false
-      })
-    }
-    else {
+        isBanned: false,
+      });
+    } else {
       await banUser.update({
-        isBanned: true
-      })
+        isBanned: true,
+      });
     }
-    return res.status(201).send(`User's ban has been modificated`)
-
+    return res.status(201).send(`User's ban has been modificated`);
   } catch (error) {
-    res.status(error.status).send(error.message)
+    res.status(error.status).send(error.message);
+  }
+};
+
+// Por body se pasa un array con los favoritos a agregar, cuando está logeado se pasa un array con una sola componente
+// Si se quiere agregar un solo favorito, se pasa por query, si se pasan muchos (como en el log-in) por body con "favoritesToAdd"
+const deleteOrAddFavorite = async (req, res) => {
+  try {
+    const { favoritesToAdd, userId, postId } = req.body;
+    console.log(favoritesToAdd, userId, postId);
+    // Busco al user con el id userId:
+    const user = await User.findOne({
+      where: { id: userId },
+    });
+
+    // Si no encuentro un user con id=userId entonces error:
+    if (!user) {
+      throw { status: 404, message: `User with id ${userId} does not exists` };
+    }
+
+    // Si me pasan muchos id, los sumo todos juntos
+
+    if (favoritesToAdd) {
+      // No puedo hacer una asignacion directa tipo: newFavorites = user.favoritesIds
+      //  porque se le asigna un objeto por referencia y hay problemas
+      const newFavorites = user.favoritesIds.length ? user.favoritesIds.map((id) => id) : [];
+      for (let i = 0; i < favoritesToAdd.length; i++) {
+        // Si no está (=== -1), lo agrego:
+        if (user.favoritesIds.indexOf(favoritesToAdd[i]) === -1) {
+          newFavorites.push(favoritesToAdd[i]);
+        }
+      }
+      await user.update({
+        favoritesIds: newFavorites,
+      });
+      return res.status(200).send(`Posts with id: ${favoritesToAdd} added to favorites`);
+    } else {
+      if (!user.favoritesIds.includes(Number(postId))) {
+        // Si no hay guardado un post en favoritos con ese id, entonces lo agrego:
+        await user.update({
+          favoritesIds: user.favoritesIds.concat(postId),
+        });
+        return res.status(200).send(`Favorite added, post id: ${postId}`);
+      } else {
+        // Si ya hay guardado un post en favoritos con ese id, entonces lo saco:
+        const newFavorites = user.favoritesIds.filter((favoriteId) => favoriteId !== Number(postId));
+        await user.update({
+          favoritesIds: newFavorites,
+        });
+        return res.status(200).send(`Favorite removed, post id: ${postId}`);
+      }
+    }
+  } catch (error) {
+    res.status(404).send(error.message);
   }
 };
 
@@ -649,7 +668,7 @@ const reportOrBannPost = async (req, res) => {
   //Si el admin coincide en dar de baja el review este se oculta.
   //Ruta: "/admin-panel/post/:postId/:idReview",
   const { postId, idReview } = req.params; //postId el del post reportado y el otro es el del user que hizo el reporte
-  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Bann") o desestimar ("Dismiss").
+  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Ban") o desestimar ("Dismiss").
   try {
     if (!postId || !idReview) {
       throw { status: 404, message: "Id is required" };
@@ -664,8 +683,8 @@ const reportOrBannPost = async (req, res) => {
       };
     }
     const newPost = post.toJSON();
-    if (event === "Bann") {
-      // si event === Bann entonces oculto el post comentado.
+    if (event === "Ban") {
+      // si event === Ban entonces oculto el post comentado.
       //Ocultado del post cuestionado 
       var reportedIds = newPost.reportedIds;
       var display = false;
@@ -721,6 +740,7 @@ module.exports = {
   modifyReview,
   addUserContact,
   userBan,
+  deleteOrAddFavorite,
   reportOrBannPost,
   getUserId
 };

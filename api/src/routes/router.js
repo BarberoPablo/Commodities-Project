@@ -22,6 +22,7 @@ const {
   modifyReview,
   addUserContact,
   userBan,
+  deleteOrAddFavorite,
   reportOrBannPost,
   getUserId
 } = require("./services");
@@ -69,6 +70,8 @@ router.put("/admin-panel/review/:userId/:idReview", modifyReview);
 router.put("/user/:idSearcher/:idPoster", addUserContact);
 
 router.put("/userBan/:id", userBan);
+
+router.put("/favorite", deleteOrAddFavorite);
 
 router.put("/admin-panel/post/:postId/:idReview", reportOrBannPost);
 
