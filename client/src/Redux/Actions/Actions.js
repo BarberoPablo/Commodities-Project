@@ -24,8 +24,10 @@ import { getAllReviews } from "../Slices/reviewsSlice";
 
 import axios from "axios";
 
-//const url = "https://b2b-01.herokuapp.com";
-const url = "http://localhost:3001";
+
+const url = "https://b2b-01.herokuapp.com";
+//const url = "http://localhost:3001";
+
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
@@ -160,6 +162,12 @@ export const reportTo = (postId, idReview, event) => () => {
   axios.put(`${url}/admin-panel/post/${postId}/${idReview}`, event);
 };
 
+//Review
+
+export const postReview = (review) => () =>{
+  axios.post(`${url}/review`, review);
+}
+
 export const banUser = (id) => (dispatch) =>{
   axios.put(`${url}/userBan/${id}`)
   .then(() => {dispatch(dispatch(getUser()));
@@ -172,3 +180,4 @@ export const getReviews = (id) => (dispatch) => {
     .then((data) => dispatch(getAllReviews(data.data)))
     .catch((e) => console.log(e));
 };
+
