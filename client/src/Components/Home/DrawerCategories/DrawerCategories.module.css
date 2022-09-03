@@ -1,13 +1,12 @@
 .container{
-  margin-top: 1%;
-  margin-left: 1%;
+  margin-top: 0.5%;
+  margin-left: 0.5%;
   border-radius: 10px;
   background-color: #151e22;
   width: 16%;
-  height: 92vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   color: white;
 }
 
