@@ -23,7 +23,7 @@ import { getAllPlans } from "../Slices/plansSlice";
 import axios from "axios";
 
 const url = "https://b2b-01.herokuapp.com";
-// const url = "http://localhost:3001";
+//const url = "http://localhost:3001";
 // FUNCTIONS POSTS
 
 export const getPost = () => (dispatch) => {
@@ -149,7 +149,7 @@ export const Searching = (value) => (dispatch) => {
 };
 
 // Guarda en base de datos los favoritos al logearse
-export const addFavoritesOnLogin = (favorites) => () => {
+export const addFavorites = (favorites) => () => {
   console.log("action", favorites);
   axios.put(`${url}/favorite`, favorites);
 };

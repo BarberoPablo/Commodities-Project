@@ -1,7 +1,12 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import { userPosts, createNewUser, getUserDetails, addFavoritesOnLogin } from "../../Redux/Actions/Actions";
+import {
+  userPosts,
+  createNewUser,
+  getUserDetails,
+  addFavorites,
+} from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
@@ -47,15 +52,17 @@ const Profile = () => {
         console.log("Hacia el back: ", { favoritesIds, userId: userLog?.id }); 
         console.log("Favoritos ahora:", JSON.parse(window.localStorage.getItem("Fav")));
         */
-        dispatch(addFavoritesOnLogin({ favoritesToAdd: favoritesIds, userId: userLog.id }));
+        dispatch(
+          addFavorites({ favoritesToAdd: favoritesIds, userId: userLog.id })
+        );
         window.localStorage.setItem("Fav", JSON.stringify([]));
       }
     }
   }, [dispatch, user, userLog.id]);
 
   useEffect(() => {
-    console.log(user)
-  },[user]);
+    console.log(user);
+  }, [user]);
 
   const formik = useFormik({
     initialValues: {
@@ -87,25 +94,38 @@ const Profile = () => {
         <>
           <div className={s.card}>
             <div className={s.user_photo} id="user_photo">
-              <img src={userLog?.image ? userLog?.image : user?.picture} alt="a" />
+              <img
+                src={userLog?.image ? userLog?.image : user?.picture}
+                alt="a"
+              />
               {userLog?.name ? <p>{userLog?.name}</p> : <p>{user?.nickname}</p>}
             </div>
             {!userLog?.country ? (
               <ToastContainer position="top-end">
                 <Toast bg="warning">
                   <Toast.Header>
-                    <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+                    <img
+                      src="holder.js/20x20?text=%20"
+                      className="rounded me-2"
+                      alt=""
+                    />
                     <strong className="me-auto">Required!</strong>
                     <small className="text-muted">just now</small>
                   </Toast.Header>
                   <Toast.Body>
                     {" "}
-                    Complete the required fields to validate your profile <br /> <b>*Email </b>and<b> *Phone</b>
+                    Complete the required fields to validate your profile <br />{" "}
+                    <b>*Email </b>and<b> *Phone</b>
                   </Toast.Body>
                 </Toast>
               </ToastContainer>
             ) : null}
-            <Button variant="outline-light" className={s.btn} size="sm" onClick={handleClick}>
+            <Button
+              variant="outline-light"
+              className={s.btn}
+              size="sm"
+              onClick={handleClick}
+            >
               edit profile
             </Button>
           </div>
@@ -120,27 +140,37 @@ const Profile = () => {
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
-              {formik.errors.name ? <div className={s.error}>{formik.errors.name}</div> : null}
+              {formik.errors.name ? (
+                <div className={s.error}>{formik.errors.name}</div>
+              ) : null}
 
               <input
                 id="country"
                 name="country"
                 type="text"
-                placeholder={userLog?.country ? userLog?.country : "Complete country *"}
+                placeholder={
+                  userLog?.country ? userLog?.country : "Complete country *"
+                }
                 onChange={formik.handleChange}
                 value={formik.values.country}
               />
-              {formik.errors.country ? <div className={s.error}>{formik.errors.country}</div> : null}
+              {formik.errors.country ? (
+                <div className={s.error}>{formik.errors.country}</div>
+              ) : null}
 
               <input
                 id="phone"
                 name="phone"
                 type="text"
-                placeholder={userLog?.phone ? userLog?.phone : "Complete phone *"}
+                placeholder={
+                  userLog?.phone ? userLog?.phone : "Complete phone *"
+                }
                 onChange={formik.handleChange}
                 value={formik.values.phone}
               />
-              {formik.errors.phone ? <div className={s.error}>{formik.errors.phone}</div> : null}
+              {formik.errors.phone ? (
+                <div className={s.error}>{formik.errors.phone}</div>
+              ) : null}
               <input
                 id="image"
                 name="image"
@@ -182,7 +212,9 @@ const Profile = () => {
                         </p>
                       )}
                       <p className={s.container_time}>
-                        {e.createdAt.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                        {e.createdAt
+                          .slice(0, 10)
+                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
                     <div className={s.container_b}>
@@ -209,7 +241,13 @@ const Profile = () => {
                       <hr />
                       <b>{e.title}</b>
                       <p>{e.description}</p>
-                      {e.image ? <img src={e.image} alt={e.title} style={{ width: "30%", height: "30%" }} /> : null}
+                      {e.image ? (
+                        <img
+                          src={e.image}
+                          alt={e.title}
+                          style={{ width: "30%", height: "30%" }}
+                        />
+                      ) : null}
                     </div>
                   </div>
                 );
