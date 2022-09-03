@@ -13,7 +13,7 @@ const Drawer = ({ allCategories, setCurrentPage }) => {
     dispatch(filterBySubcategory(e.target.innerHTML));
     setCurrentPage(1);
     setActive(!active);
-    dispatch(Searching(false))
+    dispatch(Searching('categories'))
   };
 
   return (
