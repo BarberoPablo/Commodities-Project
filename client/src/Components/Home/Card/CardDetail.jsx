@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./Card.module.css";
 import { Link } from "react-router-dom";
 import ToastHide from "./ToastHide";
+
 const CardDetail = ({ e, user, setFav, Fav }) => {
   const myUser = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
