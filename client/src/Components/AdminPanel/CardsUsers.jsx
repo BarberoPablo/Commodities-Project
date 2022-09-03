@@ -1,6 +1,15 @@
+import { banUser } from "../../Redux/Actions/Actions";
+import { useDispatch } from "react-redux";
 
-export default function CardsUsers ({allUsers}, {allCountries}) {
-console.log(allCountries)
+
+export default function CardsUsers ({allUsers}) {
+  const dispatch = useDispatch();
+
+
+function handleBan(e){
+dispatch(banUser(e.id))
+
+}
 
   return(
 <div>
@@ -15,18 +24,11 @@ console.log(allCountries)
 
 <input type="text" placeholder={e.name}/>
 <input type="text" placeholder={e.email}/>
-<select>
-        <option hidden value="">
-        {e.country}
-        </option>
-        {allCountries?.map((c) => (
-          <option value={c.name.common}>{c.name.common}</option>
-        ))}
-</select>
+
 <button>UPDATE USER</button>
-<button>BAN USER</button>
-{/* <p>{e.name}</p>
-<p>{e.country}</p> 
+<button onClick={()=>handleBan(e)}>BAN USER</button>
+<p>{e.name}</p>
+{/* <p>{e.country}</p> 
 <p>{e.email}</p> */}
 <p>{e.verified? "VERIFIED":"NOT VERIFIED"} {e.isBanned? "BANNED":"NOT BANNED"}</p>
 
