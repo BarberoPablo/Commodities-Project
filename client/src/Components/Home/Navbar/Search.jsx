@@ -18,12 +18,12 @@ const Search = ({setCurrentPage}) => {
     if (e.target.innerHTML === "Buyers" && input !== '') {
       console.log("Buyers", input);
       dispatch(searchPosts({ input, sell: true }));
-      dispatch(Searching(true))
+      dispatch(Searching('search'))
     }
     if (e.target.innerHTML === "Sellers" && input !== '') {
       console.log("Sellers", input);
       dispatch(searchPosts({ input, sell }));
-      dispatch(Searching(true))
+      dispatch(Searching('search'))
     }
     setCurrentPage(1)
   };
