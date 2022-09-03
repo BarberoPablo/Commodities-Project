@@ -53,3 +53,41 @@
   font-size: 0.9rem;
   margin-left: 90%;
 }
+
+.mobile_options{
+  background-color: #151e22;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  color: white;
+}
+
+.container_subcategories{
+  border-bottom: 1px solid rgb(107, 106, 106);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.container_subcategories label{
+  background-color: #0f161a;
+  font-size: 1.8rem;
+  text-align: center;
+  letter-spacing: 0.2rem;
+}
+
+.container_li{
+  background-color: transparent;
+  border: none;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 0.2rem;
+  height: 100%;
+}
+
+.container_li:active{
+  background-color: #27353e;
+}
