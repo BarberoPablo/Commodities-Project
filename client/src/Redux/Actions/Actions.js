@@ -153,7 +153,7 @@ export const Searching = (value) => (dispatch) => {
 };
 
 // Guarda en base de datos los favoritos al logearse
-export const addFavoritesOnLogin = (favorites) => () => {
+export const addFavorites = (favorites) => () => {
   console.log("action", favorites);
   axios.put(`${url}/favorite`, favorites);
 };

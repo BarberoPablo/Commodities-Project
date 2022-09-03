@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./Card.module.css";
 import { Link } from "react-router-dom";
 import ToastHide from "./ToastHide";
+import { addFavorites, getUserDetails } from "../../../Redux/Actions/Actions";
+import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
@@ -12,13 +15,32 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
   const myUser = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const userLog = useSelector((state) => state.users.user);
+  const userAuth0 = useAuth0().user;
 
+  useEffect(() => {
+    if (userAuth0) {
+      // Carga la const userLog con los datos del usuario
+      dispatch(getUserDetails(userAuth0.email));
+    }
+  }, [userAuth0]);
   const handleClick = (event) => {
-    const favFiltered = Fav.filter((posts) => posts.id === e.id);
-    if (favFiltered.length > 0) {
-      return;
+    // Si hay un usuario conectado, los favorites se agregan a la DB y si no, al localstorage
+    if (Object.keys(userLog).length !== 0) {
+      console.log("@", userLog.id);
+      console.log("@@", e.id);
+      const favorites = {
+        userId: userLog.id,
+        postId: e.id,
+      };
+      dispatch(addFavorites(favorites));
     } else {
-      setFav([...Fav, e]);
+      const favFiltered = Fav.filter((posts) => posts.id === e.id);
+      if (favFiltered.length > 0) {
+        return;
+      } else {
+        setFav([...Fav, e]);
+      }
     }
     setShow(true);
   };
@@ -81,7 +103,7 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           Country: <b>{e.country}</b>
         </p>
         <p>
-          payment:{" "}
+          Payment:{" "}
           {e.payment.map((e, i) => {
             return <b key={i}> {e}</b>;
           })}
