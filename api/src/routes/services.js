@@ -201,7 +201,17 @@ const getCategory = async (req, res) => {
 const createPlan = async (req, res) => {
   try {
     const { name, cost, contacts, posts, reviews } = req.body;
+    
+    if (!name || !cost || !contacts) {
+      return res.status(400).send("Complete data")
+    }
 
+    const sameName = await Plan.findOne({
+      where: {name: name}
+    })
+    if (sameName){
+      return res.status(400).send(`This membership already exist `)
+    }
     const newPlan = await Plan.create({
       name,
       cost,
@@ -762,6 +772,54 @@ const reportOrBanPost = async (req, res) => {
   }
 };
 
+const modifyPlan = async (req , res) => {
+  const { namePlan } = req.params
+  try {
+    const { name, cost, contacts, posts, reviews } = req.body;
+
+    const findPlan = await Plan.findOne({
+      where: {name: namePlan}
+    })
+
+    if (!findPlan) {
+      return res.status(404).send("The membership is not found")
+    } 
+
+    if (!name) {
+      await findPlan.update({
+        name,
+        cost,
+        contacts,
+        posts,
+        reviews
+      })
+      return res.status(201).send('Plan modified')
+    }
+    
+    const planName = await Plan.findOne({
+      where: {name: name}
+    })
+    console.log(contacts)
+    
+    if (findPlan && !planName?.name) {
+      
+      await findPlan.update({
+        name,
+        cost,
+        contacts,
+        posts,
+        reviews
+      })
+      return res.status(201).send('Plan modified')
+    }
+    else {
+      return res.status(404).send(`The membership ${name} already exist`)
+    }
+  } catch (error) {
+    res.status(error.status).send(error.message);
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -786,4 +844,5 @@ module.exports = {
   deleteOrAddFavorite,
   reportOrBanPost,
   getUserId,
+  modifyPlan
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Plan from "./Plan";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlans, getUserDetails, getUser, asignPlanToUser } from "../../Redux/Actions/Actions";
+import { getPlans, getUserDetails, getUser, asignPlanToUser, mailTous } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import s from "./membership.module.css";
 
@@ -26,6 +26,17 @@ const Memberships = () => {
           planName: planBought,
           email: user.email,
         })
+      );
+      dispatch(
+        mailTous({
+          from: "b2bcommodities@hotmail.com",
+          to: user.email,
+          subject: "Thank you for choosing the " + user.plan + "b2b Membership!",
+          text: `You just bought the ${user.plan} membership!. 
+          Now you can contact other users from all over the world to do business. 
+          We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+          Feel free to contact us at commoditiesb2b@hotmail.com`
+      })
       );
     }
     //Sacar user:

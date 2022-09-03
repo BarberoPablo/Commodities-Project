@@ -23,6 +23,7 @@ ReactDOM.render(
           clientId="tJkc2r5FoNG8a49WAtltabd4coXLKCzj"
           redirectUri={"https://dev-commodities.vercel.app/profile"}
           //redirectUri={"http://localhost:3000/profile"}
+
         >
           <App />
         </Auth0Provider>
