@@ -1,7 +1,7 @@
 import {React,  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getPost, getUser, getAllCountries } from "../../Redux/Actions/Actions";
+import { getPost, getUser } from "../../Redux/Actions/Actions";
 import CardsPost from "./CardsPost";
 import CardsUsers from "./CardsUsers";
 import CardsReview from "./CardsReviews";
@@ -16,15 +16,12 @@ const dispatch = useDispatch();
 
 const { posts } = useSelector((state) => state.posts);
 const { allUsers } = useSelector((state) => state.users);
-const { allCountries } = useSelector((state) => state.countries);
 const { user } = useAuth0();
 
-console.log(user)
 
 useEffect(() => {
   dispatch(getPost());
   dispatch(getUser())
-  dispatch(getAllCountries());
 }, [dispatch]);
 
 const [showPost, setShowPost]  = useState(false)
@@ -48,6 +45,7 @@ function clickUsers(){
     setShowCategory(false)
     setShowReviews(false)
     setShowMemberships(false)
+    setShowReports(false)
   }
 }
 const [showCategory, setShowCategory]  = useState(false)
@@ -83,6 +81,7 @@ function clickMemberships(){
     setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
+    setShowReports(false)
   }
 }
 const [showReports, setShowReports]  = useState(true)
@@ -110,7 +109,7 @@ function clickReports(){
 
 {showUsers &&
 <div>
-<CardsUsers allUsers={allUsers} allCountries={allCountries}/>
+<CardsUsers allUsers={allUsers} />
 </div>
 }
 {showPost &&
@@ -124,7 +123,7 @@ function clickReports(){
 </div>}
 {showReviews &&
 <div>
-<CardsReview/>
+<CardsReview allUsers={allUsers}/>
 </div>}
 {showMemberships &&
 <div>
@@ -132,7 +131,7 @@ function clickReports(){
 </div>}
 {showReports &&
 <div>
-<Reports currentPost={posts} allCountries={allCountries}/>
+<Reports currentPost={posts}/>
 </div>}
   </div>
 )

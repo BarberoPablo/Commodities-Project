@@ -1,12 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import {
-  userPosts,
-  createNewUser,
-  getUserDetails,
-  addFavorites,
-} from "../../Redux/Actions/Actions";
+import { userPosts, createNewUser, getUserDetails, addFavorites, mailTous } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
@@ -80,6 +75,17 @@ const Profile = () => {
       values.email = user.email;
       values.image = values.image ? values.image : user.picture;
       dispatch(createNewUser(values));
+      dispatch(
+        mailTous({
+          from: "b2bcommodities@hotmail.com",
+          to: user.email,
+          subject: "You just signed up on B2B commodities",
+          text: `Hello ${user.nickname}! Welcomes from the team of B2B.
+          You are registered with the ${user.plan} plan on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
+          We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+          Feel free to contact us at commoditiesb2b@hotmail.com`
+      })
+      );
     },
   });
 

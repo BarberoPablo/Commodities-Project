@@ -6,8 +6,12 @@ import ToastHide from "./ToastHide";
 import { addFavorites, getUserDetails } from "../../../Redux/Actions/Actions";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { BsFillExclamationCircleFill } from "react-icons/bs";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 const CardDetail = ({ e, user, setFav, Fav }) => {
+  
   const myUser = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -72,8 +76,21 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           {e.createdAt
             .slice(0, 10)
             .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+          {"        "}
+          <OverlayTrigger
+            trigger="hover"
+            placement="right"
+            overlay={
+              <Popover>
+                <Popover.Header>report post</Popover.Header>
+              </Popover>
+            }
+          >
+            <Link to={`/report/${e?.id}/${myUser?.id}`} alt="report" style={{textDecoration: "none", color: "white", margin: '10px'}}>
+              <BsFillExclamationCircleFill />
+            </Link>
+          </OverlayTrigger>
         </p>
-        <Link to={`/report/${e?.id}/${myUser?.id}`}>🚩</Link>
       </div>
       <div className={s.container_b}>
         <p>

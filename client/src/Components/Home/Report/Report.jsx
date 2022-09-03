@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { mailTous, reportTo } from "../../../Redux/Actions/Actions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { mailTous, reportTo, getUser } from "../../../Redux/Actions/Actions";
 
 function validate(input) {
   let errors = {};
@@ -12,17 +12,25 @@ function validate(input) {
   return errors;
 }
 const Report = ({ match }) => {
+  const [errors, setErrors] = useState({});
+  const { idReview } = match.params;
+  const { postId } = match.params;
+  const dispatch = useDispatch();
+  const { allUsers } = useSelector(state => state.users)
+
+  useEffect(() => {
+    dispatch(getUser())
+  }, [dispatch])
+
+  const userFilter = allUsers.filter(e => e.id === Number(idReview));
+
   const [input, setInput] = useState({
     from: "commoditiesb2b@hotmail.com",
-    to: "",
+    to: userFilter[0]?.email,
     subject: "",
     text: "",
   });
 
-  const [errors, setErrors] = useState({});
-  const {idReview} = match.params;
-  const {postId} = match.params;
-  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -43,22 +51,20 @@ const Report = ({ match }) => {
     e.preventDefault();
     if (
       !errors.text &&
-      !errors.to &&
       !errors.subject &&
       !errors.text &&
       !errors.length
     ) {
       alert("Email sent successfully.");
-      input.to = "commoditiesb2b@hotmail.com" + "," + input.to;
-      input.subject = "REPLY FROM B2B: " + input.subject;
+      input.to = "commoditiesb2b@hotmail.com" + "," + userFilter[0]?.email;
+      input.subject = "REPLY FROM B2B REPORT: " + input.subject;
       input.text =
         `Your report has already reached to our team and we will respond as soon as possible. 
-              ||This is the email you sent to us:    ` + input.text;
+              ||This is the explain you sent to us:    ` + input.text;
       dispatch(mailTous(input));
       dispatch(reportTo(postId, idReview, "Report"))
       setInput({
         ...input,
-        to: "",
         subject: "",
         text: "",
       });
@@ -70,24 +76,18 @@ const Report = ({ match }) => {
     <div>
       <h1>Report</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="to">From:</label>
-        <input
-          name="to"
-          value={input.to}
-          onChange={(e) => handleChange(e)}
-        ></input>
+        <label>From: {userFilter[0]?.email}</label>
         <br />
-        <br />
-        <label htmlFor="toFalse">To:</label>
-        <input htmlFor="toFalse"></input>
+        <label htmlFor="toFalse">ID of post: {+ Number(postId)}</label>
         <br />
         <br />
         <label htmlFor="subject">Reason:</label>
         <input
           name="subject"
-          value={input.title}
+          value={input.subject}
           onChange={(e) => handleChange(e)}
         ></input>
+        {errors.subject ? <p>{errors.subject}</p> : false}
         <br />
         <br />
         <label htmlFor="text">Explain:</label>
@@ -96,6 +96,9 @@ const Report = ({ match }) => {
           value={input.text}
           onChange={(e) => handleChange(e)}
         ></input>
+        {errors.text ? <p>{errors.text}</p> : false}
+        <br />
+        <br />
         <button type="submit">Send the report</button>
       </form>
     </div>
