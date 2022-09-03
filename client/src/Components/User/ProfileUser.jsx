@@ -9,7 +9,7 @@ import {
   getPost,
   getContactsUser,
   getUserDetails,
-  getUser,
+  postReview,
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -17,11 +17,7 @@ const ProfileUser = ({ match }) => {
   const id = match.params.id;
   const { profileUser } = useSelector((state) => state.users); //trae los datos de un usuario en especifico
   const { posts } = useSelector((state) => state.posts); //trae todos los posts
-  const filter = posts.filter((e) => e.userId === profileUser.id); //filtra los posts del usuario seleccionado
   const [showA, setShowA] = useState(false);
-  const dispatch = useDispatch();
-  const toggleShowA = () => setShowA(!showA);
-  const { user } = useAuth0();
   const [length, setLength] = useState(0);
   const [newContact, setNewContact] = useState(false);
 
@@ -29,14 +25,45 @@ const ProfileUser = ({ match }) => {
   // console.log('filter',filter)
   // console.log('posts',posts)
 
+  const { user } = useAuth0();
+  const dispatch = useDispatch();
   const userLog = useSelector((state) => state.users.user); // trae un array con los datos del usuario logeado
+  const filter = posts.filter((e) => e.userId === profileUser.id); //filtra los posts del usuario seleccionado
+  console.log(" userId: ", profileUser?.id, "idReview", userLog?.id);
 
+  const [review, setReview] = useState({
+    userId: profileUser.id,
+    idReviewer: userLog.id,
+    score: "",
+    comment: "",
+  });
+
+  const handleChange = (e) => {
+    setReview({
+      ...review,
+      userId: profileUser.id,
+      idReviewer: userLog.id,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (userLog?.id) {
+      console.log("estado", review);
+      dispatch(postReview(review));
+      console.log("listooooooooooooooooooooooooooooo");
+    }
+  };
+
+  const toggleShowA = () => setShowA(!showA);
   const toggleShowB = (e) => {
     e.preventDefault();
     if (userLog.id) {
       //dispatch(getContactsUser(userLog?.id, id)); // dispatch llenar el array de contactos con el id del usuario logeado y el id del usuario que hizo el posteo
       dispatch(getContactsUser(userLog?.id, id));
       setNewContact(true);
+      setShowA(!showA);
     } else {
       alert("Try again in a few seconds");
     }
@@ -64,37 +91,98 @@ const ProfileUser = ({ match }) => {
             <div className={s.user_photo} id="user_photo">
               <img src={profileUser.image} alt="a" />
             </div>
-            {userLog.contactsIds?.includes(profileUser.id) ? (
-              <div>
-                <p>{profileUser.name}</p>
-                <p>{profileUser.email}</p>
-                <p>{profileUser.phone}</p>
-                <p>{profileUser.country}</p>
-              </div>
-            ) : null}
-
-            <Button
-              variant="warning"
-              className={s.btn}
-              size="sm"
-              onClick={toggleShowB}
-            >
-              Contact
-            </Button>
-
-            <ToastContainer position="bottom-center">
-              <Toast show={showA} onClose={toggleShowA} bg="secondary">
-                <Toast.Body>
-                  By accepting, one of your contacts will be deducted, are you
-                  sure?
-                </Toast.Body>
-                {/* <Button variant="warning" size="sm" onClick={toggleShowB}>
-                  ok
-                </Button> */}
-              </Toast>
-            </ToastContainer>
+            {userLog && userLog.remainingContacts > 0 ? (
+              <>
+              {userLog.contactsIds?.includes(profileUser?.id) ?
+                <Button
+                  variant="secondary"
+                  className={s.btn}
+                  size="sm"
+                  onClick={toggleShowA}
+                  disabled
+                >
+                  Contact
+                </Button> : 
+                <Button
+                  variant="warning"
+                  className={s.btn}
+                  size="sm"
+                  onClick={toggleShowA}
+                >
+                  Contact
+                </Button>}
+                <ToastContainer position="bottom-center">
+                  <Toast show={showA} onClose={toggleShowA} bg="secondary">
+                    <Toast.Body>
+                      By accepting, one of your contacts will be deducted, are
+                      you sure?
+                    </Toast.Body>
+                    <Button variant="success" size="sm" onClick={toggleShowB}>
+                      Accept
+                    </Button>
+                    <Button
+                      style={{ margin: "10px" }}
+                      variant="danger"
+                      size="sm"
+                      onClick={toggleShowA}
+                    >
+                      Cancel
+                    </Button>
+                  </Toast>
+                </ToastContainer>
+              </>
+            ) : (
+              <Button
+                variant="secondary"
+                className={s.btn}
+                size="sm"
+                disabled
+              >
+                Contact
+              </Button>
+            )}
           </div>
+
           <div className={s.containerPost}>
+            {userLog.contactsIds?.includes(profileUser.id) ? (
+              <>
+                <div className={s.userDates}>
+                  <p>
+                    <b>Name: </b>
+                    {profileUser.name}
+                  </p>
+                  <p>
+                    <b>Email: </b>
+                    {profileUser.email}
+                  </p>
+                  <p>
+                    <b>Phone: </b>
+                    {profileUser.phone}
+                  </p>
+                  <p>
+                    <b>Country: </b>
+                    {profileUser.country}
+                  </p>
+                  <div>
+                    <form onSubmit={handleSubmit}>
+                      <select name="score" onChange={handleChange}>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <input
+                        type="textarea"
+                        name="comment"
+                        onChange={handleChange}
+                      ></input>
+                      <button type="submit">enviar</button>
+                    </form>
+                  </div>
+                </div>
+              </>
+            ) : null}
             {filter &&
               filter.map((e, i) => {
                 return (

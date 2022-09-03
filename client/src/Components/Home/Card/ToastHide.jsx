@@ -1,10 +1,9 @@
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Toast from "react-bootstrap/Toast";
 import { MdFavorite } from "react-icons/md";
 
-function AutohideExample({ show, setShow, handleClick, e }) {
+function AutohideExample({ show, setShow, handleClick, e, Fav}) {
   return (
     <Row>
       <Toast
@@ -12,7 +11,7 @@ function AutohideExample({ show, setShow, handleClick, e }) {
         show={show}
         delay={2000}
         autohide
-        style={{ position: "absolute", right: "0", top: "20",width:'14.2%' }}
+        style={{ position: "absolute", right: "0", top: "20", width: "14.2%" }}
       >
         <Toast.Header>
           <strong className="me-auto">{e.title}</strong>
@@ -24,7 +23,9 @@ function AutohideExample({ show, setShow, handleClick, e }) {
           </a>
         </Toast.Body>
       </Toast>
-      <Button onClick={handleClick}>{<MdFavorite />}</Button>
+      <Button onClick={handleClick} variant="outline-light" >
+          {<MdFavorite style={{color:'red'}} />}
+        </Button>
     </Row>
   );
 }
