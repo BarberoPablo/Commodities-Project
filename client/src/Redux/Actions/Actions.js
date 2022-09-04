@@ -181,3 +181,10 @@ export const getReviews = (id) => (dispatch) => {
     .catch((e) => console.log(e));
 };
 
+export const banPost = (postId,idReview,event) => (dispatch) =>{
+  console.log(postId,idReview, event)
+  axios.put(`${url}/admin-panel/post/${postId}/${idReview}`, {event: event})
+  .then(() => {dispatch(dispatch(getPost()));
+  })
+  .catch((e) => console.log(e));
+};
