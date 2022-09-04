@@ -60,7 +60,6 @@ const Profile = () => {
   }, [dispatch, user, userLog.id]);
 
   useEffect(() => {
-    console.log(user);
     setEmail({
       ...email,
       to: user?.email,
@@ -91,8 +90,6 @@ const Profile = () => {
       dispatch(
         mailTous(email)
       );
-      console.log("EMAIL", email)
-      console.group("USER", user)
     },
   });
 
