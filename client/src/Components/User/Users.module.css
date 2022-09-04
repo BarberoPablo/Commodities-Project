@@ -89,6 +89,8 @@
   color: white;
   width: 50%;
   margin: 5% auto;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .container_a{

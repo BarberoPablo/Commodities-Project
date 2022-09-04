@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import Alert from 'react-bootstrap/Alert';
 
 const Profile = () => {
   const { userPost } = useSelector((state) => state.users);
@@ -32,7 +33,6 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(userPosts());
-    console.log("Usuario conectado?", user);
     if (user) {
       dispatch(userPosts());
       dispatch(getUserDetails(user?.email));
@@ -42,11 +42,6 @@ const Profile = () => {
       if (favoritesToAdd.length > 0 && userLog?.id) {
         let favoritesIds = [];
         favoritesToAdd.forEach((post) => favoritesIds.push(post.id));
-        /* console.log("favoritesIds", favoritesIds);
-        console.log("Favoritos antes:", JSON.parse(window.localStorage.getItem("Fav")));
-        console.log("Hacia el back: ", { favoritesIds, userId: userLog?.id }); 
-        console.log("Favoritos ahora:", JSON.parse(window.localStorage.getItem("Fav")));
-        */
         dispatch(
           addFavorites({ favoritesToAdd: favoritesIds, userId: userLog.id })
         );
@@ -75,6 +70,7 @@ const Profile = () => {
       values.email = user.email;
       values.image = values.image ? values.image : user.picture;
       dispatch(createNewUser(values));
+      alert("profile updated successfully")
       dispatch(
         mailTous({
           from: "b2bcommodities@hotmail.com",
@@ -94,6 +90,7 @@ const Profile = () => {
     setActive(!active);
   };
 
+
   return (
     <div className={s.container}>
       {user ? (
@@ -106,7 +103,7 @@ const Profile = () => {
               />
               {userLog?.name ? <p>{userLog?.name}</p> : <p>{user?.nickname}</p>}
             </div>
-            {!userLog?.country ? (
+            {!userLog?.country || !userLog.phone ? (
               <ToastContainer position="top-end">
                 <Toast bg="warning">
                   <Toast.Header>
@@ -186,7 +183,8 @@ const Profile = () => {
                 value={formik.values.image}
               />
               {formik.errors.image ? <div>{formik.errors.image}</div> : null}
-              <button type="submit">Submit</button>
+              <button type="submit">Confirm</button>
+              
             </form>
           </div>
 
@@ -194,7 +192,7 @@ const Profile = () => {
             {userPost &&
               userPost.map((e) => {
                 return (
-                  <div className={s.container}>
+                  <div className={s.container_x}>
                     <div className={s.container_a}>
                       {e.sell ? (
                         <p
@@ -261,7 +259,7 @@ const Profile = () => {
           </div>
         </>
       ) : (
-        <h1>...loading</h1>
+        <h1>Loading...</h1>
       )}
     </div>
   );
