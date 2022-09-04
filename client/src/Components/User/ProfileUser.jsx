@@ -132,6 +132,8 @@ const ProfileUser = ({ match }) => {
                 </ToastContainer>
               </>
             ) : (
+              <>
+              <p>you must have a membership to make contact</p>
               <Button
                 variant="secondary"
                 className={s.btn}
@@ -140,6 +142,7 @@ const ProfileUser = ({ match }) => {
               >
                 Contact
               </Button>
+              </>
             )}
           </div>
 
