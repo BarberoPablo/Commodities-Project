@@ -15,3 +15,9 @@
   background-color: rgba(255, 255, 255, 0.178);
   color: #fff;
 }
+.description{
+  resize: none;
+  width: 20%;
+  overflow: hidden;
+  min-height: 100px;
+}

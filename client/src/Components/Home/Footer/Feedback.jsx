@@ -95,12 +95,15 @@ const Feedback = () => {
         {errors.subject ? <p>{errors.subject}</p> : false}
         <br />
         <br />
-        <input
+        <textarea
+          className={s.description}
           onChange={(e) => handleChange(e)}
           name="text"
           value={input.text}
+          autoComplete= "off"
           placeholder="What do you need from us?"
-        ></input>
+          rows= "6"
+        ></textarea>
         {errors.text ? <p>{errors.text}</p> : false}
         <br />
         <br />
