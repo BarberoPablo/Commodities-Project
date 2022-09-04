@@ -49,7 +49,7 @@ const Feedback = () => {
       !errors.length
     ) {
       alert("Email sent successfully.");
-      input.to = "commoditiesb2b@hotmail.com" + "," + input.to;
+      input.to = "commoditiesb2b@hotmail.com, " + input.to;
       input.subject = "REPLY FROM B2B: " + input.subject;
       input.text =
         `Your message has already reached our team and we will respond as soon as possible. 

@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getPost,
   getCategoriesByName,
-  getUserDetails,
-  getUser,
-  getProfileDetails,
-} from "../../Redux/Actions/Actions";
+   getUser,
+  } from "../../Redux/Actions/Actions";
 import Cards from "./Card/Cards";
 import Paginado from "./Paginado/Paginado";
 import s from "./Home.module.css";

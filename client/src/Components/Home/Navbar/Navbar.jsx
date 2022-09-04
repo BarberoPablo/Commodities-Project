@@ -19,10 +19,10 @@ const Navbarr = ({ setCurrentPage }) => {
   const {allCategories} = useSelector(state => state.categories)
 
   const dispatch = useDispatch()
-  const handleChange = (e) =>{
-    dispatch(filterBySubcategory(e.target.value))
-    setCurrentPage(1)
-  }
+  // const handleChange = (e) =>{
+  //   dispatch(filterBySubcategory(e.target.value))
+  //   setCurrentPage(1)
+  // }
 
   useEffect(()=>{
     dispatch(getCategoriesByName())
@@ -93,6 +93,7 @@ const Navbarr = ({ setCurrentPage }) => {
               title={
                 <img
                   src={userLog.image ? userLog.image : user.picture}
+                  alt="User"
                   style={{
                     width: "50px",
                     height: "50px",

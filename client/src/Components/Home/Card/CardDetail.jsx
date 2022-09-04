@@ -23,6 +23,7 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
       // Carga la const userLog con los datos del usuario
       dispatch(getUserDetails(userAuth0.email));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAuth0]);
   const handleClick = (event) => {
     // Si hay un usuario conectado, los favorites se agregan a la DB y si no, al localstorage

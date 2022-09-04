@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import Alert from 'react-bootstrap/Alert';
+//import Alert from 'react-bootstrap/Alert';
 
 const Profile = () => {
   const { userPost } = useSelector((state) => state.users);

@@ -78,6 +78,7 @@ const ProfileUser = ({ match }) => {
       dispatch(getUserDetails(user.email));
     }
     setLength(userLog.contactsIds?.length);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, user, length, newContact]);
 
   return (
