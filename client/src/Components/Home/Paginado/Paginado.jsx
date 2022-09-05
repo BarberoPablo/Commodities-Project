@@ -40,14 +40,14 @@ export default function Paginado({
           </button>
         )}
         {pageNumbers?.map((number) => (
-          <li key={number}>
-            <a
+          <span key={number}>
+            <button
               onClick={() => handlePaginado(number)}
               className={number === currentPage ? s.number : s.number2}
             >
               {number}
-            </a>
-          </li>
+            </button>
+          </span>
         ))}
       {currentPage >= Math.ceil(posts / postPerPage) ? null : (
         <button
