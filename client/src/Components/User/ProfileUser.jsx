@@ -12,6 +12,7 @@ import {
   postReview,
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
+import Reviews from './Reviews'
 
 const ProfileUser = ({ match }) => {
   const id = match.params.id;
@@ -86,67 +87,73 @@ const ProfileUser = ({ match }) => {
     <>
       {profileUser ? (
         <div className={s.container}>
-          <div className={s.card}>
-            <div className={s.user_photo} id="user_photo">
-              <img src={profileUser.image} alt="a" />
-            </div>
-            {userLog && userLog.remainingContacts > 0 ? (
-              <>
-                {userLog.contactsIds?.includes(profileUser?.id) ? (
+            <div className={s.card}>
+              <div className={s.user_photo} id="user_photo">
+                <img src={profileUser.image} alt="a" />
+              </div>
+              {userLog && userLog.remainingContacts > 0 ? (
+                <>
+                  {userLog.contactsIds?.includes(profileUser?.id) ? (
+                    <>
+                      <Button
+                        variant="secondary"
+                        className={s.btn}
+                        size="sm"
+                        onClick={toggleShowA}
+                        disabled
+                      >
+                        Contact
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="warning"
+                        className={s.btn}
+                        size="sm"
+                        onClick={toggleShowA}
+                      >
+                        Contact
+                      </Button>
+                    </>
+                  )}
+                  <ToastContainer position="bottom-center">
+                    <Toast show={showA} onClose={toggleShowA} bg="secondary">
+                      <Toast.Body>
+                        By accepting, one of your contacts will be deducted, are
+                        you sure?
+                      </Toast.Body>
+                      <Button variant="success" size="sm" onClick={toggleShowB}>
+                        Accept
+                      </Button>
+                      <Button
+                        style={{ margin: "10px" }}
+                        variant="danger"
+                        size="sm"
+                        onClick={toggleShowA}
+                      >
+                        Cancel
+                      </Button>
+                    </Toast>
+                  </ToastContainer>
+                </>
+              ) : (
+                <>
+                  <h5>You must have a membership to make contact</h5>
                   <Button
                     variant="secondary"
                     className={s.btn}
                     size="sm"
-                    onClick={toggleShowA}
                     disabled
                   >
                     Contact
                   </Button>
-                ) : (
-                  <Button
-                    variant="warning"
-                    className={s.btn}
-                    size="sm"
-                    onClick={toggleShowA}
-                  >
-                    Contact
-                  </Button>
-                )}
-                <ToastContainer position="bottom-center">
-                  <Toast show={showA} onClose={toggleShowA} bg="secondary">
-                    <Toast.Body>
-                      By accepting, one of your contacts will be deducted, are
-                      you sure?
-                    </Toast.Body>
-                    <Button variant="success" size="sm" onClick={toggleShowB}>
-                      Accept
-                    </Button>
-                    <Button
-                      style={{ margin: "10px" }}
-                      variant="danger"
-                      size="sm"
-                      onClick={toggleShowA}
-                    >
-                      Cancel
-                    </Button>
-                  </Toast>
-                </ToastContainer>
-              </>
-            ) : (
-              <>
-                <h5>You must have a membership to make contact</h5>
-                <Button
-                  variant="secondary"
-                  className={s.btn}
-                  size="sm"
-                  disabled
-                >
-                  Contact
-                </Button>
-              </>
-            )}
+                </>
+              )}
+            </div>
+            <div>
           </div>
-
+          <Reviews profileUser={profileUser} />
           <div className={s.containerPost}>
             {userLog.contactsIds?.includes(profileUser.id) ? (
               <>
