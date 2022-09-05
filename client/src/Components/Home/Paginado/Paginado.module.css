@@ -15,7 +15,7 @@
   margin-left: 18%;
 }
 
-.container span{
+.container li{
   color: white;
   margin: 0px 0.3%;
   background-color: #131B21;
@@ -26,7 +26,7 @@
   text-align: center;
 }
 
-.container span button{
+.container li a{
   display: block;
   text-decoration: none;
   color: #ffffff;
@@ -35,7 +35,7 @@
   cursor: pointer;
 }
 
-.container span:hover button{
+.container li:hover a{
   background:#acacac ;
   color: #fff;
 }
@@ -49,7 +49,7 @@
 }
 
 .number{
- background-color: #28364E;
+  background-color: #28364E;
   color: black;
 }
 
@@ -65,5 +65,5 @@
   .container{
     max-width: 90%;
     margin-left: -15%;
-  }
+  } 
 }
