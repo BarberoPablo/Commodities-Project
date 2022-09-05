@@ -56,7 +56,7 @@ const Report = ({ match }) => {
       !errors.length
     ) {
       alert("Email sent successfully.");
-      input.to = "commoditiesb2b@hotmail.com" + "," + userFilter[0]?.email;
+      input.to = "commoditiesb2b@hotmail.com, " + userFilter[0]?.email;
       input.subject = "REPLY FROM B2B REPORT: " + input.subject;
       input.text =
         `Your report has already reached to our team and we will respond as soon as possible. 

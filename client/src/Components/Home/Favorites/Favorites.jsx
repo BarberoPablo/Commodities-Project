@@ -28,6 +28,7 @@ const Favorites = () => {
       // Carga la const userLog con los datos del usuario
       dispatch(getUserDetails(user.email));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const Favorites = () => {
       setFavoritesDb(favoritePosts);
       console.log("favvvv", favoritePosts);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLog]);
 
   const handleDelete = ({ e }) => {

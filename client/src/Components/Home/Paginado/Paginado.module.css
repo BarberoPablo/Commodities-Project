@@ -15,27 +15,28 @@
   margin-left: 18%;
 }
 
-.container li{
-  color: white;
+.container span{
+  color: rgb(24, 16, 16);
   margin: 0px 0.3%;
   background-color: #131B21;
   border-radius: 10px;
   width: 50px;
   list-style: none;
-  line-height: 50px;
+  line-height: 2rem;
   text-align: center;
 }
 
-.container li a{
+.container span button{
   display: block;
   text-decoration: none;
-  color: #ffffff;
+  color: #fff;
   font-weight: 600;
   border-radius: 10px;
+  width: 100%;
   cursor: pointer;
 }
 
-.container li:hover a{
+.container span:hover button{
   background:#acacac ;
   color: #fff;
 }
@@ -66,5 +67,3 @@
     max-width: 90%;
     margin-left: -15%;
   }
-  
-}
