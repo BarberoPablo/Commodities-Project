@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import s from "../Home/Card/Card.module.css";
-import { getReviews, banPost } from "../../Redux/Actions/Actions";
+import { getReviews, reportTo } from "../../Redux/Actions/Actions";
 import { Link } from "react-router-dom";
 
 
@@ -20,7 +20,11 @@ export default function Reports( { currentPost }, {allCountries}) {
   }, [dispatch]);
 
   function handleBan(e){
-    dispatch(banPost(e.id, 9, "Ban"))
+    dispatch(reportTo(e.id, 9, {event:"Ban"}))
+    console.log(e)
+      }
+  function handleDismiss(e){
+    dispatch(reportTo(e.id, 9, {event:"Dismiss"}))
     console.log(e)
       }
 
@@ -94,6 +98,7 @@ export default function Reports( { currentPost }, {allCountries}) {
         <p>{e.description}</p>
       </div>
 <p>{e.display? "NOT BANNED":"BANNED"}</p>
+            <button onClick={()=>handleDismiss(e)}>Dismiss POST</button>
             <button onClick={()=>handleBan(e)}>DELETE POST</button>
           </div>
           );
