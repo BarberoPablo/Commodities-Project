@@ -31,6 +31,39 @@ export default function Reports( { currentPost }, {allCountries}) {
   return (
     <div>
       <p>Reports</p>
+      {Reviews?.map((r)=>{
+          return(
+          r.reviews.length>0 ?
+            <div>
+              
+              {r.reviews?.map((s) => {
+                
+      return(
+        s.idReport.length>0?
+        
+        <div>
+        <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
+        <p>Comment:{s.comment}</p> 
+        <p>score:{s.score}</p> 
+  <p>Review By:{allUsers.find(u=> u.id===s.idReviewer)?.name}</p>
+  <button>DELETE REVIEW</button>
+  { s.idReport.map((r)=>{
+    return(
+      <p>Reported By:{allUsers.find(u=> u.id == r)?.name} </p>
+
+    )}
+  )}
+  
+        </div>
+:null
+        )  
+  })}
+            </div>
+            : null
+          )
+
+        })
+}
       <div>
   <p>reviews reports</p>
 
