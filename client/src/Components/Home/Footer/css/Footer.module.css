@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: space-evenly;
   background-color: #1d1d1d;
-  color: #fff;
+  color: rgb(0, 0, 0);
   height: 7vh;
   width: 100%;
 }
 
 .footer a{
-  color: #fff;
+  color: rgb(255, 255, 255);
   text-decoration: none;
   cursor: pointer;
 }

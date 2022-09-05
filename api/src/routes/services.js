@@ -380,6 +380,9 @@ const getUserId = async (req, res) => {
   try {
     const userId = await User.findOne({
       where: { id: id },
+      include: {
+        model: ReviewUser
+      },
     });
     if (userId) {
       return res.status(200).send(userId);

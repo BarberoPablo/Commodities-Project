@@ -11,7 +11,6 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 
 const CardDetail = ({ e, user, setFav, Fav }) => {
-  
   const myUser = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -28,8 +27,6 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
   const handleClick = (event) => {
     // Si hay un usuario conectado, los favorites se agregan a la DB y si no, al localstorage
     if (Object.keys(userLog).length !== 0) {
-      console.log("@", userLog.id);
-      console.log("@@", e.id);
       const favorites = {
         userId: userLog.id,
         postId: e.id,
@@ -60,7 +57,10 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
           />
         </div>
 
-        <Link to={`/profile-user/` + e.userId}>
+        <Link
+          to={`/profile-user/` + e.userId}
+          style={{ color: "black", textDecoration: "none" }}
+        >
           <b>{user?.name}</b>
         </Link>
 
@@ -78,21 +78,39 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
             .slice(0, 10)
             .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
           {"        "}
-          <OverlayTrigger
-            trigger="hover"
-            placement="right"
-            overlay={
-              <Popover>
-                <Popover.Header>report post</Popover.Header>
-              </Popover>
-            }
-          >
-            <Link to={`/report/${e?.id}/${myUser?.id}`} alt="report" style={{textDecoration: "none", color: "white", margin: '10px'}}>
-              <BsFillExclamationCircleFill />
-            </Link>
-          </OverlayTrigger>
+          {myUser?.country ? (
+            <OverlayTrigger
+              trigger="hover"
+              placement="right"
+              overlay={
+                <Popover>
+                  <Popover.Header>report post</Popover.Header>
+                </Popover>
+              }
+            >
+              <Link
+                to={`/report/${e?.id}/${myUser?.id}`}
+                alt="report"
+                style={{ textDecoration: "none", color: "gray", margin: "5px" }}
+              >
+                <BsFillExclamationCircleFill />
+              </Link>
+            </OverlayTrigger>
+          ) : null}
         </p>
       </div>
+      <div className={s.tittle}>
+      <b>{e.title}</b>
+        <ToastHide
+          show={show}
+          setShow={setShow}
+          handleClick={handleClick}
+          e={e}
+          Fav={Fav}
+          className={s.heart}
+        />
+        </div>
+        <hr />
       <div className={s.container_b}>
         <p>
           Category: <b>{e.categoryName}</b>
@@ -112,17 +130,10 @@ const CardDetail = ({ e, user, setFav, Fav }) => {
         <p>
           Shipping: <b>{e.shipping}</b>
         </p>
-        <ToastHide
-          show={show}
-          setShow={setShow}
-          handleClick={handleClick}
-          e={e}
-          Fav={Fav}
-        />
+        
       </div>
       <div>
-        <hr />
-        <b>{e.title}</b>
+      <hr />
         <p>{e.description}</p>
       </div>
     </div>

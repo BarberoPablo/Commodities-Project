@@ -1,19 +1,19 @@
 .container {
-  min-height:calc(100vh - 70px - 7vh) ;
+  min-height: calc(100vh - 70px - 7vh);
   width: 100%;
 }
-.card { 
+.card {
   margin: 0 auto;
   max-width: 50%;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   position: relative;
   padding: 2rem 0;
   background: #151e22;
   z-index: 0;
 }
 .card:after {
-  content: '';
+  content: "";
   top: 0;
   position: absolute;
   width: 100%;
@@ -22,14 +22,14 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   z-index: -1;
 }
-.user_photo{
-  padding:0.7rem;
+.user_photo {
+  padding: 0.7rem;
   display: flex;
   flex-direction: column;
   color: #fff;
   font-weight: bold;
 }
-.user_photo p{
+.user_photo p {
   text-align: center;
 }
 .user_photo img {
@@ -38,84 +38,94 @@
   border-radius: 50%;
   border: 3px solid #151e22;
 }
-.oculto{
+.oculto {
   display: none;
 }
-.active{
+.active {
   width: 50%;
   padding: 20px;
   border-radius: 0 0 10px 10px;
   background-color: #151e22;
   margin: 0 auto;
 }
-.form{
-  display:flex;
+.form {
+  display: flex;
   flex-direction: column;
   text-align: center;
   width: 50%;
   margin: 0 auto;
 }
-.form input{
+.form input {
   border: none;
   border-radius: 10px;
   padding: 10px;
   margin: 5px;
 }
 
-.form button{
+.form button {
   border: none;
   border-radius: 10px;
   padding: 10px;
   width: 40%;
   margin: 5px auto;
 }
-.btn{
+.btn {
   height: 30px;
   margin-top: 90px;
   margin-right: 5px;
   color: #fff;
 }
-.error{
-  color:red;
+.error {
+  color: red;
 }
-.containerPost{
+.containerPost {
   color: #fff;
 }
-.container_x{
+.container_x {
   display: flex;
   flex-direction: column;
-  background-color: #151e22;
+  background-color: #f8f8f8;
   margin-bottom: 1%;
-  color: white;
+  color: rgb(0, 0, 0);
   width: 50%;
   margin: 5% auto;
   border-radius: 10px;
   padding: 10px;
 }
 
-.container_a{
+.container_a {
   display: flex;
   align-items: center;
 }
 
-.container_time{
+.container_time {
   flex-grow: 1;
   text-align: end;
 }
 
-.container_b{
+.container_b {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.container_b p{
+.container_b p {
   margin: 0px 10px;
 }
-.userDates{
+.userDates {
   background-color: #151e22;
-  max-width:50%;
+  max-width: 50%;
   margin: 0 auto;
   padding: 10px;
   text-align: start;
+}
+.postProfile{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.payment{
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
 }

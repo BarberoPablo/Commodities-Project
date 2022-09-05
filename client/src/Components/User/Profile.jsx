@@ -1,13 +1,18 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import { userPosts, createNewUser, getUserDetails, addFavorites, mailTous } from "../../Redux/Actions/Actions";
+import {
+  userPosts,
+  createNewUser,
+  getUserDetails,
+  addFavorites,
+  mailTous,
+} from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-//import Alert from 'react-bootstrap/Alert';
 
 const Profile = () => {
   const { userPost } = useSelector((state) => state.users);
@@ -86,7 +91,7 @@ const Profile = () => {
       values.email = user.email;
       values.image = values.image ? values.image : user.picture;
       dispatch(createNewUser(values));
-      alert("profile updated successfully")
+      alert("profile updated successfully");
       dispatch(
         mailTous(email)
       );
@@ -97,7 +102,6 @@ const Profile = () => {
     e.preventDefault();
     setActive(!active);
   };
-
 
   return (
     <div className={s.container}>
@@ -126,7 +130,7 @@ const Profile = () => {
                   <Toast.Body>
                     {" "}
                     Complete the required fields to validate your profile <br />{" "}
-                    <b>*Email </b>and<b> *Phone</b>
+                    <b>*Country </b>and<b> *Phone</b>
                   </Toast.Body>
                 </Toast>
               </ToastContainer>
@@ -140,7 +144,7 @@ const Profile = () => {
               edit profile
             </Button>
           </div>
-
+              
           <div className={!active ? `${s.oculto}` : `${s.active}`}>
             <form className={s.form} onSubmit={formik.handleSubmit}>
               <input
@@ -154,7 +158,6 @@ const Profile = () => {
               {formik.errors.name ? (
                 <div className={s.error}>{formik.errors.name}</div>
               ) : null}
-
               <input
                 id="country"
                 name="country"
@@ -168,7 +171,6 @@ const Profile = () => {
               {formik.errors.country ? (
                 <div className={s.error}>{formik.errors.country}</div>
               ) : null}
-
               <input
                 id="phone"
                 name="phone"
@@ -192,7 +194,6 @@ const Profile = () => {
               />
               {formik.errors.image ? <div>{formik.errors.image}</div> : null}
               <button type="submit">Confirm</button>
-              
             </form>
           </div>
 
@@ -229,6 +230,8 @@ const Profile = () => {
                           .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
+                      <b>{e.title}</b>
+                      <hr/>
                     <div className={s.container_b}>
                       <p>
                         Category: <b>{e.categoryName}</b>
@@ -240,18 +243,19 @@ const Profile = () => {
                         Country: <b>{e.country}</b>
                       </p>
                       <p>
-                        payment:{" "}
-                        {e.payment?.map((e) => {
-                          return <b>{e} </b>;
+                        payment:
+                        <div className={s.payment}>
+                        {e.payment?.map((c) => {
+                          return <b>{c}</b>
                         })}
+                        </div>
                       </p>
                       <p>
                         Shipping: <b>{e.shipping}</b>
                       </p>
                     </div>
-                    <div>
                       <hr />
-                      <b>{e.title}</b>
+                    <div className={s.postProfile}>
                       <p>{e.description}</p>
                       {e.image ? (
                         <img

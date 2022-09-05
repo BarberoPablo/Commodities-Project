@@ -1,9 +1,9 @@
 .container{
   display: flex;
   flex-direction: column;
-  background-color: #151e22;
+  background-color: #f8f8f8;
   margin-bottom: 1%;
-  color: white;
+  color: rgb(0, 0, 0);
   border-radius: 10px;
 }
 
@@ -17,7 +17,7 @@
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  border: 3px solid #404040;
+  border: 2px solid #404040;
   display: flex;
   overflow: hidden;
   box-shadow: 1px 1px 10px #404040;
@@ -38,3 +38,39 @@
 .container_b p{
   margin: 0px 10px;
 }
+li{
+  list-style: none;
+}
+.tittle{
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  
+}
+.tittle b{
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 675px){
+  .container_b{
+    display: flex;
+    font-size: 0.8rem;
+  }
+}
+@media screen and (max-width: 500px){
+  .container_b{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .container_time{
+    display: none;
+  }
+  .container_logo{
+    display: none;
+  }
+  }
+  
+  
+
+

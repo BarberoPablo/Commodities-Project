@@ -158,8 +158,11 @@ export const addFavorites = (favorites) => () => {
   axios.put(`${url}/favorite`, favorites);
 };
 
-export const reportTo = (postId, idReview, event) => () => {
-  axios.put(`${url}/admin-panel/post/${postId}/${idReview}`, event);
+export const reportTo = (postId, idReview, event) => (dispatch) => {
+  axios.put(`${url}/admin-panel/post/${postId}/${idReview}`, event)
+  .then(() => {dispatch(dispatch(getPost()))
+  })
+  .catch((e) => console.log(e));
 };
 
 //Review

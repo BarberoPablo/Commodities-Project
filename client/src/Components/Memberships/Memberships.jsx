@@ -51,7 +51,7 @@ const Memberships = () => {
   */
   return (
     <div>
-      <h1>
+      <h1 className={s.h1}>
         Remaining contacts:{" "}
         {userLog?.remainingContacts +
         (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
