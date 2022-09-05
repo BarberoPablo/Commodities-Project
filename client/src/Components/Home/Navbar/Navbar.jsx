@@ -52,16 +52,19 @@ const Navbarr = ({ setCurrentPage }) => {
           <Button variant="primary" onClick={handleShow}>
             <AiOutlineMenu />
           </Button>
-          <Offcanvas show={show} onHide={handleClose}>
+          <Offcanvas responsive='md' show={show} onHide={handleClose}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Filter</Offcanvas.Title>
+            </Offcanvas.Header>
             <div className={s.mobile_options}>
               {allCategories?.map((e, i) => (
                 <div key={i} className={s.container_subcategories}>
                   <label>{e.name}</label>
                   {e.subcategories.map((e, i) => (
                     <button
-                    key={i}
-                    onClick={handleClick}
-                    className={s.container_li}
+                      key={i}
+                      onClick={handleClick}
+                      className={s.container_li}
                     >
                       {e}
                     </button>
