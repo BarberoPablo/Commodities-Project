@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import s from "../Home/Card/Card.module.css";
 import { Link } from "react-router-dom";
-import { banPost } from "../../Redux/Actions/Actions";
+import { reportTo } from "../../Redux/Actions/Actions";
 
 
 
@@ -14,9 +14,13 @@ const CardsPost = ({ currentPost }) => {
   const user = allUsers
   
   function handleBan(e){
-dispatch(banPost(e.id, 9, "Ban"))
+dispatch(reportTo(e.id, 9, {event:"Ban"}))
 console.log(e)
   }
+  function handleDismiss(e){
+    dispatch(reportTo(e.id, 9, {event:"Dismiss"}))
+    console.log(e)
+      }
 
   return (
   
@@ -83,6 +87,7 @@ console.log(e)
         <p>{e.description}</p>
       </div>
 <p>{e.display? "NOT BANNED":"BANNED"}</p>
+<button onClick={()=>handleDismiss(e)}>Dismiss POST</button>
             <button onClick={()=>handleBan(e)}>DELETE POST</button>
           </div>
           );
