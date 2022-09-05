@@ -20,6 +20,15 @@ const Profile = () => {
   const userLog = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
+  const [email, setEmail] = useState({
+    from: "commoditiesb2b@hotmail.com",
+    to: user?.email,
+    subject: "You just signed up on B2B commodities",
+    text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
+    You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
+    We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+    Feel free to contact us at commoditiesb2b@hotmail.com`
+});
 
   const validate = (values) => {
     const errors = {};
@@ -56,7 +65,14 @@ const Profile = () => {
   }, [dispatch, user, userLog.id]);
 
   useEffect(() => {
-    console.log(user);
+    setEmail({
+      ...email,
+      to: user?.email,
+      text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
+      You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
+      We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+      Feel free to contact us at commoditiesb2b@hotmail.com`
+    })
   }, [user]);
 
   const formik = useFormik({
@@ -77,15 +93,7 @@ const Profile = () => {
       dispatch(createNewUser(values));
       alert("profile updated successfully");
       dispatch(
-        mailTous({
-          from: "b2bcommodities@hotmail.com",
-          to: user.email,
-          subject: "You just signed up on B2B commodities",
-          text: `Hello ${user.nickname}! Welcomes from the team of B2B.
-          You are registered with the ${user.plan} plan on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
-          We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
-          Feel free to contact us at commoditiesb2b@hotmail.com`,
-        })
+        mailTous(email)
       );
     },
   });
