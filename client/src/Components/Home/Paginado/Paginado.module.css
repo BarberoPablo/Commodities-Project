@@ -16,23 +16,22 @@
 }
 
 .container span{
-  color: rgb(24, 16, 16);
+  color: white;
   margin: 0px 0.3%;
   background-color: #131B21;
   border-radius: 10px;
   width: 50px;
   list-style: none;
-  line-height: 2rem;
+  line-height: 50px;
   text-align: center;
 }
 
 .container span button{
   display: block;
   text-decoration: none;
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
   border-radius: 10px;
-  width: 100%;
   cursor: pointer;
 }
 
@@ -50,7 +49,7 @@
 }
 
 .number{
-  background-color: #28364E;
+ background-color: #28364E;
   color: black;
 }
 
