@@ -52,7 +52,6 @@ const ProfileUser = ({ match }) => {
     if (userLog?.id) {
       console.log("estado", review);
       dispatch(postReview(review));
-      console.log("listooooooooooooooooooooooooooooo");
     }
   };
 
@@ -78,7 +77,7 @@ const ProfileUser = ({ match }) => {
       dispatch(getUserDetails(user.email));
     }
     setLength(userLog.contactsIds?.length);
-  }, [dispatch, user, length, newContact]);
+  }, [dispatch, user, length, newContact, id, userLog.contactsIds?.length]);
 
   return (
     /*
@@ -93,24 +92,26 @@ const ProfileUser = ({ match }) => {
             </div>
             {userLog && userLog.remainingContacts > 0 ? (
               <>
-              {userLog.contactsIds?.includes(profileUser?.id) ?
-                <Button
-                  variant="secondary"
-                  className={s.btn}
-                  size="sm"
-                  onClick={toggleShowA}
-                  disabled
-                >
-                  Contact
-                </Button> : 
-                <Button
-                  variant="warning"
-                  className={s.btn}
-                  size="sm"
-                  onClick={toggleShowA}
-                >
-                  Contact
-                </Button>}
+                {userLog.contactsIds?.includes(profileUser?.id) ? (
+                  <Button
+                    variant="secondary"
+                    className={s.btn}
+                    size="sm"
+                    onClick={toggleShowA}
+                    disabled
+                  >
+                    Contact
+                  </Button>
+                ) : (
+                  <Button
+                    variant="warning"
+                    className={s.btn}
+                    size="sm"
+                    onClick={toggleShowA}
+                  >
+                    Contact
+                  </Button>
+                )}
                 <ToastContainer position="bottom-center">
                   <Toast show={showA} onClose={toggleShowA} bg="secondary">
                     <Toast.Body>
@@ -133,15 +134,15 @@ const ProfileUser = ({ match }) => {
               </>
             ) : (
               <>
-              <p>you must have a membership to make contact</p>
-              <Button
-                variant="secondary"
-                className={s.btn}
-                size="sm"
-                disabled
-              >
-                Contact
-              </Button>
+                <h5>You must have a membership to make contact</h5>
+                <Button
+                  variant="secondary"
+                  className={s.btn}
+                  size="sm"
+                  disabled
+                >
+                  Contact
+                </Button>
               </>
             )}
           </div>

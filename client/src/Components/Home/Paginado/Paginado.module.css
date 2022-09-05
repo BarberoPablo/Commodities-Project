@@ -1,25 +1,24 @@
 .Container{
   display: flex;
-  width: 60%;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  margin-left: 30%;
+  width: 100%;
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 .container{
-  max-width: 100%;
-  border-radius: 10px;
-  margin: 3% 1%;
+  max-width: 50%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content:center;
+  align-items:center;
+  margin-left: 18%;
 }
 
 .container li{
   color: white;
   margin: 0px 0.3%;
-  background-color: #151E22;
+  background-color: #131B21;
   border-radius: 10px;
   width: 50px;
   list-style: none;
@@ -43,13 +42,29 @@
 
 .btn{
   color: white;
-  height: 15%;
-  width: 4%;
+  font-size: 1.1rem;
   border: none;
-  background-color: #151E22;
+  background-color: #131B21;
+  border-radius: 6px;
 }
 
 .number{
-  background-color: rgb(61, 65, 106);
+  background-color: #28364E;
   color: black;
+}
+
+@media screen and (max-width:1000px){
+  .Container{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   padding: 2rem;
+   margin: 0 auto;
+  }
+  .container{
+    max-width: 90%;
+    margin-left: -15%;
+  }
+  
 }
