@@ -27,6 +27,7 @@ export default function Paginado({
   }
 
   return (
+    <div className={s.Container}>
       <nav className={s.container}>
         {currentPage === 1 ? null : (
           <button
@@ -59,7 +60,6 @@ export default function Paginado({
         </button>
       )}
       </nav>
-      </div>
     </div>
   );
 }
