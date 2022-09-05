@@ -38,18 +38,18 @@ export default function Paginado({
           «{" "}
         </button>
       )}
-      <div className={s.container}>
+      <nav className={s.container}>
         {pageNumbers?.map((number) => (
-          <li key={number}>
-            <a
+          <span key={number}>
+            <button 
               onClick={() => handlePaginado(number)}
               className={number === currentPage ? s.number : s.number2}
             >
               {number}
-            </a>
-          </li>
+            </button>
+          </span>
         ))}
-      </div>
+      </nav>
       {currentPage >= Math.ceil(posts / postPerPage) ? null : (
         <button
           className={s.btn}
