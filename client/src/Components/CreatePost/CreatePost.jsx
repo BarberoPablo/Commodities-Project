@@ -103,10 +103,8 @@ export default function CreatePost() {
       alert("plaese login to create a post");
       return;
     }
-    console.log(input);
     let val = validacion(input);
     setErrors(val);
-    console.log(val);
     dispatch(postPost(user.email, input));
     if (Object.keys(val).length > 0) {
       alert("Fix errors");

@@ -12,13 +12,15 @@ import {
   postReview,
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
-import Reviews from './Reviews'
+import Reviews from "./Reviews";
+import { BsArrowBarDown, BsArrowBarUp } from "react-icons/bs";
 
 const ProfileUser = ({ match }) => {
   const id = match.params.id;
   const { profileUser } = useSelector((state) => state.users); //trae los datos de un usuario en especifico
   const { posts } = useSelector((state) => state.posts); //trae todos los posts
   const [showA, setShowA] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [length, setLength] = useState(0);
   const [newContact, setNewContact] = useState(false);
 
@@ -30,7 +32,7 @@ const ProfileUser = ({ match }) => {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.users.user); // trae un array con los datos del usuario logeado
   const filter = posts.filter((e) => e.userId === profileUser.id); //filtra los posts del usuario seleccionado
-  console.log(" userId: ", profileUser?.id, "idReview", userLog?.id);
+  const [show, setShow] = useState(true);
 
   const [review, setReview] = useState({
     userId: profileUser.id,
@@ -39,6 +41,7 @@ const ProfileUser = ({ match }) => {
     comment: "",
   });
 
+  const [alerts, setAlerts] = useState(false);
   const handleChange = (e) => {
     setReview({
       ...review,
@@ -49,26 +52,32 @@ const ProfileUser = ({ match }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     if (userLog?.id) {
-      console.log("estado", review);
-      dispatch(postReview(review));
+      if (review.score !== "" && review.comment !== "") {
+        dispatch(postReview(review));
+        setAlerts(!alerts);
+      } else {
+        e.preventDefault();
+        alert("you cannot submit without completing all fields");
+      }
     }
   };
 
   const toggleShowA = () => setShowA(!showA);
   const toggleShowB = (e) => {
-    e.preventDefault();
     if (userLog.id) {
       //dispatch(getContactsUser(userLog?.id, id)); // dispatch llenar el array de contactos con el id del usuario logeado y el id del usuario que hizo el posteo
       dispatch(getContactsUser(userLog?.id, id));
       setNewContact(true);
       setShowA(!showA);
+      window.location.reload();
     } else {
       alert("Try again in a few seconds");
     }
   };
-
+  const handleReview = () => {
+    setShowReview(!showReview);
+  };
   useEffect(() => {
     //setNewContact(false);
     dispatch(getProfileDetails(id)); //trae los datos del usuario en especifico
@@ -87,73 +96,72 @@ const ProfileUser = ({ match }) => {
     <>
       {profileUser ? (
         <div className={s.container}>
-            <div className={s.card}>
-              <div className={s.user_photo} id="user_photo">
-                <img src={profileUser.image} alt="a" />
-              </div>
-              {userLog && userLog.remainingContacts > 0 ? (
-                <>
-                  {userLog.contactsIds?.includes(profileUser?.id) ? (
-                    <>
-                      <Button
-                        variant="secondary"
-                        className={s.btn}
-                        size="sm"
-                        onClick={toggleShowA}
-                        disabled
-                      >
-                        Contact
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        variant="warning"
-                        className={s.btn}
-                        size="sm"
-                        onClick={toggleShowA}
-                      >
-                        Contact
-                      </Button>
-                    </>
-                  )}
-                  <ToastContainer position="bottom-center">
-                    <Toast show={showA} onClose={toggleShowA} bg="secondary">
-                      <Toast.Body>
-                        By accepting, one of your contacts will be deducted, are
-                        you sure?
-                      </Toast.Body>
-                      <Button variant="success" size="sm" onClick={toggleShowB}>
-                        Accept
-                      </Button>
-                      <Button
-                        style={{ margin: "10px" }}
-                        variant="danger"
-                        size="sm"
-                        onClick={toggleShowA}
-                      >
-                        Cancel
-                      </Button>
-                    </Toast>
-                  </ToastContainer>
-                </>
-              ) : (
-                <>
-                  <h5>You must have a membership to make contact</h5>
-                  <Button
-                    variant="secondary"
-                    className={s.btn}
-                    size="sm"
-                    disabled
-                  >
-                    Contact
-                  </Button>
-                </>
-              )}
+          <div className={s.card}>
+            <div className={s.user_photo} id="user_photo">
+              <img src={profileUser.image} alt="a" />
+              <Reviews profileUser={profileUser} />
             </div>
-            <div>
+            {userLog && userLog.remainingContacts > 0 ? (
+              <>
+                {userLog.contactsIds?.includes(profileUser?.id) ? (
+                  <>
+                    <Button
+                      variant="secondary"
+                      className={s.btn}
+                      size="sm"
+                      onClick={toggleShowA}
+                      disabled
+                    >
+                      Contact
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="warning"
+                      className={s.btn}
+                      size="sm"
+                      onClick={toggleShowA}
+                    >
+                      Contact
+                    </Button>
+                  </>
+                )}
+                <ToastContainer position="bottom-center">
+                  <Toast show={showA} onClose={toggleShowA} bg="secondary">
+                    <Toast.Body>
+                      By accepting, one of your contacts will be deducted, are
+                      you sure?
+                    </Toast.Body>
+                    <Button variant="success" size="sm" onClick={toggleShowB}>
+                      Accept
+                    </Button>
+                    <Button
+                      style={{ margin: "10px" }}
+                      variant="danger"
+                      size="sm"
+                      onClick={toggleShowA}
+                    >
+                      Cancel
+                    </Button>
+                  </Toast>
+                </ToastContainer>
+              </>
+            ) : (
+              <>
+                <h5>You must have a membership to make contact</h5>
+                <Button
+                  variant="secondary"
+                  className={s.btn}
+                  size="sm"
+                  disabled
+                >
+                  Contact
+                </Button>
+              </>
+            )}
           </div>
-          <Reviews profileUser={profileUser} />
+
           <div className={s.containerPost}>
             {userLog.contactsIds?.includes(profileUser.id) ? (
               <>
@@ -174,9 +182,50 @@ const ProfileUser = ({ match }) => {
                     <b>Country: </b>
                     {profileUser.country}
                   </p>
-                  <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      userSelect: "none",
+                    }}
+                  >
+                    <p style={{ color: "gray", textAlign: "center" }}>
+                      Do you have any comments about this contact? <br /> Write
+                      it
+                    </p>
+                    {showReview === true ? (
+                      <BsArrowBarUp
+                        onClick={handleReview}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "25px",
+                          color: "gray",
+                        }}
+                      />
+                    ) : (
+                      <BsArrowBarDown
+                        onClick={handleReview}
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "25px",
+                          color: "gray",
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+                {showReview === true ? (
+                  <div className={s.review}>
                     <form onSubmit={handleSubmit}>
-                      <select name="score" onChange={handleChange}>
+                      <select
+                        name="score"
+                        onChange={handleChange}
+                        defaultValue={"DEFAULT"}
+                      >
+                        <option value="DEFAULT" disabled>
+                          Score
+                        </option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -184,14 +233,32 @@ const ProfileUser = ({ match }) => {
                         <option value="5">5</option>
                       </select>
                       <input
-                        type="textarea"
+                        placeholder="write your review"
+                        type="text"
                         name="comment"
                         onChange={handleChange}
-                      ></input>
-                      <button type="submit">enviar</button>
+                      />
+
+                      <button type="submit">Send</button>
+                      {alerts === true ? (
+                        <Toast
+                          onClose={() => setShow(false)}
+                          show={show}
+                          delay={1500}
+                          bg="success"
+                          autohide
+                          position="center"
+                        >
+                          <Toast.Body>
+                            <strong style={{ color: "white" }}>
+                              Review send successfully
+                            </strong>
+                          </Toast.Body>
+                        </Toast>
+                      ) : null}
                     </form>
                   </div>
-                </div>
+                ) : null}
               </>
             ) : null}
             {filter &&
@@ -226,6 +293,8 @@ const ProfileUser = ({ match }) => {
                           .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
+                    <b>{e.title}</b>
+                    <hr />
                     <div className={s.container_b}>
                       <p>
                         Category: <b>{e.categoryName}</b>
@@ -248,7 +317,6 @@ const ProfileUser = ({ match }) => {
                     </div>
                     <div>
                       <hr />
-                      <b>{e.title}</b>
                       <p>{e.description}</p>
                       {e.image ? (
                         <img
