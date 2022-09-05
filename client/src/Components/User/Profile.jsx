@@ -122,7 +122,7 @@ const Profile = () => {
                   <Toast.Body>
                     {" "}
                     Complete the required fields to validate your profile <br />{" "}
-                    <b>*Email </b>and<b> *Phone</b>
+                    <b>*Country </b>and<b> *Phone</b>
                   </Toast.Body>
                 </Toast>
               </ToastContainer>
