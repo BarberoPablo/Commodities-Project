@@ -1,6 +1,9 @@
 .container{
-  color: #fff;
+  color: rgb(0, 0, 0);
   min-height:calc(100vh - 70px - 7vh) ;
+}
+.container h1{
+  color:rgb(36, 36, 36);
 }
 .container input{
   margin: 2px;
@@ -13,5 +16,5 @@
   padding: 3px;
   width: 20%;
   background-color: rgba(255, 255, 255, 0.178);
-  color: #fff;
+  color: rgb(0, 0, 0);
 }

@@ -27,18 +27,17 @@ export default function Paginado({
   }
 
   return (
-    <div className={s.Container}>
-      {currentPage === 1 ? null : (
-        <button
-          className={s.btn}
-          id="pn"
-          value="prev"
-          onClick={(e) => handleClick2(e)}
-        >
-          «{" "}
-        </button>
-      )}
       <nav className={s.container}>
+        {currentPage === 1 ? null : (
+          <button
+            className={s.btn}
+            id="pn"
+            value="prev"
+            onClick={(e) => handleClick2(e)}
+          >
+          «{" "}
+          </button>
+        )}
         {pageNumbers?.map((number) => (
           <span key={number}>
             <button 
@@ -48,8 +47,7 @@ export default function Paginado({
               {number}
             </button>
           </span>
-        ))}
-      </nav>
+        ))}      
       {currentPage >= Math.ceil(posts / postPerPage) ? null : (
         <button
           className={s.btn}
@@ -60,6 +58,8 @@ export default function Paginado({
           »{" "}
         </button>
       )}
+      </nav>
+      </div>
     </div>
   );
 }

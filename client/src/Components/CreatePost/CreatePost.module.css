@@ -1,12 +1,15 @@
+.Container{
+  min-width: 100%;
+}
 .container{
   color: white;
   display: flex;
   padding:20px;
   justify-content: center;
   flex-direction: column;
-  background-color: #151e22;
-  width:50%;
-  margin: 0px auto;
+  background-color: #0E3B43;
+  max-width: 40%;
+  margin: 1.6% auto;
   border-radius:10px;
   min-height:calc(100vh - 70px - 7vh) ;
 }
@@ -16,7 +19,7 @@
 }
 .form{
   margin: 0 auto;
-  width: 50%;
+  width: 100%;
   display: flex;
   gap: 0.3rem;
   justify-content: center;
@@ -27,6 +30,12 @@
   margin: 7px;
   border-radius:4px;
   border: none;
+  width: 100%;
+  text-align: center;
+
+}
+.form .tittle{
+  width: 80%;
 }
 .form select{
   border-radius:4px;
@@ -51,6 +60,10 @@
   background-color: rgba(255, 255, 255, 0.178);
   color: #fff;
 }
+.cat{
+  display: flex;
+  align-items: center;
+}
 .category{
   margin: 5px;
 }
@@ -63,10 +76,16 @@ h1{
 .payment{
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-.uploadImage{
-  border-radius:4px;
-  border: none;
-  padding: 3px;
-  color: #fff;
+.divImg{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+}
+.divImg img{
+  max-width: 150px;
+  max-height: 150px;
 }
