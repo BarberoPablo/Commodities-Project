@@ -1,7 +1,16 @@
 const categories = [
-  { name: "Agriculture", subcategories: ["Coffee", "Corn", "Rice", "Soybeans", "Sugar"] },
-  { name: "Energy", subcategories: ["Gasoline", "Heating Fuel", "Natural Gas", "Petroleum"] },
-  { name: "Livestock", subcategories: ["Beef Cattle", "Chicken Cattle", "Pig Cattle"] },
+  {
+    name: "Agriculture",
+    subcategories: ["Coffee", "Corn", "Rice", "Soybeans", "Sugar"],
+  },
+  {
+    name: "Energy",
+    subcategories: ["Gasoline", "Heating Fuel", "Natural Gas", "Petroleum"],
+  },
+  {
+    name: "Livestock",
+    subcategories: ["Beef Cattle", "Chicken Cattle", "Pig Cattle"],
+  },
   { name: "Metals", subcategories: ["Copper", "Gold", "Platinum", "Silver"] },
 ];
 
@@ -100,11 +109,21 @@ const users = [
   },
   {
     id: 10,
-    name: "Dhruv Shenoy",
+    name: "Tito Shenoy",
     country: "India",
     email: "dhruv.shenoy@example.com",
     phone: "8672994375",
     image: "https://randomuser.me/api/portraits/men/6.jpg",
+  },
+  {
+    id: 11,
+    name: "Max Verstappen",
+    country: "Netherlands",
+    email: "maxverstappen@admin.com",
+    phone: "8672994375",
+    image:
+      "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTJXw84YC1Cr4l578Ncix3oXU6hXDarw9W7nWhmfCLIAnTS_xkpu-C3cQSkWg7yo1GE",
+    isAdmin: true,
   },
 ];
 
@@ -118,7 +137,8 @@ const posts = [
   //GOLD
   {
     title: "Looking for gold supplier",
-    description: "We are looking for Gold suppliers for our buyer in UAE. Qty: 150 kg per month",
+    description:
+      "We are looking for Gold suppliers for our buyer in UAE. Qty: 150 kg per month",
     sell: false,
     shipping: ["CIF"],
     payment: ["DLC"],
@@ -141,7 +161,8 @@ const posts = [
   },
   {
     title: "Buying Gold",
-    description: "We want to buy Raw Gold Bars. Please contact us as soon as possible.",
+    description:
+      "We want to buy Raw Gold Bars. Please contact us as soon as possible.",
     sell: false,
     shipping: ["CIF"],
     payment: ["SBLC"],
@@ -268,7 +289,8 @@ const posts = [
   },
   {
     title: "Silver suppliers",
-    description: "Silver Ingots Quantity: 10.000-50.000 kilos×4 times per month.",
+    description:
+      "Silver Ingots Quantity: 10.000-50.000 kilos×4 times per month.",
     sell: true,
     shipping: ["CIF"],
     payment: ["SBLC"],
@@ -279,7 +301,8 @@ const posts = [
   },
   {
     title: "Need silver",
-    description: "We have a requirement of Silver Bars. Qty: 200 MT. Origin: any. Packing in boxes.",
+    description:
+      "We have a requirement of Silver Bars. Qty: 200 MT. Origin: any. Packing in boxes.",
     sell: false,
     shipping: ["FOB"],
     payment: ["LC"],
@@ -376,7 +399,8 @@ const posts = [
   },
   {
     title: "Looking for Sugar",
-    description: "We want to buy Sugar Icumsa 45 from Lome ( Togo ). Quantity: 50000 Tonnes",
+    description:
+      "We want to buy Sugar Icumsa 45 from Lome ( Togo ). Quantity: 50000 Tonnes",
     sell: false,
     shipping: ["CIF"],
     payment: ["SBLC"],
@@ -387,7 +411,8 @@ const posts = [
   },
   {
     title: "Sugar suppliers",
-    description: "Sugar Grades Available Grades : ICUMSA 45, 100,150 , 600 -1200",
+    description:
+      "Sugar Grades Available Grades : ICUMSA 45, 100,150 , 600 -1200",
     sell: true,
     shipping: ["CIF"],
     payment: ["DLC"],
@@ -484,7 +509,8 @@ const posts = [
   },
   {
     title: "Corn seeds",
-    description: "We trade corn seeds. This is very popular for multiple uses. World wide we supply this grain",
+    description:
+      "We trade corn seeds. This is very popular for multiple uses. World wide we supply this grain",
     sell: true,
     shipping: ["FOB"],
     payment: ["LC"],
@@ -545,7 +571,8 @@ const posts = [
   //GASOLINE
   {
     title: "Gasoline 89 Octanes",
-    description: " Quantity MIN 50,000MT x 12 months - Origin: Russian Federation",
+    description:
+      " Quantity MIN 50,000MT x 12 months - Origin: Russian Federation",
     sell: true,
     shipping: ["CIF"],
     payment: ["LC"],
@@ -568,7 +595,8 @@ const posts = [
   },
   {
     title: "Need Gasoline 95oct",
-    description: "Gasoline 95 Octane Quantity Required : 50000 Metric Ton/Metric Tons",
+    description:
+      "Gasoline 95 Octane Quantity Required : 50000 Metric Ton/Metric Tons",
     sell: false,
     shipping: ["FOB"],
     payment: ["SBLC"],
@@ -640,7 +668,8 @@ const posts = [
   //NATURAL GAS
   {
     title: "Gas Natural from Australia",
-    description: "Liquified Natural Gas LNG Quantity Required : 40000 Metric Ton/Metric Tons",
+    description:
+      "Liquified Natural Gas LNG Quantity Required : 40000 Metric Ton/Metric Tons",
     sell: true,
     shipping: ["FOB"],
     payment: ["SBLC"],
@@ -688,7 +717,8 @@ const posts = [
   //PETROLEUM
   {
     title: "Petroleum",
-    description: "Jet fuel, diesel, base oil, lng, lpg, gas oil, rebco, espo, lco, crude oil, petroleoum coke",
+    description:
+      "Jet fuel, diesel, base oil, lng, lpg, gas oil, rebco, espo, lco, crude oil, petroleoum coke",
     sell: true,
     shipping: ["FOB"],
     payment: ["SBLC"],
@@ -699,7 +729,8 @@ const posts = [
   },
   {
     title: "Best product of Texas",
-    description: "The best Oil from our glorious Republic of Texas. Large quantitys.",
+    description:
+      "The best Oil from our glorious Republic of Texas. Large quantitys.",
     sell: true,
     shipping: ["CIF"],
     payment: ["LC"],
@@ -722,7 +753,8 @@ const posts = [
   },
   {
     title: "Looking for Petroleum",
-    description: "We are looking for a supplier of Petroleum Products. Please send us your quotations in details.",
+    description:
+      "We are looking for a supplier of Petroleum Products. Please send us your quotations in details.",
     sell: false,
     shipping: ["CIF"],
     payment: ["SBLC"],
@@ -803,7 +835,8 @@ const posts = [
   },
   {
     title: "Beef meat",
-    description: "Type:Beef cuts for canning Quantity Required : 3 - 4 Twenty-Foot Container ",
+    description:
+      "Type:Beef cuts for canning Quantity Required : 3 - 4 Twenty-Foot Container ",
     sell: false,
     shipping: ["CIF"],
     payment: ["LC"],
@@ -839,7 +872,8 @@ const posts = [
   },
   {
     title: "Brazilian Chicken",
-    description: "Brazilian Frozen Chicken Quantity Required : 5000 Carton/Cartons ",
+    description:
+      "Brazilian Frozen Chicken Quantity Required : 5000 Carton/Cartons ",
     sell: false,
     shipping: ["CIF"],
     payment: ["DLC"],

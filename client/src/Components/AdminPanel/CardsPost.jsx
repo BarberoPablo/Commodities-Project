@@ -6,29 +6,31 @@ import s from "../Home/Card/Card.module.css";
 import { Link } from "react-router-dom";
 import { reportTo } from "../../Redux/Actions/Actions";
 
-
-
 const CardsPost = ({ currentPost }) => {
   const dispatch = useDispatch();
   const { allUsers } = useSelector((state) => state.users);
-  const user = allUsers
-  
-  function handleBan(e){
-    dispatch(reportTo(e.id, 9, {event:"Ban"}))
-    console.log(e)
+  const user = allUsers;
+
+  function handleBan(e) {
+    dispatch(reportTo(e.id, 9, { event: "Ban" }));
+    console.log(e);
   }
-  function handleDismiss(e){
-    dispatch(reportTo(e.id, 9, {event:"Dismiss"}))
-    console.log(e)
+  function handleDismiss(e) {
+    dispatch(reportTo(e.id, 9, { event: "Dismiss" }));
+    console.log(e);
   }
 
   return (
-  
-    <Container fluid="md" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-      <Row style={{width:'80%'}} >
+    <Container
+      fluid="md"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Row style={{ width: "80%" }}>
         {currentPost?.map((e, i) => {
           return (
-            <div className={s.container}>  {/*key={e.userId}*/}
+            <div className={s.container}>
+              {" "}
+              {/*key={e.userId}*/}
               <div className={s.container_a}>
                 <div className={s.container_logo}>
                   <img
@@ -44,15 +46,26 @@ const CardsPost = ({ currentPost }) => {
                   <b>{user.find((c) => e.userId === c.id)?.name}</b>
                 </Link>
                 {e.sell ? (
-                    <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>
-                      Seller
-                    </p>
-                  ) 
-                  : (
-                    <p style={{ color: "green", marginTop: "20px", marginLeft: "15px" }}>
-                      Buyer
-                    </p>
-                  )}
+                  <p
+                    style={{
+                      color: "red",
+                      marginTop: "20px",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    Seller
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      color: "green",
+                      marginTop: "20px",
+                      marginLeft: "15px",
+                    }}
+                  >
+                    Buyer
+                  </p>
+                )}
                 <p className={s.container_time}>
                   {e.createdAt
                     .slice(0, 10)
@@ -85,13 +98,13 @@ const CardsPost = ({ currentPost }) => {
                 <b>{e.title}</b>
                 <p>{e.description}</p>
               </div>
-              <p>{e.display? "NOT BANNED":"BANNED"}</p>
-              <button onClick={()=>handleDismiss(e)}>Dismiss Report</button>
-              <button onClick={()=>handleBan(e)}>DELETE POST</button>
+              <p>{e.display ? "NOT BANNED" : "BANNED"}</p>
+              <button onClick={() => handleDismiss(e)}>Dismiss Report</button>
+              <button onClick={() => handleBan(e)}>DELETE POST</button>
             </div>
           );
         })}
-      </Row>    
+      </Row>
     </Container>
   );
 };

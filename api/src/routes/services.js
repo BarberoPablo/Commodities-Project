@@ -201,16 +201,16 @@ const getCategory = async (req, res) => {
 const createPlan = async (req, res) => {
   try {
     const { name, cost, contacts, posts, reviews } = req.body;
-    
+
     if (!name || !cost || !contacts) {
-      return res.status(400).send("Complete data")
+      return res.status(400).send("Complete data");
     }
 
     const sameName = await Plan.findOne({
-      where: {name: name}
-    })
-    if (sameName){
-      return res.status(400).send(`This membership already exist `)
+      where: { name: name },
+    });
+    if (sameName) {
+      return res.status(400).send(`This membership already exist `);
     }
     const newPlan = await Plan.create({
       name,
@@ -381,7 +381,7 @@ const getUserId = async (req, res) => {
     const userId = await User.findOne({
       where: { id: id },
       include: {
-        model: ReviewUser
+        model: ReviewUser,
       },
     });
     if (userId) {
@@ -642,10 +642,28 @@ const userBan = async (req, res) => {
       await banUser.update({
         isBanned: false,
       });
+      const banUserPosts = await Post.findAll({
+        where: { userId: banUser.id },
+      });
+      for (let i = 0; i < banUserPosts.length; i++) {
+        console.log("@@");
+        await banUserPosts[i].update({
+          display: true,
+        });
+      }
     } else {
       await banUser.update({
         isBanned: true,
       });
+      const banUserPosts = await Post.findAll({
+        where: { userId: banUser.id },
+      });
+      for (let i = 0; i < banUserPosts.length; i++) {
+        console.log("@@");
+        await banUserPosts[i].update({
+          display: false,
+        });
+      }
     }
     return res.status(201).send(`User's ban has been modificated`);
   } catch (error) {
@@ -774,18 +792,18 @@ const reportOrBanPost = async (req, res) => {
   }
 };
 
-const modifyPlan = async (req , res) => {
-  const { namePlan } = req.params
+const modifyPlan = async (req, res) => {
+  const { namePlan } = req.params;
   try {
     const { name, cost, contacts, posts, reviews } = req.body;
 
     const findPlan = await Plan.findOne({
-      where: {name: namePlan}
-    })
+      where: { name: namePlan },
+    });
 
     if (!findPlan) {
-      return res.status(404).send("The membership is not found")
-    } 
+      return res.status(404).send("The membership is not found");
+    }
 
     if (!name) {
       await findPlan.update({
@@ -793,34 +811,32 @@ const modifyPlan = async (req , res) => {
         cost,
         contacts,
         posts,
-        reviews
-      })
-      return res.status(201).send('Plan modified')
+        reviews,
+      });
+      return res.status(201).send("Plan modified");
     }
-    
+
     const planName = await Plan.findOne({
-      where: {name: name}
-    })
-    console.log(contacts)
-    
+      where: { name: name },
+    });
+    console.log(contacts);
+
     if (findPlan && !planName?.name) {
-      
       await findPlan.update({
         name,
         cost,
         contacts,
         posts,
-        reviews
-      })
-      return res.status(201).send('Plan modified')
-    }
-    else {
-      return res.status(404).send(`The membership ${name} already exist`)
+        reviews,
+      });
+      return res.status(201).send("Plan modified");
+    } else {
+      return res.status(404).send(`The membership ${name} already exist`);
     }
   } catch (error) {
     res.status(error.status).send(error.message);
   }
-}
+};
 
 module.exports = {
   createPost,
@@ -846,5 +862,5 @@ module.exports = {
   deleteOrAddFavorite,
   reportOrBanPost,
   getUserId,
-  modifyPlan
+  modifyPlan,
 };
