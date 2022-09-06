@@ -126,7 +126,9 @@ const Navbarr = ({ setCurrentPage }) => {
           </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
-
+        <a href="/" style={{marginTop:'-55px',position:'absolute',right:'0'}}>
+          <img src={Logo} alt="Logo" className={s.logo_responsive} />              
+        </a>
         <div className={s.container_nav}>
           {isAuthenticated ? (
             <Nav>

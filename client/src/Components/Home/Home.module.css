@@ -14,3 +14,10 @@
 .container_filters{
   width: 84%;
 }
+
+@media screen and (max-width:1000px){
+.container_filters{
+  width: 100%;
+}
+}
+
