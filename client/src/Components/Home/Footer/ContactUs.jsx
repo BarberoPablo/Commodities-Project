@@ -8,13 +8,12 @@ const ContactUs = () => {
   return (
     <div className={s.container}>
       <h1>Have a question about our services? Need Help?</h1>
-      {/*<a href="/feedback">📧Click here to email us.</a>*/}
       <h5>
         Send us a quick email and we will be glad to help you. You can contact
         us at the following address:
       </h5>
       <p>
-        📧<a href="/feedback">commoditiesb2b@hotmail.com</a>
+        📧<a href="/feedback">commoditiesB2Bteam@hotmail.com</a>
       </p>
       <div>
         <address>
