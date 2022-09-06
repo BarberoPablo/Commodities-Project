@@ -66,7 +66,7 @@ router.get("/feedback", getFeedback);
 
 router.post("/feedback/:id", postFeedback);
 
-router.put("/admin-panel/review/:userId/:idReview", modifyReview);
+router.put("/admin-panel/review/:userId", modifyReview);
 
 router.put("/user/:idSearcher/:idPoster", addUserContact);
 

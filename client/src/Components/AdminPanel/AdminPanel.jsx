@@ -1,6 +1,6 @@
 import {React,  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth0 } from "@auth0/auth0-react";
+//import { useAuth0 } from "@auth0/auth0-react";
 import { getPost, getUser } from "../../Redux/Actions/Actions";
 import CardsPost from "./CardsPost";
 import CardsUsers from "./CardsUsers";
@@ -16,7 +16,7 @@ const dispatch = useDispatch();
 
 const { posts } = useSelector((state) => state.posts);
 const { allUsers } = useSelector((state) => state.users);
-const { user } = useAuth0();
+//const { user } = useAuth0();
 
 
 useEffect(() => {
