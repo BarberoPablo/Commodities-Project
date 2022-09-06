@@ -5,7 +5,6 @@ import { getPost, getUser } from "../../Redux/Actions/Actions";
 import CardsPost from "./CardsPost";
 import CardsUsers from "./CardsUsers";
 import CardsReview from "./CardsReviews";
-import CreateCategory from "./CreateCategory";
 import AdminMemberships from "./AdminMemberships";
 import Reports from "./Reports";
 
@@ -31,7 +30,6 @@ function clickPost(){
     setShowPost(true)
     setShowReports(false)
     setShowUsers(false)
-    setShowCategory(false)
     setShowReviews(false)
     setShowMemberships(false)
   }
@@ -42,22 +40,9 @@ function clickUsers(){
   if(!showUsers){
     setShowUsers(true)
     setShowPost(false)
-    setShowCategory(false)
     setShowReviews(false)
     setShowMemberships(false)
     setShowReports(false)
-  }
-}
-const [showCategory, setShowCategory]  = useState(false)
-function clickCategory(){
-  //dispatch(getUser())
-  if(!showCategory){
-    setShowCategory(true)
-    setShowReports(false)
-    setShowPost(false)
-    setShowUsers(false)
-    setShowReviews(false)
-    setShowMemberships(false)
   }
 }
 const [showReviews, setShowReviews]  = useState(false)
@@ -66,7 +51,6 @@ function clickReviews(){
   if(!showReviews){
     setShowReviews(true)
     setShowReports(false)
-    setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
     setShowMemberships(false)
@@ -78,7 +62,6 @@ function clickMemberships(){
   if(!showMemberships){
     setShowMemberships(true)
     setShowReviews(false)
-    setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
     setShowReports(false)
@@ -91,7 +74,6 @@ function clickReports(){
     setShowReports(true)
     setShowMemberships(false)
     setShowReviews(false)
-    setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
   }
@@ -105,7 +87,6 @@ function clickReports(){
     <button onClick={()=>clickPost()}>Posts</button>
     <button onClick={()=>clickReviews()}>Reviews</button>
     <button onClick={()=>clickMemberships()}>Memberships</button>
-    <button onClick={()=>clickCategory()}>Category</button>
 
 {showUsers &&
 <div>
@@ -117,10 +98,6 @@ function clickReports(){
 <CardsPost currentPost={posts}/>
 </div>
 }
-{showCategory &&
-<div>
-  <CreateCategory/>
-</div>}
 {showReviews &&
 <div>
 <CardsReview allUsers={allUsers}/>
