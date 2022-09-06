@@ -25,7 +25,7 @@ const Report = ({ match }) => {
   const userFilter = allUsers.filter(e => e.id === Number(idReview));
 
   const [input, setInput] = useState({
-    from: "commoditiesb2b@hotmail.com",
+    from: "commoditiesB2Bteam@hotmail.com",
     to: userFilter[0]?.email,
     subject: "",
     text: "",
@@ -56,12 +56,12 @@ const Report = ({ match }) => {
       !errors.length
     ) {
       alert("Email sent successfully.");
-      input.to = "commoditiesb2b@hotmail.com, " + userFilter[0]?.email;
+      input.to = "commoditiesB2Bteam@hotmail.com, " + userFilter[0]?.email;
       input.subject = "REPLY FROM B2B REPORT: " + input.subject;
       input.text =
         `Your report has already reached to our team and we will respond as soon as possible. 
               ||This is the explain you sent to us:    ` + input.text;
-      dispatch(mailTous(input));
+     // dispatch(mailTous(input));
       dispatch(reportTo(postId, idReview, {event:"Report"}))
       setInput({
         ...input,

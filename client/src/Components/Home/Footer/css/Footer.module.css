@@ -13,3 +13,11 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+@media screen and (max-width:600px){
+  .footer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}

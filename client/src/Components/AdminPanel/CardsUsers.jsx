@@ -21,15 +21,11 @@ dispatch(banUser(e.id))
 
 <img src={e.image} alt={e.name} />
 
+<p>{e.name} {e.email}</p>
 
-<input type="text" placeholder={e.name}/>
-<input type="text" placeholder={e.email}/>
-
-<button>UPDATE USER</button>
 <button onClick={()=>handleBan(e)}>BAN USER</button>
-<p>{e.name}</p>
-{/* <p>{e.country}</p> 
-<p>{e.email}</p> */}
+
+
 <p>{e.verified? "VERIFIED":"NOT VERIFIED"} {e.isBanned? "BANNED":"NOT BANNED"}</p>
 
               </div>

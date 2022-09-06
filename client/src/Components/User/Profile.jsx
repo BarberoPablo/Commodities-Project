@@ -28,14 +28,15 @@ const Profile = () => {
   const { user } = useAuth0();
   const dispatch = useDispatch();
   const [email, setEmail] = useState({
-    from: "commoditiesb2b@hotmail.com",
+    from: "commoditiesB2Bteam@hotmail.com",
     to: user?.email,
     subject: "You just signed up on B2B commodities",
     text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
     You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
     We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
-    Feel free to contact us at commoditiesb2b@hotmail.com`,
-  });
+    
+    Feel free to contact us at commoditiesB2Bteam@hotmail.com`
+});
 
   const validate = (values) => {
     const errors = {};
@@ -77,9 +78,11 @@ const Profile = () => {
       text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
       You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
       We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
-      Feel free to contact us at commoditiesb2b@hotmail.com`,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+      Feel free to contact us at commoditiesB2Bteam@hotmail.com`
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [user]);
 
   const formik = useFormik({

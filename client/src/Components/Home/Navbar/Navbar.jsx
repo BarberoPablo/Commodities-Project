@@ -10,6 +10,7 @@ import {  Container, Nav, Navbar, NavDropdown, Offcanvas,Button } from "react-bo
 import {AiOutlineMenu} from 'react-icons/ai'
 import {BiLogOut} from 'react-icons/bi'
 import {BsPersonCircle, BsFillChatLeftTextFill} from 'react-icons/bs'
+import {MdSubscriptions} from 'react-icons/md'
 
 const Navbarr = ({ setCurrentPage }) => {
   const userLog = useSelector((state) => state.users.user);
@@ -52,14 +53,51 @@ const Navbarr = ({ setCurrentPage }) => {
           <Button variant="primary" onClick={handleShow}>
             <AiOutlineMenu />
           </Button>
-          <Offcanvas responsive='md' show={show} onHide={handleClose}>
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title>Filter</Offcanvas.Title>
+          <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas.Header
+              closeButton
+              style={{color:'white', borderBottom: "1px solid white",backgroundColor:'#0f161a' }}
+            >
+              <Offcanvas.Title>Menu</Offcanvas.Title>
             </Offcanvas.Header>
+            {isAuthenticated ? (
+              <Nav className={s.mobile_nav}>
+                <div className={s.mobile_nav_A}>
+                  <a href="/profile" className={s.mobile_actions}>
+                    <BsPersonCircle />
+                    <h5>Profile</h5>
+                  </a>
+                </div>
+                <div className={s.mobile_nav_A}>
+                  <a href="/create-post" className={s.mobile_actions}>
+                    <BsFillChatLeftTextFill />
+                    <h5>Create post</h5>
+                  </a>
+                </div>
+                <div className={s.mobile_nav_A}>
+                  <div className={s.mobile_actions}>
+                    <BiLogOut />
+                    <a onClick={logout}>
+                      <h5>Logout</h5>
+                    </a>
+                  </div>
+                </div>
+                <div className={s.mobile_nav_A}>
+                  <a href="/memberships" className={s.mobile_actions}>
+                    <MdSubscriptions />
+                    <h5>Memberships</h5>
+                  </a>
+                </div>
+              </Nav>
+            ) : (
+              <button className={s.container_a} onClick={loginWithRedirect}>
+                LogIn
+              </button>
+            )}
             <div className={s.mobile_options}>
               {allCategories?.map((e, i) => (
                 <div key={i} className={s.container_subcategories}>
-                  <label>{e.name}</label>
+                  <h4 className={s.mobile_option_title}>{e.name}</h4>
                   {e.subcategories.map((e, i) => (
                     <button
                       key={i}
@@ -88,46 +126,50 @@ const Navbarr = ({ setCurrentPage }) => {
           </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
-
-        {isAuthenticated ? (
-          <Nav className={s.container_nav}>
-            <NavDropdown
-              id="nav-dropdown-dark-example"
-              title={
-                <img
-                  src={userLog.image ? userLog.image : user.picture}
-                  alt="User"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50px",
-                  }}
-                />
-              }
-              menuVariant="dark"
-              align="end"
-            >
-              <NavDropdown.Item href="/profile">
-                <div>
-                  <BsPersonCircle /> Profile
-                </div>
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/create-post">
-                <BsFillChatLeftTextFill /> Create post
-              </NavDropdown.Item>
-              <NavDropdown.Item className={s.actions}>
-                <div>
-                  <BiLogOut />
-                  <button onClick={logout}>Logout</button>
-                </div>
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        ) : (
-          <button className={s.container_a} onClick={loginWithRedirect}>
-            LogIn
-          </button>
-        )}
+        <a href="/" style={{marginTop:'-55px',position:'absolute',right:'0'}}>
+          <img src={Logo} alt="Logo" className={s.logo_responsive} />              
+        </a>
+        <div className={s.container_nav}>
+          {isAuthenticated ? (
+            <Nav>
+              <NavDropdown
+                id="nav-dropdown-dark-example"
+                title={
+                  <img
+                    src={userLog.image ? userLog.image : user.picture}
+                    alt="User"
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      borderRadius: "50px",
+                    }}
+                  />
+                }
+                menuVariant="dark"
+                align="end"
+              >
+                <NavDropdown.Item href="/profile">
+                  <div>
+                    <BsPersonCircle /> Profile
+                  </div>
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/create-post">
+                  <BsFillChatLeftTextFill /> Create post
+                </NavDropdown.Item>
+                <NavDropdown.Item className={s.actions}>
+                  <div>
+                    <BiLogOut />
+                    <button onClick={logout}>Logout</button>
+                  </div>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <button className={s.container_a} onClick={loginWithRedirect}>
+              LogIn
+            </button>
+          )}
+        </div>
       </Container>
     </Navbar>
   );
