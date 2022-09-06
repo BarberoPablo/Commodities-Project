@@ -515,11 +515,10 @@ const getAllPlans = async (req, res) => {
 
 const modifyReview = async (req, res) => {
   //Ruta pensada para que los Admin puedan ocultar un review reportado
-  //y para recibir un review reportado.
-  //llega por params el id del user reportado, y el id del user que reporta.
-  //Cuando se reporta un review, se agrega el id del que reporta al correspondiente review
+  //y para recibir un review reportado por su Owner.
+  //llega por params el id del user que desea que su review sea borrada.
   //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.
-  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo el reporte
+  const { userId } = req.params; //userId el del usuario que recibió la review
   const { display, position } = req.body; // display es false or true si hay que borrar y id indica la posición del review en el array
 
   try {
@@ -546,7 +545,7 @@ const modifyReview = async (req, res) => {
     } else if (display === "Report") {
       //"Report"
       //Aca marcamos el review para revisión
-      newReview.reviews[position].idReport.push(idReview);
+      newReview.reviews[position].idReport.push(userId);
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
       var average = newReview.average;

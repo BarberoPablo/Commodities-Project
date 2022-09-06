@@ -73,6 +73,7 @@ const Profile = () => {
       We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
       Feel free to contact us at commoditiesb2b@hotmail.com`
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const formik = useFormik({
