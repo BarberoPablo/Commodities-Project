@@ -255,9 +255,8 @@ const assignPlanToUser = async (req, res) => {
       where: { email: email },
     });
     if (planExists && userExists) {
-      console.log("@@:", planExists.contacts);
       await userExists.update({
-        planName,
+        planId: planExists.id,
         remainingContacts: userExists.remainingContacts + planExists.contacts,
       });
       res.status(201).json(userExists);
@@ -330,7 +329,7 @@ const modifyOrCreateUser = async (req, res) => {
         where: { name: "Free" },
       });
       await user.update({
-        planName: plan.name,
+        planId: plan.id,
         remainingContacts: plan.contacts,
       });
 
@@ -598,7 +597,7 @@ const addUserContact = async (req, res) => {
 
     //Si las remainingContacts son mayores a 0 ingresa al IF y descuenta 1 mientras que
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
-    if (userSearcher.remainingContacts >= 1) {
+    if (userSearcher.remainingContacts != 0) {
       if (userSearcher.contactsIds.includes(userPoster.id)) {
         throw {
           status: 404,
@@ -802,7 +801,6 @@ const modifyPlan = async (req , res) => {
     const planName = await Plan.findOne({
       where: {name: name}
     })
-    console.log(contacts)
     
     if (findPlan && !planName?.name) {
       

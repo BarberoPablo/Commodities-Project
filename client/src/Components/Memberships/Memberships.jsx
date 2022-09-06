@@ -53,11 +53,16 @@ const Memberships = () => {
     <div>
       <h1 className={s.h1}>
         Remaining contacts:{" "}
-        {userLog?.remainingContacts +
+        {
+        planBought === "Premium" || userLog?.planId === 3 ?
+        "Unlimited"
+        :
+        userLog?.remainingContacts +
         (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
           ? userLog?.remainingContacts +
             (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
-          : userLog?.remainingContacts}
+          : userLog?.remainingContacts }
+
       </h1>
       <div className={s.containerCard}>
         {memberships?.map((plan, index) => {
