@@ -5,6 +5,16 @@
   width: 100%;
   padding: 2rem;
   margin: 0 auto;
+  border: 2px solid red;
+}
+
+@media screen and (max-width:1000px){
+  .Container{
+    display: none;
+  }
+  .container{
+    display: none;
+  }
 }
 
 .container{
@@ -60,7 +70,7 @@
   background-color: #151E22;
 }
 
-@media screen and (max-width:1000px){
+/* @media screen and (max-width:1000px){
   .Container{
    display: flex;
    align-items: center;
@@ -73,4 +83,4 @@
     max-width: 90%;
     margin-left: -15%;
   } 
-}
+} */
