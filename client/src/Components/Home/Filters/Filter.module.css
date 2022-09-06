@@ -7,3 +7,9 @@
 .container_select{
   margin: 2% 3%;
 }
+
+@media screen and (max-width:500px){
+  .container_select{
+    margin: 2% 0%;
+  }
+}
