@@ -56,7 +56,7 @@ const Navbarr = ({ setCurrentPage }) => {
           <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header
               closeButton
-              style={{ borderBottom: "1px solid white" }}
+              style={{color:'white', borderBottom: "1px solid white",backgroundColor:'#0f161a' }}
             >
               <Offcanvas.Title>Menu</Offcanvas.Title>
             </Offcanvas.Header>
@@ -126,7 +126,9 @@ const Navbarr = ({ setCurrentPage }) => {
           </Navbar.Brand>
         </div>
         <Search setCurrentPage={setCurrentPage} />
-
+        <a href="/" style={{marginTop:'-55px',position:'absolute',right:'0'}}>
+          <img src={Logo} alt="Logo" className={s.logo_responsive} />              
+        </a>
         <div className={s.container_nav}>
           {isAuthenticated ? (
             <Nav>

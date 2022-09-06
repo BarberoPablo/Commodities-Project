@@ -1,4 +1,4 @@
-.Container{
+.Container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,25 +7,25 @@
   margin: 0 auto;
 }
 
-.paginated{
+.paginated {
   display: flex;
 }
 
-@media screen and (max-width:1000px){
-  .paginated{
+@media screen and (max-width:1000px) {
+  .paginated {
     display: none;
   }
-} 
+}
 
-.container{
+.container {
   max-width: 50%;
   display: flex;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   margin-left: 18%;
 }
 
-.container span{
+.container span {
   color: white;
   margin: 0px 0.3%;
   background-color: #131B21;
@@ -36,7 +36,7 @@
   text-align: center;
 }
 
-.container span button{
+.container span button {
   display: block;
   text-decoration: none;
   color: #ffffff;
@@ -46,12 +46,12 @@
   cursor: pointer;
 }
 
-.container span:hover button{
-  background:#acacac ;
+.container span:hover button {
+  background: #acacac;
   color: #fff;
 }
 
-.btn{
+.btn {
   text-decoration: none;
   color: #fff;
   font-weight: 800;
@@ -61,17 +61,17 @@
   background-color: #131B21;
 }
 
-.number{
+.number {
   background-color: #28364E;
   color: black;
 }
 
-.number2{
+.number2 {
   background-color: #151E22;
 }
 
-@media screen and (max-width:1100px){
-  .Container{
+@media screen and (max-width:1000px) {
+  .Container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,14 +79,16 @@
     padding: 2rem;
     margin: 0 auto;
   }
-  .container{
+
+  .container {
     max-width: 50%;
     display: flex;
-    justify-content:center;
-    align-items:center;
-    margin-left: -20%;
+    justify-content: center;
+    align-items: center;
+    margin-left: -4%;
   }
-  .container span{
+
+  .container span {
     color: white;
     margin: 0px 0.3%;
     background-color: #131B21;
@@ -96,14 +98,14 @@
     line-height: 45px;
     text-align: center;
   }
-  .btn{
-  text-decoration: none;
-  color: #fff;
-  font-weight: 800;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 0.75em;
-  background-color: #131B21;
-}
-}
 
+  .btn {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0.75em;
+    background-color: #131B21;
+  }
+}

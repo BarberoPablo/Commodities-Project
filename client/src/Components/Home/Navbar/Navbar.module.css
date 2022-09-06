@@ -8,6 +8,33 @@
   height: 45px;
 }
 
+.logo_responsive{
+  display: none;
+
+}
+
+@media screen and (max-width:1000px){
+  .logo_responsive{
+    display: block;
+    position: absolute;
+    width: 60px;
+    height: 50px;
+    right: 0;
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width:500px){
+  .logo_responsive{
+    display: block;
+    width: 55px;
+    height: 45px;
+    position: absolute;
+    right: 0;
+    margin-right: 0px;
+  }
+}
+
 
 .container_desktop{
   display: flex;
@@ -95,9 +122,10 @@
   font-size: 1.4rem;
 }
 
-.mobile_nav_A{
-  border-bottom: 1px solid white;
+.mobile_nav{
+  background-color: #0f161a;
 }
+
 .mobile_nav_A:hover{
   background-color: #27353e;
 }

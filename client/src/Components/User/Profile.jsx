@@ -7,19 +7,30 @@ import {
   getUserDetails,
   addFavorites,
   mailTous,
+  getUser,
+  getReviews,
+  deleteReview,
 } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import { BsStarFill, BsStar } from "react-icons/bs";
+import { BsFillExclamationCircleFill } from "react-icons/bs";
+import axios from "axios";
 
 const Profile = () => {
-  const { userPost } = useSelector((state) => state.users);
-  const { user } = useAuth0();
-  const userLog = useSelector((state) => state.users.user);
-  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showA, setShowA] = useState(false);
+  const { userPost } = useSelector((state) => state.users);
+  const userLog = useSelector((state) => state.users.user);
+  const contact = useSelector((state) => state.users.allUsers);
+  const contacts = contact.filter((e) => userLog.contactsIds?.includes(e.id));
+  const userLogReviews = useSelector((state) => state.reviews.Reviews);
+  const { user } = useAuth0();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState({
     from: "commoditiesB2Bteam@hotmail.com",
     to: user?.email,
@@ -27,8 +38,9 @@ const Profile = () => {
     text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
     You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
     We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
-    Feel free to contact us at commoditiesB2Bteam@hotmail.com`
-});
+    
+    Feel free to contact us at commoditiesB2Bteam@hotmail.com`,
+  });
 
   const validate = (values) => {
     const errors = {};
@@ -46,12 +58,9 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    dispatch(userPosts());
     if (user) {
       dispatch(userPosts());
       dispatch(getUserDetails(user?.email));
-      //Aca iría la logica para poner los favoritos en la DB SIEMPRE Y CUANDO TENGA FAVORITOS:
-      // Agregar favoritos a la base de datos:
       const favoritesToAdd = JSON.parse(window.localStorage.getItem("Fav"));
       if (favoritesToAdd.length > 0 && userLog?.id) {
         let favoritesIds = [];
@@ -61,6 +70,8 @@ const Profile = () => {
         );
         window.localStorage.setItem("Fav", JSON.stringify([]));
       }
+      dispatch(getUser());
+      dispatch(getReviews(userLog.id));
     }
   }, [dispatch, user, userLog.id]);
 
@@ -71,10 +82,23 @@ const Profile = () => {
       text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
       You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
       We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
-      Feel free to contact us at commoditiesB2Bteam@hotmail.com`
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+      Feel free to contact us at commoditiesB2Bteam@hotmail.com`,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  const [img, setImg] = useState("");
+
+  async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append("file", file[0]);
+    formData.append("upload_preset", "kl8ubh2v");
+    const imgUrl = await axios
+      .post("https://api.cloudinary.com/v1_1/nicomsl/image/upload", formData)
+      .then((response) => response.data.secure_url);
+    setImg(imgUrl);
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -90,12 +114,10 @@ const Profile = () => {
       values.country = values.country ? values.country : userLog.country;
       values.phone = values.phone ? values.phone : userLog.phone;
       values.email = user.email;
-      values.image = values.image ? values.image : user.picture;
+      values.image = img !== "" ? img : user.picture ;
       dispatch(createNewUser(values));
       alert("profile updated successfully");
-      dispatch(
-        mailTous(email)
-      );
+      dispatch(mailTous(email));
     },
   });
 
@@ -103,11 +125,37 @@ const Profile = () => {
     e.preventDefault();
     setActive(!active);
   };
-
+  const handleReport = (e, i) => {
+    dispatch(deleteReview(userLog?.id, { display: "Report", position: i }));
+    window.location.reload();
+  };
   return (
     <div className={s.container}>
       {user ? (
         <>
+          <div>
+            <ToastContainer style={{ width: "23%", margin: "0 15px" }}>
+              {contacts.map((e, i) => (
+                <Toast
+                  onClose={() => setShow(false)}
+                  show={show}
+                  animation={true}
+                  style={{ minWidth: "100%", backgroundColor: "#151e22" }}
+                  key={i}
+                >
+                  <Toast.Body>
+                    <a
+                      href={`/profile-user/${e.id}`}
+                      style={{ textDecoration: "none", color: "white" }}
+                    >
+                      {e.name}
+                    </a>
+                  </Toast.Body>
+                </Toast>
+              ))}
+            </ToastContainer>
+          </div>
+
           <div className={s.card}>
             <div className={s.user_photo} id="user_photo">
               <img
@@ -115,6 +163,26 @@ const Profile = () => {
                 alt="a"
               />
               {userLog?.name ? <p>{userLog?.name}</p> : <p>{user?.nickname}</p>}
+              {userLog?.contactsIds?.length > 0 ? (
+                <Button
+                  onClick={() => setShow(!show)}
+                  variant="outline-light"
+                  size="sm"
+                  style={{ width: "70px", margin: "0 10%" }}
+                >
+                  Contacts
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => setShow(!show)}
+                  variant="outline-light"
+                  size="sm"
+                  style={{ width: "70px", margin: "0 10%" }}
+                  disabled
+                >
+                  Contacts
+                </Button>
+              )}
             </div>
             {!userLog?.country || !userLog.phone ? (
               <ToastContainer position="top-end">
@@ -136,16 +204,95 @@ const Profile = () => {
                 </Toast>
               </ToastContainer>
             ) : null}
-            <Button
-              variant="outline-light"
-              className={s.btn}
-              size="sm"
-              onClick={handleClick}
-            >
-              edit profile
-            </Button>
+            <div>
+              <Button
+                variant="outline-light"
+                className={s.btn}
+                size="sm"
+                onClick={handleClick}
+              >
+                Edit profile
+              </Button>
+              {userLogReviews.reviews?.length > 0 ? (
+                <Button
+                  onClick={() => setShowA(!showA)}
+                  variant="outline-light"
+                  size="sm"
+                  className={s.btn}
+                >
+                  Reviews
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => setShowA(!showA)}
+                  variant="outline-light"
+                  size="sm"
+                  className={s.btn}
+                  disabled
+                >
+                  Reviews
+                </Button>
+              )}
+            </div>
           </div>
-              
+          <div>
+            <ToastContainer
+              style={{ width: "23%", margin: "6% 15px" }}
+              position="top-end"
+            >
+              {userLogReviews.reviews?.map((e, i) => (
+                <>
+                  <Toast
+                    onClose={() => setShowA(false)}
+                    show={showA}
+                    animation={true}
+                    style={{ minWidth: "100%", backgroundColor: "#151e22" }}
+                    key={i}
+                  >
+                    <Toast.Header style={{ color: "#151e22" }}>
+                      {e.name}
+                      {e.score === "1" ? (
+                        <strong className="me-auto">
+                          <BsStarFill /> <BsStar /> <BsStar /> <BsStar />{" "}
+                          <BsStar />
+                        </strong>
+                      ) : null}
+                      {e.score === "2" ? (
+                        <strong className="me-auto">
+                          <BsStarFill /> <BsStarFill /> <BsStar /> <BsStar />{" "}
+                          <BsStar />
+                        </strong>
+                      ) : null}
+                      {e.score === "3" ? (
+                        <strong className="me-auto">
+                          <BsStarFill /> <BsStarFill /> <BsStarFill />{" "}
+                          <BsStar /> <BsStar />
+                        </strong>
+                      ) : null}
+                      {e.score === "4" ? (
+                        <strong className="me-auto">
+                          <BsStarFill /> <BsStarFill /> <BsStarFill />{" "}
+                          <BsStarFill /> <BsStar />
+                        </strong>
+                      ) : null}
+                      {e.score === "5" ? (
+                        <strong className="me-auto">
+                          <BsStarFill /> <BsStarFill /> <BsStarFill />{" "}
+                          <BsStarFill /> <BsStarFill />
+                        </strong>
+                      ) : null}
+                      <BsFillExclamationCircleFill
+                        onClick={(report) => handleReport(report, i)}
+                        style={{ cursor: "pointer" }}
+                      />
+                    </Toast.Header>
+                    <Toast.Body>{e.comment}</Toast.Body>
+                  </Toast>
+                </>
+              ))}
+            </ToastContainer>
+          </div>
+
           <div className={!active ? `${s.oculto}` : `${s.active}`}>
             <form className={s.form} onSubmit={formik.handleSubmit}>
               <input
@@ -188,10 +335,11 @@ const Profile = () => {
               <input
                 id="image"
                 name="image"
-                type="text"
-                placeholder="image"
-                onChange={formik.handleChange}
-                value={formik.values.image}
+                type="file"
+                onChange={(e) => {
+                  uploadImage(e.target.files)
+                }}
+                style={{color: 'white', border: 'none'}}
               />
               {formik.errors.image ? <div>{formik.errors.image}</div> : null}
               <button type="submit">Confirm</button>
@@ -200,9 +348,9 @@ const Profile = () => {
 
           <div className={s.containerPost}>
             {userPost &&
-              userPost.map((e) => {
+              userPost.map((e, i) => {
                 return (
-                  <div className={s.container_x}>
+                  <div className={s.container_x} key={i}>
                     <div className={s.container_a}>
                       {e.sell ? (
                         <p
@@ -231,8 +379,8 @@ const Profile = () => {
                           .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
-                      <b>{e.title}</b>
-                      <hr/>
+                    <b>{e.title}</b>
+                    <hr />
                     <div className={s.container_b}>
                       <p>
                         Category: <b>{e.categoryName}</b>
@@ -246,16 +394,16 @@ const Profile = () => {
                       <p>
                         payment:
                         <div className={s.payment}>
-                        {e.payment?.map((c) => {
-                          return <b>{c}</b>
-                        })}
+                          {e.payment?.map((c, i) => {
+                            return <b key={i}>{c}</b>;
+                          })}
                         </div>
                       </p>
                       <p>
                         Shipping: <b>{e.shipping}</b>
                       </p>
                     </div>
-                      <hr />
+                    <hr />
                     <div className={s.postProfile}>
                       <p>{e.description}</p>
                       {e.image ? (

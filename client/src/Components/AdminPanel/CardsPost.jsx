@@ -97,8 +97,8 @@ const CardsPost = ({ currentPost }) => {
                 <p>{e.description}</p>
               </div>
               <p>{e.display ? "NOT BANNED" : "BANNED"}</p>
-              <button onClick={() => handleDismiss(e)}>Dismiss Report</button>
-              <button onClick={() => handleBan(e)}>DELETE POST</button>
+              <button onClick={() => handleDismiss(e)}>Dismiss Ban</button>
+              <button onClick={() => handleBan(e)}>Ban Post</button>
             </div>
           );
         })}

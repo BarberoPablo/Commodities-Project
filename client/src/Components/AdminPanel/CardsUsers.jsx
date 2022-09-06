@@ -23,7 +23,7 @@ dispatch(banUser(e.id))
 
 <p>{e.name} {e.email}</p>
 
-<button onClick={()=>handleBan(e)}>BAN USER</button>
+<button onClick={()=>handleBan(e)}>{e.isBanned? "UNBAN USER":"BAN USER"}</button>
 
 
 <p>{e.verified? "VERIFIED":"NOT VERIFIED"} {e.isBanned? "BANNED":"NOT BANNED"}</p>

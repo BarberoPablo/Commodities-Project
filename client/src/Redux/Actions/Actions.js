@@ -22,8 +22,9 @@ import { getAllPlans } from "../Slices/plansSlice";
 import { getAllReviews } from "../Slices/reviewsSlice";
 import axios from "axios";
 
-//const url = "https://b2b-01.herokuapp.com";
-const url = "http://localhost:3001";
+const url = "https://b2b-01.herokuapp.com";
+//const url = "http://localhost:3001";
+
 
 // FUNCTIONS POSTS
 
@@ -151,28 +152,31 @@ export const Searching = (value) => (dispatch) => {
 
 // Guarda en base de datos los favoritos al logearse
 export const addFavorites = (favorites) => () => {
-  console.log("action", favorites);
   axios.put(`${url}/favorite`, favorites);
 };
 
 export const reportTo = (postId, idReview, event) => (dispatch) => {
-  axios.put(`${url}/admin-panel/post/${postId}/${idReview}`, event)
-  .then(() => {dispatch(dispatch(getPost()))
-  })
-  .catch((e) => console.log(e));
+  axios
+    .put(`${url}/admin-panel/post/${postId}/${idReview}`, event)
+    .then(() => {
+      dispatch(dispatch(getPost()));
+    })
+    .catch((e) => console.log(e));
 };
 
 //Review
 
-export const postReview = (review) => () =>{
+export const postReview = (review) => () => {
   axios.post(`${url}/review`, review);
-}
+};
 
-export const banUser = (id) => (dispatch) =>{
-  axios.put(`${url}/userBan/${id}`)
-  .then(() => {dispatch(dispatch(getUser()));
-  })
-  .catch((e) => console.log(e));
+export const banUser = (id) => (dispatch) => {
+  axios
+    .put(`${url}/userBan/${id}`)
+    .then(() => {
+      dispatch(dispatch(getUser()));
+    })
+    .catch((e) => console.log(e));
 };
 
 export const getReviews = (id) => (dispatch) => {
@@ -182,23 +186,26 @@ export const getReviews = (id) => (dispatch) => {
 };
 
 export const deleteReview = (userId, body) => (dispatch) =>{
-  //console.log(body)
   axios.put(`${url}/admin-panel/review/${userId}`, body)
   .then(() => {dispatch(getReviews("All"));
   })
   .catch((e) => console.log(e));
 };
 
-export const updateMembership = (input)=>(dispatch)=>{
-  axios.put(`${url}/plan/${input.nameO}`, input)
-  .then(() => {dispatch(getPlans())
-  })
-  .catch((e) => console.log(e));
-}
+export const updateMembership = (modifyPlan, planName) => (dispatch) => {
+  axios
+    .put(`${url}/plan/` + planName, modifyPlan[planName])
+    .then(() => {
+      dispatch(getPlans());
+    })
+    .catch((e) => console.log(e));
+};
 
-export const createNewPlan = (input)=>(dispatch)=>{
-  axios.post(`${url}/plan/`, input)
-  .then(() => {dispatch(getPlans())
-  })
-  .catch((e) => console.log(e));
-}
+export const createNewPlan = (input) => (dispatch) => {
+  axios
+    .post(`${url}/plan/`, input)
+    .then(() => {
+      dispatch(getPlans());
+    })
+    .catch((e) => console.log(e));
+};
