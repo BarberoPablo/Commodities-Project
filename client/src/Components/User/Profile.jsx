@@ -204,7 +204,7 @@ const Profile = () => {
                 </Toast>
               </ToastContainer>
             ) : null}
-            <div>
+            <div className={s.user_btn}>
               <Button
                 variant="outline-light"
                 className={s.btn}
@@ -342,7 +342,7 @@ const Profile = () => {
                 style={{color: 'white', border: 'none'}}
               />
               {formik.errors.image ? <div>{formik.errors.image}</div> : null}
-              <button type="submit">Confirm</button>
+              <button className={s.form_btn} type="submit">Confirm</button>
             </form>
           </div>
 
@@ -391,7 +391,7 @@ const Profile = () => {
                       <p>
                         Country: <b>{e.country}</b>
                       </p>
-                      <p>
+                      <p className={s.payment_div}>
                         payment:
                         <div className={s.payment}>
                           {e.payment?.map((c, i) => {
