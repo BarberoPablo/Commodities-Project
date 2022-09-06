@@ -20,11 +20,11 @@ import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries, sortCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
 import { getAllReviews } from "../Slices/reviewsSlice";
-
 import axios from "axios";
 
 const url = "https://b2b-01.herokuapp.com";
 //const url = "http://localhost:3001";
+
 
 // FUNCTIONS POSTS
 
