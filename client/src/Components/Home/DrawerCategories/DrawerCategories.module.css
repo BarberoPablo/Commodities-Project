@@ -1,14 +1,13 @@
 .container{
-  margin-top: 1%;
-  margin-left: 1%;
+  margin: 0.7%;
   border-radius: 10px;
-  background-color: #151e22;
+  background-color: #f8f8f8;
   width: 16%;
-  height: 92vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  color: white;
+  justify-content: space-around;
+  color: rgb(0, 0, 0);
 }
 
 .container_subcategories{
@@ -26,10 +25,13 @@
 
 .container_li{
   text-align: start;
-  margin-left: 10%;
   cursor: pointer;
-  width: 50%;
+  width: 100%;
   list-style: none;
+  transition: all 0.4s;
+}
+.container_li:hover{
+  background-color: #C4CBCA;
 }
 
 @media screen and (max-width:1000px){

@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import s from "./CreatePost.module.css";
-
+import Toast from "react-bootstrap/Toast";
 export default function CreatePost() {
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
@@ -26,7 +26,7 @@ export default function CreatePost() {
       dispatch(getUserDetails(user.email));
     }
   }, [dispatch, user]);
-
+  const [show, setShow] = useState(false);
   const [input, setInput] = useState({
     //acomadar a modelo
     title: "",
@@ -103,10 +103,8 @@ export default function CreatePost() {
       alert("plaese login to create a post");
       return;
     }
-    console.log(input);
     let val = validacion(input);
     setErrors(val);
-    console.log(val);
     dispatch(postPost(user.email, input));
     if (Object.keys(val).length > 0) {
       alert("Fix errors");
@@ -189,194 +187,199 @@ export default function CreatePost() {
       ...input,
       image: img,
     });
+    setShow(true);
   }
 
   return (
-    <div className={s.container}>
-      {/* <Link to="/">
-        <button className="boton" id="btna">
-          Go Back
-        </button>
-      </Link> */}
-      <h1>Create new post</h1>
-      <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
-        <div className={s.tittle}>
-          <input
-            type="text"
-            value={input.title}
-            autoComplete="off"
-            placeholder="Please write a title..."
-            name="title"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        {errors.title && <p className="err">{errors.title}</p>}
-        <select
-          value={input.shipping}
-          name="shipping"
-          onChange={(e) => handleChangeArray(e)}
-        >
-          <option hidden value="">
-            Shipping method
-          </option>
-          <option value={["CIF"]}>CIF</option>
-          <option value={["FOB"]}>FOB</option>
-          <option value={["CIF", "FOB"]}>CIF or FOB</option>
-        </select>
-        {errors.shipping && <p className="err">{errors.shipping}</p>}
-        <label>Payment method:</label>
-        <div className={s.payment}>
-          <label>
+    <div className={s.Container}>
+      <div className={s.container}>
+      <h3>Create new post</h3>
+        <form onSubmit={(e) => handleSubmit(e)} className={s.form}>
+          <div className={s.tittle}>
+            <input
+              type="text"
+              value={input.title}
+              autoComplete="off"
+              placeholder="Please write a title..."
+              name="title"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          {errors.title && <p className="err">{errors.title}</p>}
+          <select
+            value={input.shipping}
+            name="shipping"
+            onChange={(e) => handleChangeArray(e)}
+          >
+            <option hidden value="">
+              Shipping method
+            </option>
+            <option value={["CIF"]}>CIF</option>
+            <option value={["FOB"]}>FOB</option>
+            <option value={["CIF", "FOB"]}>CIF or FOB</option>
+          </select>
+          {errors.shipping && <p className="err">{errors.shipping}</p>}
+          <label>Payment method:</label>
+          <div className={s.payment}>
+            <label>LC</label>
             <input
               type="checkbox"
               value="LC"
               onChange={(e) => handleChange2(e)}
               name="payment"
             />{" "}
-            LC
-          </label>
-          <label>
+            <label>DLC</label>
             <input
               type="checkbox"
               value="DLC"
               onChange={(e) => handleChange2(e)}
               name="payment"
             />{" "}
-            DLC
-          </label>
-          <label>
+            <label>SBLC</label>
             <input
               type="checkbox"
               value="SBLC"
               onChange={(e) => handleChange2(e)}
               name="payment"
             />{" "}
-            SBLC
-          </label>
-
-          {errors.payment && <p className="err">{errors.payment}</p>}
-        </div>
-
-        <select
-          value={input.categoryName}
-          name="categoryName"
-          onChange={(e) => handleChange3(e)}
-          className={s.category}
-        >
-          <option hidden value="">
-            Select category
-          </option>
-          {allCategories?.map((e, i) => {
-            return (
-              <option value={e.name} key={i}>
-                {e.name}
-              </option>
-            );
-          })}
-        </select>
-
-        {errors.categoryName && <p className="err">{errors.categoryName}</p>}
-
-        {idCategory === 0 ? (
-          <div />
-        ) : (
-          <div>
+            {errors.payment && <p className="err">{errors.payment}</p>}
+          </div>
+          <div className={s.cat}>
             <select
-              value={input.subCategory}
-              name="subCategory"
-              onChange={(e) => handleChange(e)}
+              value={input.categoryName}
+              name="categoryName"
+              onChange={(e) => handleChange3(e)}
+              className={s.category}
             >
               <option hidden value="">
-                Select sub category
+                Select category
               </option>
               {allCategories?.map((e, i) => {
-                return e.name === idCategory
-                  ? e.subcategories?.map((e) => (
-                      <option value={e} key={i}>
-                        {e}
-                      </option>
-                    ))
-                  : null;
+                return (
+                  <option value={e.name} key={i}>
+                    {e.name}
+                  </option>
+                );
               })}
             </select>
 
-            {errors.subCategory && <p className="err">{errors.subCategory}</p>}
-          </div>
-        )}
-        <textarea
-          className={s.description}
-          value={input.description}
-          autoComplete="off"
-          placeholder="Please write a description..."
-          name="description"
-          onChange={(e) => handleChange(e)}
-        />
+            {errors.categoryName && (
+              <p className="err">{errors.categoryName}</p>
+            )}
 
-        {errors.description && <p className="err">{errors.description}</p>}
-        <div className={s.buy}>
-          <label>
+            {idCategory === 0 ? (
+              <div />
+            ) : (
+              <div>
+                <select
+                  value={input.subCategory}
+                  name="subCategory"
+                  onChange={(e) => handleChange(e)}
+                >
+                  <option hidden value="">
+                    Select sub category
+                  </option>
+                  {allCategories?.map((e, i) => {
+                    return e.name === idCategory
+                      ? e.subcategories?.map((e) => (
+                          <option value={e} key={i}>
+                            {e}
+                          </option>
+                        ))
+                      : null;
+                  })}
+                </select>
+
+                {errors.subCategory && (
+                  <p className="err">{errors.subCategory}</p>
+                )}
+              </div>
+            )}
+          </div>
+          <textarea
+            className={s.description}
+            value={input.description}
+            autoComplete="off"
+            placeholder="Please write a description..."
+            name="description"
+            onChange={(e) => handleChange(e)}
+          />
+
+          {errors.description && <p className="err">{errors.description}</p>}
+          <div className={s.buy}>
+            <label>Buy</label>
             <input
               onChange={(e) => handleCheck(e)}
               type="radio"
               name="check"
               value="buy"
             />
-            Buy
-          </label>
-          <label>
+            <label>sell</label>
             <input
               onChange={(e) => handleCheck(e)}
               type="radio"
               name="check"
               value="sell"
             />
-            sell
-          </label>
-        </div>
-        {errors.sell && <p className="err">{errors.sell}</p>}
-        <select
-          value={input.country}
-          name="country"
-          onChange={(e) => handleChange(e)}
-        >
-          <option hidden value="">
-            Select country...
-          </option>
-          {allCountries.map((c) => (
-            <option value={c.name.common}>{c.name.common}</option>
-          ))}
-        </select>
+          </div>
+          {errors.sell && <p className="err">{errors.sell}</p>}
+          <select
+            value={input.country}
+            name="country"
+            onChange={(e) => handleChange(e)}
+          >
+            <option hidden value="">
+              Select country...
+            </option>
+            {allCountries.map((c) => (
+              <option value={c.name.common}>{c.name.common}</option>
+            ))}
+          </select>
 
-        {errors.country && <p className="err">{errors.country}</p>}
+          {errors.country && <p className="err">{errors.country}</p>}
 
-        <div>
-          <input
-            type="file"
-            onChange={(e) => {
-              uploadImage(e.target.files);
-            }}
-          />
-
-          <img style={{ width: 200 }} src={img} alt="" />
-
-          {img !== "" ? (
-            <button
-              type="button"
-              onClick={() => {
-                aceptar();
+          <div className={s.divImg}>
+            <input
+              type="file"
+              onChange={(e) => {
+                uploadImage(e.target.files);
               }}
-              className={s.boton}
-              style={{ marginTop: "5px" }}
-            >
-              confirm image
-            </button>
-          ) : null}
-        </div>
+            />
+            <img style={{ width: 200 }} src={img} alt="" />
+            {img !== "" ? (
+              <>
+                <Toast
+                  onClose={() => setShow(false)}
+                  show={show}
+                  delay={1500}
+                  bg="success"
+                  autohide
+                >
+                  <Toast.Body>
+                    <strong style={{ color: "white" }}>
+                      image confirmed successfully
+                    </strong>
+                  </Toast.Body>
+                </Toast>
+                <button
+                  type="button"
+                  onClick={() => {
+                    aceptar();
+                  }}
+                  className={s.boton}
+                  style={{ marginTop: "5px" }}
+                >
+                  confirm image
+                </button>
+              </>
+            ) : null}
+          </div>
 
-        <button type="submit" className={s.boton}>
-          Create Post
-        </button>
-      </form>
+          <button type="submit" className={s.boton}>
+            Create Post
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

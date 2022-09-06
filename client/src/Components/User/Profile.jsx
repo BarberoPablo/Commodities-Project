@@ -1,7 +1,13 @@
 import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import s from "./Users.module.css";
-import { userPosts, createNewUser, getUserDetails, addFavoritesOnLogin } from "../../Redux/Actions/Actions";
+import {
+  userPosts,
+  createNewUser,
+  getUserDetails,
+  addFavorites,
+  mailTous,
+} from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
@@ -14,6 +20,15 @@ const Profile = () => {
   const userLog = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
+  const [email, setEmail] = useState({
+    from: "commoditiesB2Bteam@hotmail.com",
+    to: user?.email,
+    subject: "You just signed up on B2B commodities",
+    text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
+    You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
+    We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+    Feel free to contact us at commoditiesB2Bteam@hotmail.com`
+});
 
   const validate = (values) => {
     const errors = {};
@@ -32,28 +47,34 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(userPosts());
-    console.log("Usuario conectado?", !!user);
     if (user) {
       dispatch(userPosts());
-      dispatch(getUserDetails(user.email));
+      dispatch(getUserDetails(user?.email));
       //Aca iría la logica para poner los favoritos en la DB SIEMPRE Y CUANDO TENGA FAVORITOS:
       // Agregar favoritos a la base de datos:
       const favoritesToAdd = JSON.parse(window.localStorage.getItem("Fav"));
-      if (favoritesToAdd.length > 0 && userLog.id) {
+      if (favoritesToAdd.length > 0 && userLog?.id) {
         let favoritesIds = [];
         favoritesToAdd.forEach((post) => favoritesIds.push(post.id));
-        /* console.log("favoritesIds", favoritesIds);
-        console.log("Favoritos antes:", JSON.parse(window.localStorage.getItem("Fav")));
-        console.log("Hacia el back: ", { favoritesIds, userId: userLog?.id }); 
-        console.log("Favoritos ahora:", JSON.parse(window.localStorage.getItem("Fav")));
-        */
-        dispatch(addFavoritesOnLogin({ favoritesToAdd: favoritesIds, userId: userLog.id }));
+        dispatch(
+          addFavorites({ favoritesToAdd: favoritesIds, userId: userLog.id })
+        );
         window.localStorage.setItem("Fav", JSON.stringify([]));
       }
     }
   }, [dispatch, user, userLog.id]);
 
-  useEffect(() => {});
+  useEffect(() => {
+    setEmail({
+      ...email,
+      to: user?.email,
+      text: `Hello ${user?.nickname}! Welcomes from the team of B2B.
+      You are registered fully registered on our platform, you can browse freely on it. In order to make contacts with others you must buy a membership!
+      We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+      Feel free to contact us at commoditiesB2Bteam@hotmail.com`
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const formik = useFormik({
     initialValues: {
@@ -71,6 +92,10 @@ const Profile = () => {
       values.email = user.email;
       values.image = values.image ? values.image : user.picture;
       dispatch(createNewUser(values));
+      alert("profile updated successfully");
+      dispatch(
+        mailTous(email)
+      );
     },
   });
 
@@ -85,60 +110,81 @@ const Profile = () => {
         <>
           <div className={s.card}>
             <div className={s.user_photo} id="user_photo">
-              <img src={userLog.image ? userLog.image : user.picture} alt="a" />
-              {userLog.name ? <p>{userLog.name}</p> : <p>{user?.nickname}</p>}
+              <img
+                src={userLog?.image ? userLog?.image : user?.picture}
+                alt="a"
+              />
+              {userLog?.name ? <p>{userLog?.name}</p> : <p>{user?.nickname}</p>}
             </div>
-            {!userLog.country ? (
+            {!userLog?.country || !userLog.phone ? (
               <ToastContainer position="top-end">
                 <Toast bg="warning">
                   <Toast.Header>
-                    <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+                    <img
+                      src="holder.js/20x20?text=%20"
+                      className="rounded me-2"
+                      alt=""
+                    />
                     <strong className="me-auto">Required!</strong>
                     <small className="text-muted">just now</small>
                   </Toast.Header>
                   <Toast.Body>
                     {" "}
-                    Complete the required fields to validate your profile <br /> <b>*Email </b>and<b> *Phone</b>
+                    Complete the required fields to validate your profile <br />{" "}
+                    <b>*Country </b>and<b> *Phone</b>
                   </Toast.Body>
                 </Toast>
               </ToastContainer>
             ) : null}
-            <Button variant="outline-light" className={s.btn} size="sm" onClick={handleClick}>
+            <Button
+              variant="outline-light"
+              className={s.btn}
+              size="sm"
+              onClick={handleClick}
+            >
               edit profile
             </Button>
           </div>
-
+              
           <div className={!active ? `${s.oculto}` : `${s.active}`}>
             <form className={s.form} onSubmit={formik.handleSubmit}>
               <input
                 id="name"
                 name="name"
                 type="text"
-                placeholder={userLog.name ? userLog.name : user.nickname}
+                placeholder={userLog?.name ? userLog?.name : user?.nickname}
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
-              {formik.errors.name ? <div className={s.error}>{formik.errors.name}</div> : null}
-
+              {formik.errors.name ? (
+                <div className={s.error}>{formik.errors.name}</div>
+              ) : null}
               <input
                 id="country"
                 name="country"
                 type="text"
-                placeholder={userLog.country ? userLog.country : "Complete country *"}
+                placeholder={
+                  userLog?.country ? userLog?.country : "Complete country *"
+                }
                 onChange={formik.handleChange}
                 value={formik.values.country}
               />
-              {formik.errors.country ? <div className={s.error}>{formik.errors.country}</div> : null}
-
+              {formik.errors.country ? (
+                <div className={s.error}>{formik.errors.country}</div>
+              ) : null}
               <input
                 id="phone"
                 name="phone"
                 type="text"
-                placeholder={userLog.phone ? userLog.phone : "Complete phone *"}
+                placeholder={
+                  userLog?.phone ? userLog?.phone : "Complete phone *"
+                }
                 onChange={formik.handleChange}
                 value={formik.values.phone}
               />
-              {formik.errors.phone ? <div className={s.error}>{formik.errors.phone}</div> : null}
+              {formik.errors.phone ? (
+                <div className={s.error}>{formik.errors.phone}</div>
+              ) : null}
               <input
                 id="image"
                 name="image"
@@ -148,7 +194,7 @@ const Profile = () => {
                 value={formik.values.image}
               />
               {formik.errors.image ? <div>{formik.errors.image}</div> : null}
-              <button type="submit">Submit</button>
+              <button type="submit">Confirm</button>
             </form>
           </div>
 
@@ -156,7 +202,7 @@ const Profile = () => {
             {userPost &&
               userPost.map((e) => {
                 return (
-                  <div className={s.container}>
+                  <div className={s.container_x}>
                     <div className={s.container_a}>
                       {e.sell ? (
                         <p
@@ -180,9 +226,13 @@ const Profile = () => {
                         </p>
                       )}
                       <p className={s.container_time}>
-                        {e.createdAt.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+                        {e.createdAt
+                          .slice(0, 10)
+                          .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
                       </p>
                     </div>
+                      <b>{e.title}</b>
+                      <hr/>
                     <div className={s.container_b}>
                       <p>
                         Category: <b>{e.categoryName}</b>
@@ -194,20 +244,27 @@ const Profile = () => {
                         Country: <b>{e.country}</b>
                       </p>
                       <p>
-                        payment:{" "}
-                        {e.payment?.map((e) => {
-                          return <b>{e} </b>;
+                        payment:
+                        <div className={s.payment}>
+                        {e.payment?.map((c) => {
+                          return <b>{c}</b>
                         })}
+                        </div>
                       </p>
                       <p>
                         Shipping: <b>{e.shipping}</b>
                       </p>
                     </div>
-                    <div>
                       <hr />
-                      <b>{e.title}</b>
+                    <div className={s.postProfile}>
                       <p>{e.description}</p>
-                      {e.image ? <img src={e.image} alt={e.title} style={{ width: "30%", height: "30%" }} /> : null}
+                      {e.image ? (
+                        <img
+                          src={e.image}
+                          alt={e.title}
+                          style={{ width: "30%", height: "30%" }}
+                        />
+                      ) : null}
                     </div>
                   </div>
                 );
@@ -215,7 +272,7 @@ const Profile = () => {
           </div>
         </>
       ) : (
-        <h1>...loading</h1>
+        <h1>Loading...</h1>
       )}
     </div>
   );

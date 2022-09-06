@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Plan from "./Plan";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlans, getUserDetails, getUser, asignPlanToUser } from "../../Redux/Actions/Actions";
+import { getPlans, getUserDetails, getUser, asignPlanToUser, mailTous } from "../../Redux/Actions/Actions";
 import { useAuth0 } from "@auth0/auth0-react";
 import s from "./membership.module.css";
 
@@ -27,6 +27,17 @@ const Memberships = () => {
           email: user.email,
         })
       );
+      // dispatch(
+      //   mailTous({
+      //     from: "commoditiesB2Bteam@hotmail.com",
+      //     to: user.email,
+      //     subject: "Thank you for choosing the " + user.plan + "b2b Membership!",
+      //     text: `You just bought the ${user.plan} membership!. 
+      //     Now you can contact other users from all over the world to do business. 
+      //     We, the team of B2B Commodities are here to make your business grow. Thank you for choosing us.
+      //     Feel free to contact us at commoditiesB2Bteam@hotmail.com`
+      // })
+      // );
     }
     //Sacar user:
   }, [dispatch, user, planBought]);
@@ -40,13 +51,18 @@ const Memberships = () => {
   */
   return (
     <div>
-      <h1>
+      <h1 className={s.h1}>
         Remaining contacts:{" "}
-        {userLog?.remainingContacts +
+        {
+        planBought === "Premium" || userLog?.planId === 3 ?
+        "Unlimited"
+        :
+        userLog?.remainingContacts +
         (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
           ? userLog?.remainingContacts +
             (memberships ? memberships[memberships.findIndex((plan) => plan.name === planBought)]?.contacts : 0)
-          : userLog?.remainingContacts}
+          : userLog?.remainingContacts }
+
       </h1>
       <div className={s.containerCard}>
         {memberships?.map((plan, index) => {

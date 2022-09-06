@@ -49,10 +49,29 @@ const createPost = async (req, res) => {
     //El id es del user a quien pertenece el post
     const { email } = req.params;
     //Category es un id (integer)
-    const { title, description, sell, shipping, payment, subCategory, image, country, categoryName } = req.body;
+    const {
+      title,
+      description,
+      sell,
+      shipping,
+      payment,
+      subCategory,
+      image,
+      country,
+      categoryName,
+    } = req.body;
 
     //Cuando este logeada la persona vamos a poder hacer que se mande us id para crear un post, mientras tanto no
-    if (!email || !title || !description || !shipping[0] || !payment[0] || !subCategory || !country || !categoryName) {
+    if (
+      !email ||
+      !title ||
+      !description ||
+      !shipping[0] ||
+      !payment[0] ||
+      !subCategory ||
+      !country ||
+      !categoryName
+    ) {
       throw { status: 400, message: "missing data" };
     }
     const user = await User.findOne({
@@ -63,10 +82,18 @@ const createPost = async (req, res) => {
       throw { status: 400, message: `User with id: ${email}, does not exists` };
     }
 
-    if (!description || !shipping || !payment || !categoryName || !country || !subCategory) {
+    if (
+      !description ||
+      !shipping ||
+      !payment ||
+      !categoryName ||
+      !country ||
+      !subCategory
+    ) {
       throw {
         status: 400,
-        message: "Parameters error, check description, shipping, paymend, country, category and subCategory",
+        message:
+          "Parameters error, check description, shipping, paymend, country, category and subCategory",
       };
     }
 
@@ -107,7 +134,7 @@ const getReviews = async (req, res) => {
   try {
     const { id } = req.params;
     console.log(id);
-    if(id === "All") {
+    if (id === "All") {
       var reviews = await ReviewUser.findAll();
     } else {
       var reviews = await ReviewUser.findOne({
@@ -115,7 +142,6 @@ const getReviews = async (req, res) => {
       });
     }
     return res.status(200).send(reviews);
-
   } catch (error) {
     return res.status(404).send("The reviews selected are no longer available");
   }
@@ -176,6 +202,16 @@ const createPlan = async (req, res) => {
   try {
     const { name, cost, contacts, posts, reviews } = req.body;
 
+    if (!name || !cost || !contacts) {
+      return res.status(400).send("Complete data");
+    }
+
+    const sameName = await Plan.findOne({
+      where: { name: name },
+    });
+    if (sameName) {
+      return res.status(400).send(`This membership already exist `);
+    }
     const newPlan = await Plan.create({
       name,
       cost,
@@ -219,9 +255,8 @@ const assignPlanToUser = async (req, res) => {
       where: { email: email },
     });
     if (planExists && userExists) {
-      console.log("@@:", planExists.contacts);
       await userExists.update({
-        planName,
+        planId: planExists.id,
         remainingContacts: userExists.remainingContacts + planExists.contacts,
       });
       res.status(201).json(userExists);
@@ -269,7 +304,8 @@ const modifyOrCreateUser = async (req, res) => {
     if (!country || !email || !image || !name || !phone) {
       throw {
         status: 400,
-        message: "Please send all the properties of the new user, even the old ones",
+        message:
+          "Please send all the properties of the new user, even the old ones",
       };
     }
     // Si el usuario no existe, se crea
@@ -293,7 +329,7 @@ const modifyOrCreateUser = async (req, res) => {
         where: { name: "Free" },
       });
       await user.update({
-        planName: plan.name,
+        planId: plan.id,
         remainingContacts: plan.contacts,
       });
 
@@ -329,9 +365,7 @@ const getUserDetail = async (req, res) => {
     });
     if (user) {
       return res.status(200).send(user);
-    } 
-
-    else {
+    } else {
       res.status(404).send("User not found");
     }
   } catch (error) {
@@ -339,25 +373,25 @@ const getUserDetail = async (req, res) => {
   }
 };
 
-const getUserId = async (req ,res ) => {
-  const { id } = req.params
+const getUserId = async (req, res) => {
+  const { id } = req.params;
+  console.log("getUserId", id);
   try {
-
     const userId = await User.findOne({
       where: { id: id },
+      include: {
+        model: ReviewUser,
+      },
     });
-    if(userId) {
-      return res.status(200).send(userId)
-    }
-  
-    else {
+    if (userId) {
+      return res.status(200).send(userId);
+    } else {
       res.status(404).send("User not found");
     }
-  
-} catch (error) {
-  res.status(error.status).send(error.message);
-}
-}
+  } catch (error) {
+    res.status(error.status).send(error.message);
+  }
+};
 
 const getAllUsers = async (req, res) => {
   //Ruta util para el panel de usuario
@@ -480,11 +514,10 @@ const getAllPlans = async (req, res) => {
 
 const modifyReview = async (req, res) => {
   //Ruta pensada para que los Admin puedan ocultar un review reportado
-  //y para recibir un review reportado.
-  //llega por params el id del user reportado, y el id del user que reporta.
-  //Cuando se reporta un review, se agrega el id del que reporta al correspondiente review
+  //y para recibir un review reportado por su Owner.
+  //llega por params el id del user que desea que su review sea borrada.
   //Si el admin coincide en dar de baja el review este se borra y se corrigen las estadísticas.
-  const { userId, idReview } = req.params; //userId el del usuario que recibió la review y el otro es el del user que hizo el reporte
+  const { userId } = req.params; //userId el del usuario que recibió la review
   const { display, position } = req.body; // display es false or true si hay que borrar y id indica la posición del review en el array
   try {
     if (!userId) {
@@ -502,18 +535,20 @@ const modifyReview = async (req, res) => {
     const newReview = user.toJSON();
     if (display === "Erase") {
       // si display === false entonces borro el review comentado, sino solo agrego el id del que reportó.
-      //borrado del review cuestionado 
+      //borrado del review cuestionado
       var scoreSum = newReview.scoreSum - newReview.reviews[position].score;
       newReview.reviews.splice(position, 1);
       var reviews = newReview.reviews;
       var average = scoreSum / reviews.length;
-    } else if(display === "Report"){     //"Report"
+    } else if (display === "Report") {
+      //"Report"
       //Aca marcamos el review para revisión
-      newReview.reviews[position].idReport.push(idReview);
+      newReview.reviews[position].idReport.push(userId);
       var reviews = newReview.reviews;
       var scoreSum = newReview.scoreSum;
       var average = newReview.average;
-    } else {                  //"Confirm"
+    } else {
+      //"Confirm"
       //Aca eliminamos el reporte para confirmar que el review esta correcto
       newReview.reviews[position].idReport = [];
       var reviews = newReview.reviews;
@@ -560,9 +595,12 @@ const addUserContact = async (req, res) => {
 
     //Si las remainingContacts son mayores a 0 ingresa al IF y descuenta 1 mientras que
     // concatena el numero de ID del usuario que hizo el posteo en el contactsIds
-    if (userSearcher.remainingContacts >= 1) {
+    if (userSearcher.remainingContacts != 0) {
       if (userSearcher.contactsIds.includes(userPoster.id)) {
-        throw { status: 404, message: "You are already connected with that user" };
+        throw {
+          status: 404,
+          message: "You are already connected with that user",
+        };
       } else {
         await userSearcher.update({
           contactsIds: userSearcher.contactsIds.concat(userPoster.id),
@@ -576,7 +614,10 @@ const addUserContact = async (req, res) => {
         res.status(201).json(userSearcher);
       }
     } else {
-      throw { status: 401, message: `You don't have remaining contacts available` };
+      throw {
+        status: 401,
+        message: `You don't have remaining contacts available`,
+      };
     }
   } catch (error) {
     res.status(error.status).send(error.message);
@@ -591,15 +632,36 @@ const userBan = async (req, res) => {
   try {
     const banUser = await User.findOne({ where: { id: id } });
     if (!banUser) {
-      throw { status: 400, message: `User searcher with id ${id} is not found` };
+      throw {
+        status: 400,
+        message: `User searcher with id ${id} is not found`,
+      };
     } else if (banUser.isBanned) {
       await banUser.update({
         isBanned: false,
       });
+      const banUserPosts = await Post.findAll({
+        where: { userId: banUser.id },
+      });
+      for (let i = 0; i < banUserPosts.length; i++) {
+        console.log("@@");
+        await banUserPosts[i].update({
+          display: true,
+        });
+      }
     } else {
       await banUser.update({
         isBanned: true,
       });
+      const banUserPosts = await Post.findAll({
+        where: { userId: banUser.id },
+      });
+      for (let i = 0; i < banUserPosts.length; i++) {
+        console.log("@@");
+        await banUserPosts[i].update({
+          display: false,
+        });
+      }
     }
     return res.status(201).send(`User's ban has been modificated`);
   } catch (error) {
@@ -628,7 +690,9 @@ const deleteOrAddFavorite = async (req, res) => {
     if (favoritesToAdd) {
       // No puedo hacer una asignacion directa tipo: newFavorites = user.favoritesIds
       //  porque se le asigna un objeto por referencia y hay problemas
-      const newFavorites = user.favoritesIds.length ? user.favoritesIds.map((id) => id) : [];
+      const newFavorites = user.favoritesIds.length
+        ? user.favoritesIds.map((id) => id)
+        : [];
       for (let i = 0; i < favoritesToAdd.length; i++) {
         // Si no está (=== -1), lo agrego:
         if (user.favoritesIds.indexOf(favoritesToAdd[i]) === -1) {
@@ -638,7 +702,9 @@ const deleteOrAddFavorite = async (req, res) => {
       await user.update({
         favoritesIds: newFavorites,
       });
-      return res.status(200).send(`Posts with id: ${favoritesToAdd} added to favorites`);
+      return res
+        .status(200)
+        .send(`Posts with id: ${favoritesToAdd} added to favorites`);
     } else {
       if (!user.favoritesIds.includes(Number(postId))) {
         // Si no hay guardado un post en favoritos con ese id, entonces lo agrego:
@@ -648,7 +714,9 @@ const deleteOrAddFavorite = async (req, res) => {
         return res.status(200).send(`Favorite added, post id: ${postId}`);
       } else {
         // Si ya hay guardado un post en favoritos con ese id, entonces lo saco:
-        const newFavorites = user.favoritesIds.filter((favoriteId) => favoriteId !== Number(postId));
+        const newFavorites = user.favoritesIds.filter(
+          (favoriteId) => favoriteId !== Number(postId)
+        );
         await user.update({
           favoritesIds: newFavorites,
         });
@@ -668,13 +736,13 @@ const reportOrBanPost = async (req, res) => {
   //Si el admin coincide en dar de baja el review este se oculta.
   //Ruta: "/admin-panel/post/:postId/:idReview",
   const { postId, idReview } = req.params; //postId el del post reportado y el otro es el del user que hizo el reporte
-  const { event} = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Ban") o desestimar ("Dismiss").
+  const { event } = req.body; // event es lo que indica que hacer, si reportar ("Report"), Ocultar("Ban") o desestimar ("Dismiss").
   try {
     if (!postId || !idReview) {
       throw { status: 404, message: "Id is required" };
     }
     const post = await Post.findOne({
-      where: { id : postId },
+      where: { id: postId },
     });
     if (!post) {
       throw {
@@ -685,21 +753,24 @@ const reportOrBanPost = async (req, res) => {
     const newPost = post.toJSON();
     if (event === "Ban") {
       // si event === Ban entonces oculto el post comentado.
-      //Ocultado del post cuestionado 
+      //Ocultado del post cuestionado
       var reportedIds = newPost.reportedIds;
       var display = false;
-    } else if(event === "Report"){     //"Report"
+    } else if (event === "Report") {
+      //"Report"
       //Aca marcamos el post para revisión, agregando el Id de quien lo reporta
       newPost.reportedIds.push(idReview);
       var reportedIds = newPost.reportedIds;
       var display = true;
-    } else {                  //"Dismiss"
+    } else {
+      //"Dismiss"
       //Aca eliminamos el reporte para confirmar que el post esta correcto y revertimos el Display
       newPost.reportedIds = [];
       var reportedIds = newPost.reportedIds;
       var display = true;
     }
-    await Post.upsert({         //actualizo el regsitro en base de datos
+    await Post.upsert({
+      //actualizo el regsitro en base de datos
       id: postId,
       title: newPost.title,
       description: newPost.description,
@@ -707,15 +778,60 @@ const reportOrBanPost = async (req, res) => {
       shipping: newPost.shipping,
       payment: newPost.payment,
       subCategory: newPost.subCategory,
-      image:newPost.image,
+      image: newPost.image,
       display,
-      country:newPost.country,
+      country: newPost.country,
       reportedIds,
-      categoryName:newPost.categoryName,
+      categoryName: newPost.categoryName,
     });
     return res.status(201).json("Post has been Updated");
   } catch (error) {
     return res.status(error.status).send(error.message);
+  }
+};
+
+const modifyPlan = async (req, res) => {
+  const { namePlan } = req.params;
+  try {
+    const { name, cost, contacts, posts, reviews } = req.body;
+
+    const findPlan = await Plan.findOne({
+      where: { name: namePlan },
+    });
+
+    if (!findPlan) {
+      return res.status(404).send("The membership is not found");
+    }
+
+    if (!name) {
+      await findPlan.update({
+        name,
+        cost,
+        contacts,
+        posts,
+        reviews,
+      });
+      return res.status(201).send("Plan modified");
+    }
+
+    const planName = await Plan.findOne({
+      where: {name: name}
+    })
+    
+    if (findPlan && !planName?.name) {
+      await findPlan.update({
+        name,
+        cost,
+        contacts,
+        posts,
+        reviews,
+      });
+      return res.status(201).send("Plan modified");
+    } else {
+      return res.status(404).send(`The membership ${name} already exist`);
+    }
+  } catch (error) {
+    res.status(error.status).send(error.message);
   }
 };
 
@@ -742,5 +858,6 @@ module.exports = {
   userBan,
   deleteOrAddFavorite,
   reportOrBanPost,
-  getUserId
+  getUserId,
+  modifyPlan,
 };

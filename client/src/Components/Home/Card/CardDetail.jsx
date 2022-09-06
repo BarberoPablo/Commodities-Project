@@ -1,26 +1,44 @@
 import { React, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import s from "./Card.module.css";
-import { getProfileDetails } from "../../../Redux/Actions/Actions";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import ToastHide from "./ToastHide";
+import { addFavorites, getUserDetails } from "../../../Redux/Actions/Actions";
+import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { BsFillExclamationCircleFill } from "react-icons/bs";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
-const CardDetail = ({ e, user, setFav, Fav}) => {
-
- const dispatch = useDispatch();
-
-  const handle = () => {
-    dispatch(getProfileDetails(user.email))  
-  }
-  
+const CardDetail = ({ e, user, setFav, Fav }) => {
+  const myUser = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const userLog = useSelector((state) => state.users.user);
+  const userAuth0 = useAuth0().user;
 
+  useEffect(() => {
+    if (userAuth0) {
+      // Carga la const userLog con los datos del usuario
+      dispatch(getUserDetails(userAuth0.email));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAuth0]);
   const handleClick = (event) => {
-    const favFiltered = Fav.filter((posts) => posts.id === e.id);
-    if (favFiltered.length > 0) {
-      return;
+    // Si hay un usuario conectado, los favorites se agregan a la DB y si no, al localstorage
+    if (Object.keys(userLog).length !== 0) {
+      const favorites = {
+        userId: userLog.id,
+        postId: e.id,
+      };
+      dispatch(addFavorites(favorites));
     } else {
-      setFav([...Fav, e]);
+      const favFiltered = Fav.filter((posts) => posts.id === e.id);
+      if (favFiltered.length > 0) {
+        return;
+      } else {
+        setFav([...Fav, e]);
+      }
     }
     setShow(true);
   };
@@ -39,9 +57,12 @@ const CardDetail = ({ e, user, setFav, Fav}) => {
           />
         </div>
 
-          <Link to= {`/profile-user/`+ e.id}>
-            <b onClick={handle}>{user?.name}</b>
-          </Link>
+        <Link
+          to={`/profile-user/` + e.userId}
+          style={{ color: "black", textDecoration: "none" }}
+        >
+          <b>{user?.name}</b>
+        </Link>
 
         {e.sell ? (
           <p style={{ color: "red", marginTop: "20px", marginLeft: "15px" }}>
@@ -56,8 +77,40 @@ const CardDetail = ({ e, user, setFav, Fav}) => {
           {e.createdAt
             .slice(0, 10)
             .replace(/^(\d{4})-(\d{2})-(\d{2})$/g, "$3/$2/$1")}
+          {"        "}
+          {myUser?.country ? (
+            <OverlayTrigger
+              trigger="hover"
+              placement="right"
+              overlay={
+                <Popover>
+                  <Popover.Header>report post</Popover.Header>
+                </Popover>
+              }
+            >
+              <Link
+                to={`/report/${e?.id}/${myUser?.id}`}
+                alt="report"
+                style={{ textDecoration: "none", color: "gray", margin: "5px" }}
+              >
+                <BsFillExclamationCircleFill />
+              </Link>
+            </OverlayTrigger>
+          ) : null}
         </p>
       </div>
+      <div className={s.tittle}>
+      <b>{e.title}</b>
+        <ToastHide
+          show={show}
+          setShow={setShow}
+          handleClick={handleClick}
+          e={e}
+          Fav={Fav}
+          className={s.heart}
+        />
+        </div>
+        <hr />
       <div className={s.container_b}>
         <p>
           Category: <b>{e.categoryName}</b>
@@ -69,7 +122,7 @@ const CardDetail = ({ e, user, setFav, Fav}) => {
           Country: <b>{e.country}</b>
         </p>
         <p>
-          payment:{" "}
+          Payment:{" "}
           {e.payment.map((e, i) => {
             return <b key={i}> {e}</b>;
           })}
@@ -77,17 +130,10 @@ const CardDetail = ({ e, user, setFav, Fav}) => {
         <p>
           Shipping: <b>{e.shipping}</b>
         </p>
-        <ToastHide
-          show={show}
-          setShow={setShow}
-          handleClick={handleClick}
-          e={e}
-          Fav={Fav}
-        />
+        
       </div>
       <div>
-        <hr />
-        <b>{e.title}</b>
+      <hr />
         <p>{e.description}</p>
       </div>
     </div>

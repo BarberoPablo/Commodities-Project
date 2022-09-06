@@ -43,48 +43,65 @@ export const postSlice = createSlice({
     },
 
     filteredPayment: (state, action) => {
-      if(state.search){
+      if(state.search === 'search'){
         state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsSearch.filter((e) =>
               e.payment.includes(action.payload)
             );
-      }else{
+      }else if(state.search === 'categories'){
         state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsCategory.filter((e) =>
               e.payment.includes(action.payload)
             );
+      }else{
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.allPosts.filter((e) =>
+              e.payment.includes(action.payload)
+            );
       }
       
     },
     filteredCountry: (state, action) => {
-      if(state.search){
+      if(state.search === 'search'){
         state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsSearch.filter((e) => e.country === action.payload);
-      }else{
+      }else if(state.search === 'categories'){
         state.posts =
         action.payload === "ALL"
           ? state.allPosts
           : state.postsCategory.filter((e) => e.country === action.payload);
-      }
-     
-    },
-    filteredShippment: (state, action) => {
-      if(state.search){
-        state.posts =
-        action.payload === "ALL"
-          ? state.allPosts
-          : state.postsSearch.filter((e) => e.shipping[0] === action.payload);
       }else{
         state.posts =
         action.payload === "ALL"
           ? state.allPosts
+          : state.allPosts.filter((e) => e.country === action.payload);
+      }
+     
+    },
+    filteredShippment: (state, action) => {
+      if(state.search === 'search'){
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.postsSearch.filter((e) => e.shipping[0] === action.payload);
+      }else if(state.search === 'categories'){
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
           : state.postsCategory.filter((e) => e.shipping[0] === action.payload);
+      }else{
+        state.posts =
+        action.payload === "ALL"
+          ? state.allPosts
+          : state.allPosts.filter((e) => e.shipping[0] === action.payload);
       }
       
     },

@@ -1,36 +1,40 @@
 import { React, useEffect, useState } from "react";
 import DrawerCategories from "./DrawerCategories/DrawerCategories";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getCategoriesByName, getUserDetails, getUser, getProfileDetails } from "../../Redux/Actions/Actions";
+import {
+  getPost,
+  getCategoriesByName,
+  getUser,
+} from "../../Redux/Actions/Actions";
 import Cards from "./Card/Cards";
 import Paginado from "./Paginado/Paginado";
 import s from "./Home.module.css";
 import Filters from "./Filters/Filters";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
   const { posts } = useSelector((state) => state.posts);
-  const { user } = useAuth0();
+  const [filteredPosts, setFilteredPosts] = useState([]); //cantidad de cards por paginas
 
   useEffect(() => {
     dispatch(getPost());
-    console.log(posts);
     dispatch(getCategoriesByName());
     dispatch(getUser());
-    if (user) {
-      dispatch(getUserDetails(user.email));
-    }
-  }, [dispatch, user]);
+  }, [dispatch]);
 
   //paginado
   //pagina actual
   const [postPerPage, setPostPerPage] = useState(4); //cantidad de cards por paginas
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);
+  //const currentPost = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
+  useEffect(() => {
+    if (posts.length > 0) {
+      setFilteredPosts(posts.filter((post) => post.display === true));
+    }
+  }, [posts.length]);
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -38,25 +42,36 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   return (
     <div className={s.container}>
       <div className={s.container_home}>
-        <DrawerCategories allCategories={allCategories} setCurrentPage={setCurrentPage} />
+        <DrawerCategories
+          allCategories={allCategories}
+          setCurrentPage={setCurrentPage}
+        />
         <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
-          <Cards currentPost={currentPost} setFav={setFav} Fav={Fav} />
-          {/* more components in HOME */}
-          {
-            posts.length ? 
-            <Paginado
-              setPostPerPage={setPostPerPage}
-              setCurrentPage={setCurrentPage}
-              postPerPage={postPerPage}
-              posts={posts.length}
-              paginado={paginado}
-              currentPage={currentPage}
+          {filteredPosts.length > 0 ? (
+            <Cards
+              currentPost={filteredPosts.slice(
+                indexOfFirstPost,
+                indexOfLastPost
+              )}
+              setFav={setFav}
+              Fav={Fav}
             />
-            :null
-          }
+          ) : null}
         </div>
       </div>
+
+      {filteredPosts.length > 0 ? (
+        <Paginado
+          setPostPerPage={setPostPerPage}
+          setCurrentPage={setCurrentPage}
+          postPerPage={postPerPage}
+          posts={filteredPosts.length}
+          paginado={paginado}
+          currentPage={currentPage}
+        />
+      ) : null}
+      {/* more components in HOME */}
     </div>
   );
 };

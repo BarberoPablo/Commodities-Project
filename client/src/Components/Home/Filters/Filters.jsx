@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import s from "./Filter.module.css";
 import {
-  getAllCountries,
   filterByPayment,
   filterCountry,
   filterShippment,

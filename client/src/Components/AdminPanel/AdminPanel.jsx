@@ -1,11 +1,10 @@
 import {React,  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth0 } from "@auth0/auth0-react";
-import { getPost, getUser, getAllCountries } from "../../Redux/Actions/Actions";
+//import { useAuth0 } from "@auth0/auth0-react";
+import { getPost, getUser } from "../../Redux/Actions/Actions";
 import CardsPost from "./CardsPost";
 import CardsUsers from "./CardsUsers";
 import CardsReview from "./CardsReviews";
-import CreateCategory from "./CreateCategory";
 import AdminMemberships from "./AdminMemberships";
 import Reports from "./Reports";
 
@@ -16,15 +15,12 @@ const dispatch = useDispatch();
 
 const { posts } = useSelector((state) => state.posts);
 const { allUsers } = useSelector((state) => state.users);
-const { allCountries } = useSelector((state) => state.countries);
-const { user } = useAuth0();
+//const { user } = useAuth0();
 
-console.log(user)
 
 useEffect(() => {
   dispatch(getPost());
   dispatch(getUser())
-  dispatch(getAllCountries());
 }, [dispatch]);
 
 const [showPost, setShowPost]  = useState(false)
@@ -34,7 +30,6 @@ function clickPost(){
     setShowPost(true)
     setShowReports(false)
     setShowUsers(false)
-    setShowCategory(false)
     setShowReviews(false)
     setShowMemberships(false)
   }
@@ -45,21 +40,9 @@ function clickUsers(){
   if(!showUsers){
     setShowUsers(true)
     setShowPost(false)
-    setShowCategory(false)
     setShowReviews(false)
     setShowMemberships(false)
-  }
-}
-const [showCategory, setShowCategory]  = useState(false)
-function clickCategory(){
-  //dispatch(getUser())
-  if(!showCategory){
-    setShowCategory(true)
     setShowReports(false)
-    setShowPost(false)
-    setShowUsers(false)
-    setShowReviews(false)
-    setShowMemberships(false)
   }
 }
 const [showReviews, setShowReviews]  = useState(false)
@@ -68,7 +51,6 @@ function clickReviews(){
   if(!showReviews){
     setShowReviews(true)
     setShowReports(false)
-    setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
     setShowMemberships(false)
@@ -80,9 +62,9 @@ function clickMemberships(){
   if(!showMemberships){
     setShowMemberships(true)
     setShowReviews(false)
-    setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
+    setShowReports(false)
   }
 }
 const [showReports, setShowReports]  = useState(true)
@@ -92,7 +74,6 @@ function clickReports(){
     setShowReports(true)
     setShowMemberships(false)
     setShowReviews(false)
-    setShowCategory(false)
     setShowPost(false)
     setShowUsers(false)
   }
@@ -106,11 +87,10 @@ function clickReports(){
     <button onClick={()=>clickPost()}>Posts</button>
     <button onClick={()=>clickReviews()}>Reviews</button>
     <button onClick={()=>clickMemberships()}>Memberships</button>
-    <button onClick={()=>clickCategory()}>Category</button>
 
 {showUsers &&
 <div>
-<CardsUsers allUsers={allUsers} allCountries={allCountries}/>
+<CardsUsers allUsers={allUsers} />
 </div>
 }
 {showPost &&
@@ -118,13 +98,9 @@ function clickReports(){
 <CardsPost currentPost={posts}/>
 </div>
 }
-{showCategory &&
-<div>
-  <CreateCategory/>
-</div>}
 {showReviews &&
 <div>
-<CardsReview/>
+<CardsReview allUsers={allUsers}/>
 </div>}
 {showMemberships &&
 <div>
@@ -132,7 +108,7 @@ function clickReports(){
 </div>}
 {showReports &&
 <div>
-<Reports currentPost={posts} allCountries={allCountries}/>
+<Reports currentPost={posts}/>
 </div>}
   </div>
 )

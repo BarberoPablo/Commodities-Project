@@ -1,16 +1,13 @@
 .container{
-  background-color: #151e22;
-  height: 70px;
+  background-color: #131B21;
+  min-height: 70px;
 }
 
 .container_logo{
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 45px;
 }
 
-.container_nav{
-  z-index: 1;
-}
 
 .container_desktop{
   display: flex;
@@ -23,21 +20,10 @@
   text-decoration: none;
 }
 
-@media screen and (max-width:1000px){
-  .container_desktop{
-    display: none;
-  }
-}
-
 .mobile{
   display: none;
 }
 
-@media screen and (max-width:1000px){
-  .mobile{
-    display: inline;
-  }
-}
 
 .actions button{
   border:none;
@@ -52,4 +38,109 @@
   color: #fff;
   font-size: 0.9rem;
   margin-left: 90%;
+}
+
+.mobile_options{
+  background-color: #151e22;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  color: white;
+}
+
+.container_subcategories{
+  border-bottom: 1px solid rgb(107, 106, 106);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.container_subcategories label{
+  font-size: 1.8rem;
+  text-align: center;
+  letter-spacing: 0.2rem;
+}
+
+.container_li{
+  background-color: #0f161a;
+  border: none;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 0.2rem;
+  height: 100%;
+}
+
+.container_li:active{
+  background-color: #27353e;
+}
+
+.container_search{
+  width: 70%;
+}
+
+
+@media screen and (max-width:500px){
+  .search{
+    width: 40%;
+  }
+  .btn{
+    width: 25%;
+  }
+}
+.mobile_option_title{
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.mobile_nav_A{
+  border-bottom: 1px solid white;
+}
+.mobile_nav_A:hover{
+  background-color: #27353e;
+}
+.mobile_actions{
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  margin-left: 30%;
+  text-decoration: none;
+  color: white;
+  height: 60px;
+  text-transform: uppercase;
+}
+.mobile_actions:hover{
+  color: white;
+}
+.mobile_actions h5{
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.search{
+  border-radius: 10px;
+  border: none;
+}
+
+.btn{
+  border: none;
+  margin-left:5px;
+  border-radius: 6px;
+}
+
+@media screen and (max-width:1000px){
+  .mobile{
+    display: block;
+  }
+  .container_desktop{
+    display: none;
+  }
+  .container_nav{
+    display: none;
+  }
+  .search{
+    margin-left: -40%;
+  }
 }
