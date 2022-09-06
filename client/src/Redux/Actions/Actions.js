@@ -190,6 +190,7 @@ export const deleteReview = (userId, body) => (dispatch) =>{
   .then(() => {dispatch(getReviews("All"));
   })
   .catch((e) => console.log(e));
+};
 
 export const updateMembership = (modifyPlan, planName) => (dispatch) => {
   axios
