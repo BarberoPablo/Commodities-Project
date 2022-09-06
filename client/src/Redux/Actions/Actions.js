@@ -20,10 +20,7 @@ import { getCategories } from "../Slices/categoriesSlice";
 import { getCountries, sortCountries } from "../Slices/countriesSlice";
 import { getAllPlans } from "../Slices/plansSlice";
 import { getAllReviews } from "../Slices/reviewsSlice";
-
-
 import axios from "axios";
-
 
 //const url = "https://b2b-01.herokuapp.com";
 const url = "http://localhost:3001";
@@ -184,9 +181,9 @@ export const getReviews = (id) => (dispatch) => {
     .catch((e) => console.log(e));
 };
 
-export const deleteReview = (userId,idReview, display) => (dispatch) =>{
-  console.log(display)
-  axios.put(`${url}/admin-panel/review/${userId}/${idReview}`, display)
+export const deleteReview = (userId, body) => (dispatch) =>{
+  //console.log(body)
+  axios.put(`${url}/admin-panel/review/${userId}`, body)
   .then(() => {dispatch(getReviews("All"));
   })
   .catch((e) => console.log(e));
