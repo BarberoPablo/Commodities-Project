@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchPosts,Searching } from "../../../Redux/Actions/Actions";
+import s from "./Navbar.module.css";
 
 const Search = ({setCurrentPage}) => {
 
@@ -29,10 +30,10 @@ const Search = ({setCurrentPage}) => {
   };
 
   return (
-    <div>
-      <input onChange={handleChange} type="text" value={input} style={{borderRadius:'10px',border:'none'}} />
-      <button onClick={handleClick} style={{border:'none',marginLeft:'5px',borderRadius:'6px'}} >Buyers</button>
-      <button onClick={handleClick} style={{border:'none',marginLeft:'5px',borderRadius:'6px'}}>Sellers</button>
+    <div className={s.container_search}>
+      <input onChange={handleChange} type="text" value={input} className={s.search} />
+      <button onClick={handleClick} className={s.btn} >Buyers</button>
+      <button onClick={handleClick} className={s.btn}>Sellers</button>
     </div>
   );
 };
