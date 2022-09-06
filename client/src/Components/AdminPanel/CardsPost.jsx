@@ -13,11 +13,9 @@ const CardsPost = ({ currentPost }) => {
 
   function handleBan(e) {
     dispatch(reportTo(e.id, 9, { event: "Ban" }));
-    console.log(e);
   }
   function handleDismiss(e) {
     dispatch(reportTo(e.id, 9, { event: "Dismiss" }));
-    console.log(e);
   }
 
   return (
