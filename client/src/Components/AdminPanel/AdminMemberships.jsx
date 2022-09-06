@@ -66,6 +66,7 @@ export default function AdminMemberships() {
               <input
                 name="cost"
                 type="number"
+                min="0"
                 placeholder={plan.cost}
                 onChange={(e) => handleChangeModify(e, plan.name)}
               />
@@ -73,6 +74,7 @@ export default function AdminMemberships() {
               <input
                 name="contacts"
                 type="number"
+                min="0"
                 placeholder={plan.contacts}
                 onChange={(e) => handleChangeModify(e, plan.name)}
               />

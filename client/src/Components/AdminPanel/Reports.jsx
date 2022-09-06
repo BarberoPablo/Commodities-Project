@@ -1,15 +1,19 @@
-import {React,  useEffect } from "react";
+import {React,  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import s from "../Home/Card/Card.module.css";
 import { getReviews, reportTo, deleteReview } from "../../Redux/Actions/Actions";
 import { Link } from "react-router-dom";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import Toast from "react-bootstrap/Toast";
+import Button from "react-bootstrap/Button";
 
 
 export default function Reports( { currentPost }, {allCountries}) {
   const { allUsers } = useSelector((state) => state.users);
   const user = allUsers
+  const [showA, setShowA] = useState(false);
 
   const dispatch = useDispatch();
   const { Reviews } = useSelector((state) => state.reviews);
@@ -28,9 +32,14 @@ export default function Reports( { currentPost }, {allCountries}) {
     console.log(e)
       }
 
-  function handleDeleteReview(userId, position){
-    dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
-  }
+
+
+  const toggleShowA = () => setShowA(!showA);
+  const toggleShowB = (userId, position) => {
+      setShowA(!showA);
+dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
+  };
+
 
   return (
     <div>
@@ -45,7 +54,26 @@ export default function Reports( { currentPost }, {allCountries}) {
                   <p>Comment:{s.comment}</p> 
                   <p>score:{s.score}</p> 
                   <p>Review By:{allUsers.find(u=> u.id===s.idReviewer)?.name}</p>
-                  <button onClick={()=>handleDeleteReview( r.userId, r.reviews.indexOf(s))}>DELETE REVIEW</button>
+                  <button onClick={toggleShowA}>DELETE REVIEW</button>
+
+<ToastContainer position="middle-center">
+<Toast show={showA} onClose={toggleShowA} bg="secondary">
+  <Toast.Body>
+  You are about to definitely erase this review. Are you sure?
+  </Toast.Body>
+  <Button variant="success" size="sm" onClick={()=>toggleShowB( r.userId, r.reviews.indexOf(s))}>
+    Accept
+  </Button>
+  <Button
+    style={{ margin: "10px" }}
+    variant="danger"
+    size="sm"
+    onClick={toggleShowA}
+  >
+    Cancel
+  </Button>
+</Toast>
+</ToastContainer>
                   { s.idReport.map((r)=>{
                     return(
                       // eslint-disable-next-line eqeqeq
@@ -124,7 +152,7 @@ export default function Reports( { currentPost }, {allCountries}) {
                 </div>
                 <p>{e.display? "NOT BANNED":"BANNED"}</p>
                 <button onClick={()=>handleDismiss(e)}>Dismiss Report</button>
-                <button onClick={()=>handleBan(e)}>DELETE POST</button>
+                <button onClick={()=>handleBan(e)}>Delete Post</button>
               </div>
             );
           })}
