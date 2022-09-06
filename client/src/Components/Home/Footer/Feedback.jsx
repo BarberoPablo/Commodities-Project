@@ -14,7 +14,7 @@ export function validate(input) {
 
 const Feedback = () => {
   const [input, setInput] = useState({
-    from: "commoditiesb2b@hotmail.com",
+    from: "commoditiesB2Bteam@hotmail.com",
     to: "",
     subject: "",
     text: "",
@@ -49,7 +49,7 @@ const Feedback = () => {
       !errors.length
     ) {
       alert("Email sent successfully.");
-      input.to = "commoditiesb2b@hotmail.com, " + input.to;
+      input.to = "commoditiesB2Bteam@hotmail.com, " + input.to;
       input.subject = "REPLY FROM B2B: " + input.subject;
       input.text =
         `Your message has already reached our team and we will respond as soon as possible. 
