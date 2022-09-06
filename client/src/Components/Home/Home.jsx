@@ -60,8 +60,6 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
           ) : null}
         </div>
       </div>
-      {console.log("no filtrados", posts.length)}
-      {console.log("filtrados", filteredPosts.length)}
 
       {filteredPosts.length > 0 ? (
         <Paginado
