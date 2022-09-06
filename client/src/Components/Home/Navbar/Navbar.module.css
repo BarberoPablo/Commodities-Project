@@ -122,9 +122,10 @@
   font-size: 1.4rem;
 }
 
-.mobile_nav_A{
-  border-bottom: 1px solid white;
+.mobile_nav{
+  background-color: #0f161a;
 }
+
 .mobile_nav_A:hover{
   background-color: #27353e;
 }

@@ -56,7 +56,7 @@ const Navbarr = ({ setCurrentPage }) => {
           <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header
               closeButton
-              style={{ borderBottom: "1px solid white" }}
+              style={{color:'white', borderBottom: "1px solid white",backgroundColor:'#0f161a' }}
             >
               <Offcanvas.Title>Menu</Offcanvas.Title>
             </Offcanvas.Header>
