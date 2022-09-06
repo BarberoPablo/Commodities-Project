@@ -152,7 +152,6 @@ export const Searching = (value) => (dispatch) => {
 
 // Guarda en base de datos los favoritos al logearse
 export const addFavorites = (favorites) => () => {
-  console.log("action", favorites);
   axios.put(`${url}/favorite`, favorites);
 };
 
@@ -186,20 +185,13 @@ export const getReviews = (id) => (dispatch) => {
     .catch((e) => console.log(e));
 };
 
-export const deleteReview = (userId, body) => (dispatch) => {
-  //console.log(body)
-  axios
-    .put(`${url}/admin-panel/review/${userId}`, body)
-    .then(() => {
-      dispatch(getReviews("All"));
-    })
-    .catch((e) => console.log(e));
-};
+export const deleteReview = (userId, body) => (dispatch) =>{
+  axios.put(`${url}/admin-panel/review/${userId}`, body)
+  .then(() => {dispatch(getReviews("All"));
+  })
+  .catch((e) => console.log(e));
 
 export const updateMembership = (modifyPlan, planName) => (dispatch) => {
-  console.log("ACTION NAME", planName);
-  console.log("ACTION", modifyPlan[planName]);
-  console.log("Ruta", `${url}/plan/` + planName);
   axios
     .put(`${url}/plan/` + planName, modifyPlan[planName])
     .then(() => {
