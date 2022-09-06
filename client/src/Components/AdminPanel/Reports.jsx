@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import s from "../Home/Card/Card.module.css";
-import { getReviews, reportTo } from "../../Redux/Actions/Actions";
+import { getReviews, reportTo, deleteReview } from "../../Redux/Actions/Actions";
 import { Link } from "react-router-dom";
 
 
@@ -28,6 +28,10 @@ export default function Reports( { currentPost }, {allCountries}) {
     console.log(e)
       }
 
+  function handleDeleteReview(userId, position){
+    dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
+  }
+
   return (
     <div>
       <h2>Reports</h2>
@@ -41,7 +45,7 @@ export default function Reports( { currentPost }, {allCountries}) {
                   <p>Comment:{s.comment}</p> 
                   <p>score:{s.score}</p> 
                   <p>Review By:{allUsers.find(u=> u.id===s.idReviewer)?.name}</p>
-                  <button>DELETE REVIEW</button>
+                  <button onClick={()=>handleDeleteReview( r.userId, r.reviews.indexOf(s))}>DELETE REVIEW</button>
                   { s.idReport.map((r)=>{
                     return(
                       // eslint-disable-next-line eqeqeq

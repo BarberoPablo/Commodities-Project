@@ -191,3 +191,17 @@ export const deleteReview = (userId, body) => (dispatch) =>{
   })
   .catch((e) => console.log(e));
 };
+
+export const updateMembership = (input)=>(dispatch)=>{
+  axios.put(`${url}/plan/${input.nameO}`, input)
+  .then(() => {dispatch(getPlans())
+  })
+  .catch((e) => console.log(e));
+}
+
+export const createNewPlan = (input)=>(dispatch)=>{
+  axios.post(`${url}/plan/`, input)
+  .then(() => {dispatch(getPlans())
+  })
+  .catch((e) => console.log(e));
+}
