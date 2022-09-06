@@ -70,7 +70,6 @@ const ProfileUser = ({ match }) => {
       dispatch(getContactsUser(userLog?.id, id));
       setNewContact(true);
       setShowA(!showA);
-      window.location.reload();
     } else {
       alert("Try again in a few seconds");
     }
