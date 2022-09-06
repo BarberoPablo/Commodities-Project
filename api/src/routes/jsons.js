@@ -109,7 +109,7 @@ const users = [
   },
   {
     id: 10,
-    name: "Tito Shenoy",
+    name: "Dhruv Shenoy",
     country: "India",
     email: "dhruv.shenoy@example.com",
     phone: "8672994375",
