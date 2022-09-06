@@ -185,7 +185,6 @@ export const getReviews = (id) => (dispatch) => {
 };
 
 export const deleteReview = (userId, body) => (dispatch) =>{
-  //console.log(body)
   axios.put(`${url}/admin-panel/review/${userId}`, body)
   .then(() => {dispatch(getReviews("All"));
   })
