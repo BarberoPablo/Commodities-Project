@@ -48,11 +48,11 @@ dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
       <h2>Reports</h2>
       {Reviews?.map((r)=>{
         return(r.reviews.length>0 ?
-          <div key={filtrado.id} className={x.cardB} >
-            <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
+          <div key={filtrado.id} className={x.cardB} >        
             {r.reviews?.map((s) => {
               return( s.idReport.length>0?
                 <div key={filtrado.id} className={x.cardR}>
+                 <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
             {s.score == '1' ? <strong className="me-auto"><BsStarFill/> <BsStar/> <BsStar/> <BsStar/> <BsStar/></strong> : null}
             {s.score == '2' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStar/> <BsStar/> <BsStar/></strong> : null}
             {s.score == '3' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStar/> <BsStar/></strong> : null}
