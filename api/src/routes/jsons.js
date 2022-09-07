@@ -89,7 +89,7 @@ const users = [
     country: "Australia",
     email: "gloria.ryan@example.com",
     phone: "07-6721-9149",
-    image: "https://randomuser.me/api/portraits/women/49.jpg",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
   },
   {
     id: 8,
@@ -101,7 +101,7 @@ const users = [
   },
   {
     id: 9,
-    name: "Pablo2 Barbero",
+    name: "Irene Galindo",
     country: "Argentina",
     email: "irene.galindo@example.com",
     phone: "(661) 978 1714",
@@ -136,13 +136,13 @@ const users = [
     isAdmin: true,
     remainingContacts: 10,
     planId: 2
-
+  },
+  {
     id: 13,
     name: "Juan",
     country: "Argentina",
     email: "juandiarts@gmail.com",
     phone: "8672994375",
-    
     isAdmin: true,
 
   },
