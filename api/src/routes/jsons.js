@@ -30,7 +30,7 @@ const plans = [
   {
     name: "Premium",
     cost: 500,
-    contacts: 2000,
+    contacts: -100,
   },
 ];
 
