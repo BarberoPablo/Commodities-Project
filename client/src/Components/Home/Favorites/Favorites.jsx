@@ -78,10 +78,37 @@ const Favorites = () => {
         favoritesDb.length > 0 ? (
           favoritesDb.map((post, index) => (
             // Si el los id de los favoritos incluyen al del post, lo renderizo:
-            <div key={index}>
-              <h1>{post.title}</h1>
-              <p>{post.categoryName}</p>
-              <button onClick={() => handleDeleteDb(post.id)}>x</button>
+            <div key={index} className={s.local_fav}>
+              <div className={s.local_fav_A}>
+                <a href={"/profile-user/"+ post.userId} style={{textDecoration:'none'}}>
+                  <h1 style={{ backgroundColor: "transparent" }}>{post.title}</h1>
+                </a>
+                <button
+                  className={s.local_fav_A_btn}
+                  onClick={() => handleDeleteDb(post.id)}
+                >
+                  x
+                </button>
+              </div>
+              <div>
+                <p>{post.categoryName}</p>
+                <p>
+                  Sub Category: <b>{post.subCategory}</b>
+                </p>
+              </div>
+              <div>
+                <p>{post.country}</p>
+                <p>
+                  Payment:{" "}
+                  {post.payment.map((e, i) => {
+                    return <b key={i}> {e}</b>;
+                  })}
+                </p>
+                <p>
+                  Shipping: <b>{post.shipping}</b>
+                </p>
+              </div>
+              <p>{post.description}</p>
             </div>
           ))
         ) : (
@@ -89,10 +116,32 @@ const Favorites = () => {
         )
       ) : favorites?.length > 0 ? (
         favorites.map((e, index) => (
-          <div key={index}>
-            <h1>{e.title}</h1>
-            <p>{e.categoryName}</p>
-            <button onClick={() => handleDelete({ e })}>x</button>
+          <div key={index} className={s.local_fav}>
+            <div className={s.local_fav_A}>
+              <a href={"/profile-user/"+ e.userId} style={{textDecoration:'none'}}>
+                <h1 style={{ backgroundColor: "transparent" }}>{e.title}</h1>
+              </a>
+              <button onClick={() => handleDelete({ e })}  className={s.local_fav_A_btn}>x</button>
+            </div>
+            <div>
+              <p>{e.categoryName}</p>
+              <p>
+                Sub Category: <b>{e.subCategory}</b>
+              </p>
+            </div>
+            <div>
+              <p>{e.country}</p>
+              <p>
+                Payment:{" "}
+                {e.payment.map((e, i) => {
+                  return <b key={i}> {e}</b>;
+                })}
+              </p>
+              <p>
+                Shipping: <b>{e.shipping}</b>
+              </p>
+            </div>
+            <p>{e.description}</p>
           </div>
         ))
       ) : (
