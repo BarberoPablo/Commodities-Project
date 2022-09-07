@@ -118,5 +118,3 @@ export const {
   setSearch
 } = postSlice.actions;
 export default postSlice.reducer;
-
-//PARA CREAR OTRO SLICE HACERLO EN OTRO ARCHIVO
