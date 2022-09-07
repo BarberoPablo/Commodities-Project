@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+
 .containerCard {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   color: black;
-  height: 80vh;
+  min-height: calc(100vh - 70px - 16vh);
+  
 }
 .card {
-  background-color: #0E3B43;
+  background-color: #435de0;
   border-radius: 10px;
   width: 280px;
   height: 350px;
@@ -15,14 +18,19 @@
   transition: all 0.1s;
   box-shadow: 0px 23px 19px -5px #404040;
 }
+
 .card:hover {
   cursor: pointer;
   transform: translateY(-30px)
 }
+
+
 .infoPlan h3 {
-  background-color: green;
+  background-color: #0a0d14;
   width: 100%;
-  color: white;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  
 }
 .product p {
   display: flex;
@@ -32,15 +40,18 @@
 .h1{
   margin-top: 1%;
   color: rgb(255, 255, 255);
-  background-color: #0E3B43;
+  background-color: #28364e;
   border-radius: 0;
-
 }
-h2 {
-  color: #fff;
+/*#0a0d14 #28364e #556ff7 #ffffff*/
+
+.h2 {
+  padding: 5px;
+  color: rgb(225, 227, 236);
+  letter-spacing: 0.1rem;
 }
 .approved h1 {
-  background-color:green;
+  background-color:#28364e;
   color: white;
   z-index: 1;
   position: absolute;
@@ -61,7 +72,6 @@ h2 {
   .card {
     width: 250px;
     height: 350px;
- 
   }
   
 }
@@ -71,3 +81,15 @@ h2 {
     height: 350px;
   }
 }
+@media screen and (max-width:700px){
+  .containerCard{
+    display: grid;
+    min-height: 1300px;
+  }
+  .card{
+    width: 300px;
+  }
+
+}
+
+/*#0a0d14 #28364e #556ff7 #ffffff*/
