@@ -15,7 +15,6 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   const dispatch = useDispatch();
   const { allCategories } = useSelector((state) => state.categories);
   const { posts } = useSelector((state) => state.posts);
-  const [filteredPosts, setFilteredPosts] = useState([]); //cantidad de cards por paginas
 
   useEffect(() => {
     dispatch(getPost());
@@ -28,13 +27,8 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
   const [postPerPage, setPostPerPage] = useState(4); //cantidad de cards por paginas
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  //const currentPost = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  useEffect(() => {
-    if (posts.length > 0) {
-      setFilteredPosts(posts.filter((post) => post.display === true));
-    }
-  }, [posts.length]);
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -48,25 +42,18 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
         />
         <div className={s.container_filters}>
           <Filters setCurrentPage={setCurrentPage} />
-          {filteredPosts.length > 0 ? (
-            <Cards
-              currentPost={filteredPosts.slice(
-                indexOfFirstPost,
-                indexOfLastPost
-              )}
-              setFav={setFav}
-              Fav={Fav}
-            />
+          {posts.length > 0 ? (
+            <Cards currentPost={currentPost} setFav={setFav} Fav={Fav} />
           ) : null}
         </div>
       </div>
 
-      {filteredPosts.length > 0 ? (
+      {posts.length > 0 ? (
         <Paginado
           setPostPerPage={setPostPerPage}
           setCurrentPage={setCurrentPage}
           postPerPage={postPerPage}
-          posts={filteredPosts.length}
+          posts={posts.length}
           paginado={paginado}
           currentPage={currentPage}
         />

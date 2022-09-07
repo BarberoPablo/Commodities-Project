@@ -25,8 +25,6 @@ const ProfileUser = ({ match }) => {
   const [newContact, setNewContact] = useState(false);
 
   // CHANGES
-  // console.log('filter',filter)
-  // console.log('posts',posts)
 
   const { user } = useAuth0();
   const dispatch = useDispatch();
@@ -82,7 +80,6 @@ const ProfileUser = ({ match }) => {
     //setNewContact(false);
     dispatch(getProfileDetails(id)); //trae los datos del usuario en especifico
     dispatch(getPost()); //trae todos los posteos
-    console.log("auth0", user);
     if (user) {
       dispatch(getUserDetails(user.email));
     }
