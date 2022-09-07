@@ -56,7 +56,7 @@ const Memberships = () => {
   reviews: BOOLEAN,
   */
   return (
-    <div>
+    <div  className={s.container_membership} >
       {userLog && userLog.country ? (
         <div>
           <h1 className={s.h1}>
@@ -104,7 +104,9 @@ const Memberships = () => {
           </div>
         </div>
       ) : (
-        <h1>Please log in and set your country and phone number</h1>
+        <div className={s.container_membership}>
+          <h1> Please log in and set your country and phone number</h1>
+        </div>
       )}
     </div>
   );
