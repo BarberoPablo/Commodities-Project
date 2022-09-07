@@ -136,6 +136,15 @@ const users = [
     isAdmin: true,
     remainingContacts: 10,
     planId: 2
+
+    id: 13,
+    name: "Juan",
+    country: "Argentina",
+    email: "juandiarts@gmail.com",
+    phone: "8672994375",
+    
+    isAdmin: true,
+
   },
 ];
 
