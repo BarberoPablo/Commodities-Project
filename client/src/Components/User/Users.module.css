@@ -1,7 +1,6 @@
 .container {
   min-height: calc(100vh - 70px - 7vh);
   width: 100%;
-
 }
 .card {
   margin: 0 auto;
@@ -13,12 +12,12 @@
   background: #151e22;
   z-index: 0;
 }
-
 .card:after {
   content: "";
   top: 0;
   position: absolute;
   width: 100%;
+  height: 45%;
   height: 40%;
   background: #f8f8f8;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
@@ -31,7 +30,6 @@
   gap: 1rem;
   color: #fff;
   font-weight: bold;
-  
 }
 .user_photo p {
   text-align: center;
@@ -44,7 +42,6 @@
 }
 .oculto {
   display: none;
-  border: 2px solid red;
 }
 .active {
   width: 50%;
@@ -66,7 +63,6 @@
   padding: 10px;
   margin: 5px;
 }
-
 .form button {
   border: none;
   border-radius: 10px;
@@ -85,9 +81,6 @@
 }
 .containerPost {
   color: #fff;
-  margin: auto;
-  width: 50%;
-
 }
 .container_x {
   display: flex;
@@ -95,31 +88,78 @@
   background-color: #f8f8f8;
   margin-bottom: 1%;
   color: rgb(0, 0, 0);
-  width: 100%;
+  width: 50%;
   margin: 5% auto;
   border-radius: 10px;
   padding: 10px;
-
 }
-
 .container_a {
   display: flex;
   align-items: center;
 }
-
 .container_time {
   flex-grow: 1;
   text-align: end;
 }
-
 .container_b {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.container_b p {
+  margin: 0px 10px;
+}
+.userDates {
+  background-color: #151e22;
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: start;
+}
+.postProfile {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.payment {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+.toast {
+  top: 0;
+  right: -50%;
+  padding: 10px;
+}
+.review {
+  background-color: #151e22;
+  width: 50%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.review form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+  width: 50%;
+}
+.review form input {
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+.review form select {
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+.review form button {
+  border: none;
+  border-radius: 10px;
+}
 
-@media screen and (max-width:950px) {
-
+@media screen and (max-width: 950px) {
   .container_b {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -137,7 +177,7 @@
   }
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width: 650px) {
   .container_b {
     display: grid;
     grid-template-columns: 1fr;
@@ -183,68 +223,8 @@
     width: 100%;
   }
 }
-
-.container_b p {
-  margin: 0px 10px;
-}
-.userDates {
-  background-color: #151e22;
-  max-width: 50%;
-  margin: 0 auto;
-  padding: 10px;
-  text-align: start;
-}
-.postProfile{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.payment{
-  display: flex;
-  flex-direction: row;
-  gap: 0.3rem;
-}
-.toast{
-  top: 0;
-  right:-50%;
-  padding: 10px;
-}
-.review{
-  background-color:#151e22;
-  width: 50%;
-  margin: 0 auto;
-  padding: 1rem;
-}
-.review form{
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0 auto;
-  width: 50%;
-}
-.review form input{
-  border: none;
-  border-radius: 10px;
-  text-align: center;
-}
-.review form select{
-  border: none;
-  border-radius: 10px;
-  text-align: center;
-
-
-}
-.review form button{
-  border: none;
-  border-radius: 10px;
-}
-
-
-@media screen and (max-width:580px){
-  .user_btn{
-    width: 100px;
-  }
-  .btn{
-    min-height: 50px;
+@media screen and (max-width: 580px) {
+  .card:after {
+    height: 40%;
   }
 }
