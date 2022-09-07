@@ -286,7 +286,7 @@ const Profile = () => {
                         style={{ cursor: "pointer" }}
                       />
                     </Toast.Header>
-                    <Toast.Body>{e.comment}</Toast.Body>
+                    <Toast.Body style={{ color: "white" }}>{e.comment}</Toast.Body>
                   </Toast>
                 </>
               ))}
