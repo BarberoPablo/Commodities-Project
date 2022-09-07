@@ -48,7 +48,7 @@ dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
       <h2>Reports</h2>
       {Reviews?.map((r)=>{
         return(r.reviews.length>0 ?
-          <div key={filtrado.id} className={x.cardB} >        
+          <div key={filtrado.id} >        
             {r.reviews?.map((s) => {
               return( s.idReport.length>0?
                 <div key={filtrado.id} className={x.cardR}>
