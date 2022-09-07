@@ -112,7 +112,7 @@ const Favorites = () => {
             </div>
           ))
         ) : (
-          <h1>You have no favorites</h1>
+          <h1>You don't have favorites</h1>
         )
       ) : favorites?.length > 0 ? (
         favorites.map((e, index) => (
