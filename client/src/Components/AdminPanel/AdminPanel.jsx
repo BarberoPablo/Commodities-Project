@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getPost, getUser, getUserDetails } from "../../Redux/Actions/Actions";
+import { getPostAdmin, getUser, getUserDetails } from "../../Redux/Actions/Actions";
 import CardsPost from "./CardsPost";
 import CardsUsers from "./CardsUsers";
 import CardsReview from "./CardsReviews";
@@ -11,13 +11,13 @@ import Reports from "./Reports";
 export default function AdminPanel() {
   const dispatch = useDispatch();
 
-  const { posts } = useSelector((state) => state.posts);
+  const { allPostsAdmin } = useSelector((state) => state.posts);
   const { allUsers } = useSelector((state) => state.users);
   const userLog = useSelector((state) => state.users.user);
   const { user } = useAuth0();
 
   useEffect(() => {
-    dispatch(getPost());
+    dispatch(getPostAdmin());
     dispatch(getUser());
   }, [dispatch]);
 
@@ -29,7 +29,7 @@ export default function AdminPanel() {
 
   const [showPost, setShowPost] = useState(false);
   function clickPost() {
-    dispatch(getPost());
+    dispatch(getPostAdmin());
     if (!showPost) {
       setShowPost(true);
       setShowReports(false);
@@ -100,7 +100,7 @@ export default function AdminPanel() {
           )}
           {showPost && (
             <div>
-              <CardsPost currentPost={posts} />
+              <CardsPost currentPost={allPostsAdmin} />
             </div>
           )}
           {showReviews && (
@@ -115,7 +115,7 @@ export default function AdminPanel() {
           )}
           {showReports && (
             <div>
-              <Reports currentPost={posts} />
+              <Reports currentPost={allPostsAdmin} />
             </div>
           )}
         </div>

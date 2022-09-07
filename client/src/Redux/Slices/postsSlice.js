@@ -4,6 +4,7 @@ export const postSlice = createSlice({
   name: "posts", //nombre del slice- pasarlo al store
   initialState: {
     allPosts: [],
+    allPostsAdmin: [],
     posts: [],
     postsSearch:[],
     postsCategory: [],
@@ -17,6 +18,9 @@ export const postSlice = createSlice({
       state.allPosts = action.payload;
       state.posts = action.payload;
       state.postsCategory = action.payload;
+    },
+    getAllPostsAdmin: (state, action) => {
+      state.allPostsAdmin = action.payload;
     },
     getPosts: (state, action) => {
       const filtered = state.allPosts.filter(
@@ -115,7 +119,8 @@ export const {
   filteredPayment,
   filteredCountry,
   filteredShippment,
-  setSearch
+  setSearch,
+  getAllPostsAdmin
 } = postSlice.actions;
 export default postSlice.reducer;
 

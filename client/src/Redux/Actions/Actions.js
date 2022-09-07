@@ -1,5 +1,6 @@
 import {
   getAllPosts,
+  getAllPostsAdmin,
   getPosts,
   filteredSubcategory,
   filteredPayment,
@@ -32,6 +33,13 @@ export const getPost = () => (dispatch) => {
     .then((data) => dispatch(getAllPosts(data.data)))
     .catch((e) => console.log(e));
 };
+
+export const getPostAdmin = () => (dispatch) => {
+  axios(`${url}/allposts`) // end-point del back /posts
+    .then((data) => dispatch(getAllPostsAdmin(data.data)))
+    .catch((e) => console.log(e));
+};
+
 
 export const searchPosts = (name, sell) => (dispatch) => {
   dispatch(getPosts(name, sell));
@@ -158,7 +166,7 @@ export const reportTo = (postId, idReview, event) => (dispatch) => {
   axios
     .put(`${url}/admin-panel/post/${postId}/${idReview}`, event)
     .then(() => {
-      dispatch(dispatch(getPost()));
+      dispatch(dispatch(getPostAdmin()));
     })
     .catch((e) => console.log(e));
 };
