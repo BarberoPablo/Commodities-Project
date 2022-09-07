@@ -1,5 +1,5 @@
 import React from "react";
-import { filterBySubcategory,Searching } from "../../../Redux/Actions/Actions";
+import { filterBySubcategory, Searching } from "../../../Redux/Actions/Actions";
 import { useDispatch } from "react-redux";
 import s from "./DrawerCategories.module.css";
 import { useState } from "react";
@@ -13,14 +13,15 @@ const Drawer = ({ allCategories, setCurrentPage }) => {
     dispatch(filterBySubcategory(e.target.innerHTML));
     setCurrentPage(1);
     setActive(!active);
-    dispatch(Searching('categories'))
+    dispatch(Searching("categories"));
   };
 
   return (
-    <div className={s.container} >
+    <div className={s.container}>
       {allCategories?.map((e, i) => (
         <div key={i} className={s.container_subcategories}>
           <label>{e.name}</label>
+          <hr />
           {e.subcategories.map((e, i) => (
             <li key={i} onClick={handleClick} className={s.container_li}>
               {e}
