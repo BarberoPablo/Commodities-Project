@@ -145,7 +145,7 @@ const users = [
     phone: "8672994375",
     isAdmin: true,
 
-  },
+  }
 ];
 
 // const posts = [
