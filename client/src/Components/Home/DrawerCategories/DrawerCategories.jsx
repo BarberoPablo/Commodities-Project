@@ -21,6 +21,7 @@ const Drawer = ({ allCategories, setCurrentPage }) => {
       {allCategories?.map((e, i) => (
         <div key={i} className={s.container_subcategories}>
           <label>{e.name}</label>
+          <hr/>
           {e.subcategories.map((e, i) => (
             <li key={i} onClick={handleClick} className={s.container_li}>
               {e}

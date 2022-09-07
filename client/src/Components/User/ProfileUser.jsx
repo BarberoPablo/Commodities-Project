@@ -97,7 +97,7 @@ const ProfileUser = ({ match }) => {
               <img src={profileUser.image} alt="a" />
               <Reviews profileUser={profileUser} />
             </div>
-            {userLog && userLog.remainingContacts > 0 ? (
+            {userLog && userLog.remainingContacts != 0 ? (
               <>
                 {userLog.contactsIds?.includes(profileUser?.id) ? (
                   <>
