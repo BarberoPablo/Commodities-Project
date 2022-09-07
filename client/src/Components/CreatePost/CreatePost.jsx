@@ -110,12 +110,13 @@ export default function CreatePost() {
     dispatch(postPost(user.email, input));
     if (Object.keys(val).length > 0) {
       alert("Fix errors");
-      val = {};
-      setInput({
-        sell: false,
-        shipping: [],
-        payment: [],
-      });
+      setErrors({})
+      // val = {};
+      // setInput({
+      //   sell: false,
+      //   shipping: [],
+      //   payment: [],
+      // });
       return;
     }
     alert("Post Created");
