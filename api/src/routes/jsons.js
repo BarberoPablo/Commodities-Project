@@ -125,6 +125,15 @@ const users = [
       "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTJXw84YC1Cr4l578Ncix3oXU6hXDarw9W7nWhmfCLIAnTS_xkpu-C3cQSkWg7yo1GE",
     isAdmin: true,
   },
+  {
+    id: 12,
+    name: "Juan",
+    country: "Argentina",
+    email: "juandiarts@gmail.com",
+    phone: "8672994375",
+    
+    isAdmin: true,
+  },
 ];
 
 // const posts = [
