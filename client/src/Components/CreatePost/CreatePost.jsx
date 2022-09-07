@@ -102,7 +102,7 @@ export default function CreatePost() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!user) {
-      alert("plaese login to create a post");
+      alert("Please login to create a post");
       return;
     }
     let val = validacion(input);
@@ -110,12 +110,13 @@ export default function CreatePost() {
     dispatch(postPost(user.email, input));
     if (Object.keys(val).length > 0) {
       alert("Fix errors");
-      val = {};
-      setInput({
-        sell: false,
-        shipping: [],
-        payment: [],
-      });
+      setErrors({})
+      // val = {};
+      // setInput({
+      //   sell: false,
+      //   shipping: [],
+      //   payment: [],
+      // });
       return;
     }
     alert("Post Created");
