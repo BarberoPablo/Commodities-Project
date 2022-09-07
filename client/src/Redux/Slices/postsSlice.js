@@ -14,7 +14,9 @@ export const postSlice = createSlice({
       state.search=action.payload
     },
     getAllPosts: (state, action) => {
-      state.allPosts = action.payload;
+      state.allPosts = action.payload.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
       state.posts = action.payload.sort(function(a,b){
         return new Date(b.createdAt) - new Date(a.createdAt);
       });
