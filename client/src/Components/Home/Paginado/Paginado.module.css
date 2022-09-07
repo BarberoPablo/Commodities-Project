@@ -23,6 +23,7 @@
   justify-content: center;
   align-items: center;
   margin-left: 18%;
+  
 }
 
 .container span {
@@ -30,10 +31,11 @@
   margin: 0px 0.3%;
   background-color: #131B21;
   border-radius: 10px;
-  width: 50px;
+  width: 40px;
+  height: 40px;
   list-style: none;
-  line-height: 45px;
   text-align: center;
+  border: none;
 }
 
 .container span button {
@@ -44,30 +46,38 @@
   border-radius: 10px;
   width: 100%;
   cursor: pointer;
+  border: none;
+
 }
 
 .container span:hover button {
-  background: #acacac;
+  background: #28364E;
   color: #fff;
 }
 
 .btn {
-  text-decoration: none;
-  color: #fff;
-  font-weight: 800;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 0.75em;
+  color: white;
+  margin: 0px 0.3%;
   background-color: #131B21;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  list-style: none;
+  text-align: center;
+  border: none;
 }
 
 .number {
   background-color: #28364E;
+  height: 40px;
+  width: 40px;
   color: black;
 }
 
 .number2 {
   background-color: #151E22;
+  height: 40px;
+  width: 40px;
 }
 
 @media screen and (max-width:1000px) {

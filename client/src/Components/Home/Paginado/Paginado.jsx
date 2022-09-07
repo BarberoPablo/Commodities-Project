@@ -30,6 +30,7 @@ export default function Paginado({
     <div className={s.Container}>
       {console.log(postPerPage, posts, paginado, currentPage, setCurrentPage)}
       <div className={s.container}>
+        <div className={s.paginated}>
         {currentPage === 1 ? null : (
           <button
             className={s.btn}
@@ -40,7 +41,6 @@ export default function Paginado({
             «{" "}
           </button>
         )}
-        <div className={s.paginated}>
           {pageNumbers?.map((number) => (
             <span key={number}>
               <button
@@ -51,7 +51,6 @@ export default function Paginado({
               </button>
             </span>
           ))}
-        </div>
         {currentPage >= Math.ceil(posts / postPerPage) ? null : (
           <button
             className={s.btn}
@@ -62,6 +61,7 @@ export default function Paginado({
             »{" "}
           </button>
         )}
+        </div>
       </div>
     </div>
   );
