@@ -125,6 +125,18 @@ const users = [
       "http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTJXw84YC1Cr4l578Ncix3oXU6hXDarw9W7nWhmfCLIAnTS_xkpu-C3cQSkWg7yo1GE",
     isAdmin: true,
   },
+  {
+    id: 12,
+    name: "Maxi Marolda",
+    country: "Colombia",
+    email: "mmarolda12@gmail.com",
+    phone: "8672994375",
+    image:
+      "https://lh3.googleusercontent.com/a-/AFdZucqzUaBaQEd8YNrMlk_GYprCGiVcVkTAE76FeGT7=s96-c",
+    isAdmin: true,
+    remainingContacts: 10,
+    planId: 2
+  },
 ];
 
 // const posts = [
