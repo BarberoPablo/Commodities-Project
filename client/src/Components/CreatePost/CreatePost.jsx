@@ -16,6 +16,8 @@ export default function CreatePost() {
   const { allCountries } = useSelector((state) => state.countries);
   const { user } = useAuth0();
 
+  const allCountriesOrder = allCountries.map((c)=> c.name.common).sort()
+
   const [errors, setErrors] = useState({}); //validaciones front
   const [checkBS, setCheckBS] = useState(0);
 
@@ -331,8 +333,8 @@ export default function CreatePost() {
             <option hidden value="">
               Select country...
             </option>
-            {allCountries.map((c) => (
-              <option value={c.name.common}>{c.name.common}</option>
+            {allCountriesOrder.map((c,i) => (
+              <option value={c} key={i}>{c}</option>
             ))}
           </select>
 
