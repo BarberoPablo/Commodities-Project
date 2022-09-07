@@ -1,3 +1,36 @@
 .container{
   min-height: calc(100vh - 70px - 7vh);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.local_fav{
+  border-radius: 20px;
+  margin: 10px 10px;
+  background-color: rgba(24, 27, 69, 0.948);
+  width: 50%;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.local_fav_A{
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(14, 16, 39);
+}
+
+.local_fav_A_btn{
+  height: 28px;
+  width: 28px;
+  border-radius: 10px;
+  background-color: rgb(235, 68, 68);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
