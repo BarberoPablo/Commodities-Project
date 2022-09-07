@@ -105,7 +105,7 @@ const users = [
     country: "Argentina",
     email: "irene.galindo@example.com",
     phone: "(661) 978 1714",
-    image: "loquesea",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
   },
   {
     id: 10,
