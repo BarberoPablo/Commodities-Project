@@ -127,12 +127,24 @@ const users = [
   },
   {
     id: 12,
+    name: "Maxi Marolda",
+    country: "Colombia",
+    email: "mmarolda12@gmail.com",
+    phone: "8672994375",
+    image:
+      "https://lh3.googleusercontent.com/a-/AFdZucqzUaBaQEd8YNrMlk_GYprCGiVcVkTAE76FeGT7=s96-c",
+    isAdmin: true,
+    remainingContacts: 10,
+    planId: 2
+
+    id: 13,
     name: "Juan",
     country: "Argentina",
     email: "juandiarts@gmail.com",
     phone: "8672994375",
     
     isAdmin: true,
+
   },
 ];
 
