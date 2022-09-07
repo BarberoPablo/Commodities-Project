@@ -11,6 +11,8 @@ import {AiOutlineMenu} from 'react-icons/ai'
 import {BiLogOut} from 'react-icons/bi'
 import {BsPersonCircle, BsFillChatLeftTextFill} from 'react-icons/bs'
 import {MdSubscriptions} from 'react-icons/md'
+import { MdFavorite } from "react-icons/md";
+
 
 const Navbarr = ({ setCurrentPage }) => {
   const userLog = useSelector((state) => state.users.user);
@@ -56,7 +58,11 @@ const Navbarr = ({ setCurrentPage }) => {
           <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header
               closeButton
-              style={{color:'white', borderBottom: "1px solid white",backgroundColor:'#0f161a' }}
+              style={{
+                color: "white",
+                borderBottom: "1px solid white",
+                backgroundColor: "#0f161a",
+              }}
             >
               <Offcanvas.Title>Menu</Offcanvas.Title>
             </Offcanvas.Header>
@@ -75,18 +81,24 @@ const Navbarr = ({ setCurrentPage }) => {
                   </a>
                 </div>
                 <div className={s.mobile_nav_A}>
+                  <a href="/memberships" className={s.mobile_actions}>
+                    <MdSubscriptions />
+                    <h5>Memberships</h5>
+                  </a>
+                </div>
+                <div className={s.mobile_nav_A}>
+                <a href="/favorites" className={s.mobile_actions}>
+                  <MdFavorite /> 
+                  <h5>Favorites</h5>
+                </a>
+                </div>
+                <div className={s.mobile_nav_A}>
                   <div className={s.mobile_actions}>
                     <BiLogOut />
                     <a onClick={logout}>
                       <h5>Logout</h5>
                     </a>
                   </div>
-                </div>
-                <div className={s.mobile_nav_A}>
-                  <a href="/memberships" className={s.mobile_actions}>
-                    <MdSubscriptions />
-                    <h5>Memberships</h5>
-                  </a>
                 </div>
               </Nav>
             ) : (
@@ -118,14 +130,19 @@ const Navbarr = ({ setCurrentPage }) => {
           <Navbar.Brand href="/">
             <img src={Logo} alt="Logo" className={s.container_logo} />
           </Navbar.Brand>
-          <Navbar.Brand href="/" style={{ textDecoration: "none"}}>
+          <Navbar.Brand href="/" style={{ textDecoration: "none" }}>
             <h2>B2B Commodities</h2>
           </Navbar.Brand>
-          <a href="/memberships" className={s.boton}>Memberships</a>
+          <a href="/memberships" className={s.boton}>
+            Memberships
+          </a>
         </div>
         <Search setCurrentPage={setCurrentPage} />
-        <a href="/" style={{marginTop:'-55px',position:'absolute',right:'0'}}>
-          <img src={Logo} alt="Logo" className={s.logo_responsive} />              
+        <a
+          href="/"
+          style={{ marginTop: "-55px", position: "absolute", right: "0" }}
+        >
+          <img src={Logo} alt="Logo" className={s.logo_responsive} />
         </a>
         <div className={s.container_nav}>
           {isAuthenticated ? (
@@ -153,6 +170,9 @@ const Navbarr = ({ setCurrentPage }) => {
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/create-post">
                   <BsFillChatLeftTextFill /> Create post
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/favorites">
+                  <MdFavorite /> Favorites
                 </NavDropdown.Item>
                 <NavDropdown.Item className={s.actions}>
                   <div>
