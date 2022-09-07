@@ -1,0 +1,16 @@
+.cardR{
+    background-color: #4d4f50a4;
+    width: 40%;
+    margin: 10px auto;
+    padding: 1rem;
+    border-radius: 15px;
+    color: aliceblue;
+}
+.cardB{
+    background-color: #4d4f50a4;
+    width: 40%;
+    margin: 20px auto;
+    border-radius: 15px;
+    padding: 0.5rem;
+    color: aliceblue;
+}
