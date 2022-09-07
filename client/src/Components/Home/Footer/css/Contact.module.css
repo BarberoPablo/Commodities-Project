@@ -4,13 +4,33 @@
 }
 .container h1{
   color:rgb(36, 36, 36);
- 
 }
-.map{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+/* .adressMap {
+  margin: 10% 10%;
+  min-width: 1200px;
+  margin: 0 auto;
+} */
+
+.adress {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ grid-template-rows: 1fr 1fr 1fr;
+ max-width: 700px;
+ margin: 0% auto;
+ margin-top: 2%;
+ text-align: left;
+ font-size: 1.2rem;
+ font-weight: bolder;
 }
-.containerMap{
-  display: flex;
+
+.phone {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 800px) {
+  .adress{
+    grid-template-columns: 1fr;
+    grid-template-rows: 16% 16% 16% 16% 16% 16%;
+  }
 }
