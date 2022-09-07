@@ -1,14 +1,12 @@
 import { banUser } from "../../Redux/Actions/Actions";
 import { useDispatch } from "react-redux";
-
+import x from "./Admin.module.css"
 
 export default function CardsUsers ({allUsers}) {
   const dispatch = useDispatch();
 
-
 function handleBan(e){
 dispatch(banUser(e.id))
-
 }
 
   return(
@@ -17,16 +15,16 @@ dispatch(banUser(e.id))
 {allUsers?.map((e) => {
   console.log(e.isBanned)
           return (
-            <div>
+            <div className={x.cardR}>
 
-<img src={e.image} alt={e.name} />
+<img src={e.image} alt={e.name} className={x.item} id={x.img} />
 
-<p>{e.name} {e.email}</p>
+<p className={x.item}>{e.name} {e.email}</p>
 
-<button onClick={()=>handleBan(e)}>{e.isBanned? "UNBAN USER":"BAN USER"}</button>
+<button onClick={()=>handleBan(e)} className={x.item}>{e.isBanned? "UNBAN USER":"BAN USER"} </button>
 
-
-<p>{e.verified? "VERIFIED":"NOT VERIFIED"} {e.isBanned? "BANNED":"NOT BANNED"}</p>
+<p className={e.isBanned? x.BANNED:x.NOTBANNED}> {e.isBanned? "BANNED":"NOT BANNED"}</p>
+{/* {e.verified? "VERIFIED":"NOT VERIFIED"} */}
 
               </div>
               )
