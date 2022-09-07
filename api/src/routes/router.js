@@ -25,11 +25,15 @@ const {
   deleteOrAddFavorite,
   reportOrBanPost,
   getUserId,
-  modifyPlan
-
+  modifyPlan,
+  getAllPosts,
 } = require("./services");
 
+//Filtra los baneados
 router.get("/posts/", getPosts);
+
+//Devuelve todos los posts
+router.get("/allPosts/", getAllPosts);
 
 router.get("/posts/:email", getUserPosts);
 

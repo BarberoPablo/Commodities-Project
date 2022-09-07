@@ -39,7 +39,16 @@ const getPosts = async (req, res) => {
     const posts = await Post.findAll({
       where: { display: true },
     });
-    console.log(posts.length);
+    return res.status(200).json(posts);
+  } catch (error) {
+    res.status(error.status).send(error.message);
+  }
+};
+
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.findAll();
+
     return res.status(200).json(posts);
   } catch (error) {
     res.status(error.status).send(error.message);
@@ -862,4 +871,5 @@ module.exports = {
   reportOrBanPost,
   getUserId,
   modifyPlan,
+  getAllPosts,
 };
