@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Toast from "react-bootstrap/Toast";
 import { MdFavorite } from "react-icons/md";
 import { useSelector } from "react-redux";
-function AutohideExample({ show, setShow, handleClick, e, Fav}) {
+function AutohideExample({ show, setShow, handleClick, e, Fav }) {
   const myUser = useSelector((state) => state.users.user);
 
   return (
@@ -25,15 +25,16 @@ function AutohideExample({ show, setShow, handleClick, e, Fav}) {
           </a>
         </Toast.Body>
       </Toast>
-      
-      {console.log(myUser.favoritesIds, e.id)}
-      {myUser.favoritesIds?.includes(e.id) ? 
-      <Button onClick={handleClick} variant="outline-light" >
-          {<MdFavorite style={{color:'red'}} />}
-      </Button> 
-      : <Button onClick={handleClick} variant="outline-light" >
-          {<MdFavorite style={{color:'gray'}} />}
-      </Button>}
+
+      {myUser.favoritesIds?.includes(e.id) ? (
+        <Button onClick={handleClick} variant="outline-light">
+          {<MdFavorite style={{ color: "red" }} />}
+        </Button>
+      ) : (
+        <Button onClick={handleClick} variant="outline-light">
+          {<MdFavorite style={{ color: "gray" }} />}
+        </Button>
+      )}
     </Row>
   );
 }
