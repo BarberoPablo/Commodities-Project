@@ -1,22 +1,13 @@
-import React, { useMemo } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
-import style from "./Maps.module.css"
+import React from "react";
 
 const Posadas = () => {
-    const center = useMemo(() => ({ lat: -27.36750297749476, lng: -55.8938362446043 }), [])
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBhcv8b92XebDQA0rOSqbZQrA5GI659lfI"
-    });
-
-    if (!isLoaded) return <p>Loading...</p>
-
 
     return (
-        <GoogleMap zoom={17} center={center} mapContainerClassName={style.mapcontainer} mapTypeId="satellite">
-            <Marker position={{ lat: -27.36750297749476, lng: -55.8938362446043 }} />
-            <Marker position={{ lat: -38.71878671928893, lng: -62.266768364493466 }} />
-            <Marker position={{ lat: -34.60548276848841, lng: -58.36220788165187 }} />
-        </GoogleMap>
+        <div>
+            <iframe id="iframemap" src="https://maps.google.com/maps?q=-27.36750297749476+-55.8938362446043&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="300px" height="250px" frameBorder="0" scrolling="yes"></iframe>
+            <div style={{color: "#333", fontSize: "14px", fontFamily: "Arial", textAlign: "right", padding: "10px"}}>
+            </div>
+        </div>
     )
 }
 
