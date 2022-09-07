@@ -15,7 +15,9 @@ export const postSlice = createSlice({
     },
     getAllPosts: (state, action) => {
       state.allPosts = action.payload;
-      state.posts = action.payload;
+      state.posts = action.payload.sort(function(a,b){
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
       state.postsCategory = action.payload;
     },
     getPosts: (state, action) => {
