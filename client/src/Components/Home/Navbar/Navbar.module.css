@@ -1,5 +1,5 @@
 .container{
-  background-color: #131B21;
+  background-color: #0a0d14;
   min-height: 70px;
 }
 
@@ -113,9 +113,11 @@
 }
 
 .container_search{
-  width: 70%;
+  width: 100%;
+  display: flex;
+  justify-content:center;
+  align-items: center;
 }
-
 
 @media screen and (max-width:500px){
   .search{
@@ -158,12 +160,28 @@
 .search{
   border-radius: 10px;
   border: none;
+  background-color: #C4CBCA;
 }
 
 .btn{
   border: none;
   margin-left:5px;
   border-radius: 6px;
+  background-color: #C4CBCA;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.btn:hover{
+  color: red;
+}
+.btns{
+  border: none;
+  margin-left:5px;
+  border-radius: 6px;
+  background-color: #C4CBCA;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.btns:hover{
+  color: green;
 }
 
 @media screen and (max-width:1000px){

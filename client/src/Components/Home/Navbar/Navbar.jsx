@@ -22,11 +22,6 @@ const Navbarr = ({ setCurrentPage }) => {
   const {allCategories} = useSelector(state => state.categories)
 
   const dispatch = useDispatch()
-  // const handleChange = (e) =>{
-  //   dispatch(filterBySubcategory(e.target.value))
-  //   setCurrentPage(1)
-  // }
-
   useEffect(()=>{
     dispatch(getCategoriesByName())
   },[dispatch])
@@ -133,9 +128,6 @@ const Navbarr = ({ setCurrentPage }) => {
           <Navbar.Brand href="/" style={{ textDecoration: "none" }}>
             <h2>B2B Commodities</h2>
           </Navbar.Brand>
-          <a href="/memberships" className={s.boton}>
-            Memberships
-          </a>
         </div>
         <Search setCurrentPage={setCurrentPage} />
         <a
@@ -174,6 +166,11 @@ const Navbarr = ({ setCurrentPage }) => {
                 <NavDropdown.Item href="/favorites">
                   <MdFavorite /> Favorites
                 </NavDropdown.Item>
+                <NavDropdown.Item href="/memberships">
+                  <div>
+                  <MdSubscriptions /> Memberships
+                  </div>
+                </NavDropdown.Item>
                 <NavDropdown.Item className={s.actions}>
                   <div>
                     <BiLogOut />
@@ -183,7 +180,7 @@ const Navbarr = ({ setCurrentPage }) => {
               </NavDropdown>
             </Nav>
           ) : (
-            <button className={s.container_a} onClick={loginWithRedirect}>
+            <button className={s.boton} onClick={loginWithRedirect}>
               LogIn
             </button>
           )}

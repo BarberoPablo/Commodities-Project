@@ -32,7 +32,7 @@ const Search = ({setCurrentPage}) => {
   return (
     <div className={s.container_search}>
       <input onChange={handleChange} type="text" value={input} className={s.search} />
-      <button onClick={handleClick} className={s.btn} >Buyers</button>
+      <button onClick={handleClick} className={s.btns}>Buyers</button>
       <button onClick={handleClick} className={s.btn}>Sellers</button>
     </div>
   );
