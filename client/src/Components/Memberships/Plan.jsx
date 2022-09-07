@@ -90,7 +90,7 @@ const Plan = ({
                 <div className={s.infoPlan}>
                   {/*Plan name*/}
 
-                  <h2>{name.toUpperCase()}</h2>
+                  <h2 className={s.h2}>{name.toUpperCase()}</h2>
                   {/*Plan cost*/}
                   <h3>${cost} USD</h3>
                   <hr />

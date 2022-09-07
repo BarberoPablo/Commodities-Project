@@ -1,13 +1,16 @@
 .Container{
   min-width: 100%;
 }
+
+/*#0a0d14 #28364e #556ff7 #ffffff*/
+
 .container{
   color: white;
   display: flex;
   padding:20px;
   justify-content: center;
   flex-direction: column;
-  background-color: #0E3B43;
+  background-color: #28364e;
   max-width: 40%;
   margin: 1.6% auto;
   border-radius:10px;

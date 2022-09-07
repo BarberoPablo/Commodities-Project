@@ -1,46 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+
+.container_membership{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px - 7vh);
+}
+
 .containerCard {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   color: black;
-  height: 80vh;
+  min-height: calc(100vh - 70px - 7vh);
 }
+
 .card {
-  background-color: #0E3B43;
+  background-color: #435de0;
   border-radius: 10px;
   width: 280px;
   height: 350px;
   color: #fff;
   transition: all 0.1s;
   box-shadow: 0px 23px 19px -5px #404040;
+  margin: 0px 20px;
 }
+
 .card:hover {
   cursor: pointer;
   transform: translateY(-30px)
 }
+
+
 .infoPlan h3 {
-  background-color: green;
-  width: 100%;
-  color: white;
+  background-color: #0a0d14;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
 }
 .product p {
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
 }
-.h1{
-  margin-top: 1%;
-  color: rgb(255, 255, 255);
-  background-color: #0E3B43;
-  border-radius: 0;
-
+.container_h1{
+  background-color: #758298;
+  padding: 10px;
+  color: #0a0d14;
+  font-family: 'Kanit', sans-serif;
+  width: 98%;
 }
-h2 {
-  color: #fff;
+/*#0a0d14 #28364e #556ff7 #ffffff*/
+
+.h2 {
+  padding: 5px;
+  color: rgb(225, 227, 236);
+  letter-spacing: 0.1rem;
 }
 .approved h1 {
-  background-color:green;
+  background-color:#28364e;
   color: white;
   z-index: 1;
   position: absolute;
@@ -58,12 +77,14 @@ h2 {
     gap: 1rem;
     align-items: center;
   }
+
   .card {
     width: 250px;
     height: 350px;
- 
   }
-  
+  .container_h1{
+    width: 90%;
+  }
 }
 @media screen and (max-width: 780px) {
   .card {
@@ -71,3 +92,15 @@ h2 {
     height: 350px;
   }
 }
+@media screen and (max-width:720px){
+  .containerCard{
+    display: grid;
+    min-height: 1300px;
+  }
+  .card{
+    width: 300px;
+  }
+
+}
+
+/*#0a0d14 #28364e #556ff7 #ffffff*/
