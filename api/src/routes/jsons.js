@@ -101,11 +101,11 @@ const users = [
   },
   {
     id: 9,
-    name: "Pablo2 Barbero",
+    name: "Irene Galindo",
     country: "Argentina",
     email: "irene.galindo@example.com",
     phone: "(661) 978 1714",
-    image: "loquesea",
+    image: "https://randomuser.me/api/portraits/women/12.jpg",
   },
   {
     id: 10,
@@ -134,8 +134,6 @@ const users = [
     image:
       "https://lh3.googleusercontent.com/a-/AFdZucqzUaBaQEd8YNrMlk_GYprCGiVcVkTAE76FeGT7=s96-c",
     isAdmin: true,
-    remainingContacts: 10,
-    planId: 2
   },
   {
     id: 13,
@@ -143,9 +141,7 @@ const users = [
     country: "Argentina",
     email: "juandiarts@gmail.com",
     phone: "8672994375",
-    
     isAdmin: true,
-
   },
 ];
 
