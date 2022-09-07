@@ -24,6 +24,7 @@ const Profile = () => {
   const [active, setActive] = useState(false);
   const [show, setShow] = useState(false);
   const [showA, setShowA] = useState(false);
+  const [showB, setShowB] = useState(false);
   const { userPost } = useSelector((state) => state.users);
   const userLog = useSelector((state) => state.users.user);
   const contact = useSelector((state) => state.users.allUsers);
@@ -116,7 +117,7 @@ const Profile = () => {
       values.email = user.email;
       values.image = img !== "" ? img : user.picture ;
       dispatch(createNewUser(values));
-      alert("profile updated successfully");
+      setShowB(true);
       dispatch(mailTous(email));
     },
   });
@@ -342,6 +343,20 @@ const Profile = () => {
                 style={{color: 'white', border: 'none'}}
               />
               {formik.errors.image ? <div>{formik.errors.image}</div> : null}
+              <Toast
+                onClose={() => setShowB(false)}
+                show={showB}
+                delay={1500}
+                bg="success"
+                position="middle-center"
+                autohide
+              >
+                <Toast.Body>
+                  <strong style={{ color: "white" }}>
+                    Profile updated successfully
+                  </strong>
+                </Toast.Body>
+              </Toast>
               <button className={s.form_btn} type="submit">Confirm</button>
             </form>
           </div>
