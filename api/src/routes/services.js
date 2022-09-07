@@ -36,8 +36,10 @@ const { EMAIL_USER, EMAIL_PASS } = process.env;
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await Post.findAll();
-
+    const posts = await Post.findAll({
+      where: { display: true },
+    });
+    console.log(posts.length);
     return res.status(200).json(posts);
   } catch (error) {
     res.status(error.status).send(error.message);
@@ -815,9 +817,9 @@ const modifyPlan = async (req, res) => {
     }
 
     const planName = await Plan.findOne({
-      where: {name: name}
-    })
-    
+      where: { name: name },
+    });
+
     if (findPlan && !planName?.name) {
       await findPlan.update({
         name,

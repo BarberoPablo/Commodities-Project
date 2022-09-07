@@ -118,12 +118,10 @@ const Navbarr = ({ setCurrentPage }) => {
           <Navbar.Brand href="/">
             <img src={Logo} alt="Logo" className={s.container_logo} />
           </Navbar.Brand>
-          <Navbar.Brand href="/" style={{ textDecoration: "none" }}>
+          <Navbar.Brand href="/" style={{ textDecoration: "none"}}>
             <h2>B2B Commodities</h2>
           </Navbar.Brand>
-          <Navbar.Brand href="/memberships">
-            <button className={s.boton}>Memberships</button>
-          </Navbar.Brand>
+          <a href="/memberships" className={s.boton}>Memberships</a>
         </div>
         <Search setCurrentPage={setCurrentPage} />
         <a href="/" style={{marginTop:'-55px',position:'absolute',right:'0'}}>

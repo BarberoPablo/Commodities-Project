@@ -28,7 +28,7 @@ const Glosary = () => {
               remaining amount on behalf of the buyer.
             </li>
             <li>
-              <b>DLC:</b> Domestic Letter of Credit. Refers to a legal documennt
+              <b>DLC:</b> Domestic Letter of Credit. Refers to a legal document
               where is bank obligation to pay the seller of goods a certain
               amount of money in the timely submission of documents confirming
               shipment of good of contractual services.
