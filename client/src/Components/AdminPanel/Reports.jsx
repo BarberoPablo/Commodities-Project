@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import s from "../Home/Card/Card.module.css";
+import x from "./Admin.module.css"
 import { getReviews, reportTo, deleteReview } from "../../Redux/Actions/Actions";
 import { Link } from "react-router-dom";
 import ToastContainer from "react-bootstrap/ToastContainer";
 import Toast from "react-bootstrap/Toast";
 import Button from "react-bootstrap/Button";
+import { BsStarFill, BsStar } from "react-icons/bs";
 
 
 export default function Reports( { currentPost }, {allCountries}) {
@@ -46,13 +48,17 @@ dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
       <h2>Reports</h2>
       {Reviews?.map((r)=>{
         return(r.reviews.length>0 ?
-          <div key={filtrado.id}>
+          <div key={filtrado.id} className={x.cardB} >
+            <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
             {r.reviews?.map((s) => {
               return( s.idReport.length>0?
-                <div key={filtrado.id}>
-                  <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
+                <div key={filtrado.id} className={x.cardR}>
+            {s.score == '1' ? <strong className="me-auto"><BsStarFill/> <BsStar/> <BsStar/> <BsStar/> <BsStar/></strong> : null}
+            {s.score == '2' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStar/> <BsStar/> <BsStar/></strong> : null}
+            {s.score == '3' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStar/> <BsStar/></strong> : null}
+            {s.score == '4' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStar/></strong> : null}
+            {s.score == '5' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStarFill/></strong> : null}
                   <p>Comment:{s.comment}</p> 
-                  <p>score:{s.score}</p> 
                   <p>Review By:{allUsers.find(u=> u.id===s.idReviewer)?.name}</p>
                   <button onClick={toggleShowA}>DELETE REVIEW</button>
 
