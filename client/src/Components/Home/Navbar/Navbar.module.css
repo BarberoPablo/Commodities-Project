@@ -60,11 +60,19 @@
 .boton{
   border-radius:4px;
   border: none;
-  padding: 3px;
+  padding: 5px 12px;
+  text-transform: uppercase;
   background-color: rgba(255, 255, 255, 0.178);
   color: #fff;
   font-size: 0.9rem;
-  margin-left: 90%;
+  text-decoration: none;
+  margin-left: 10%;
+  width: 100%;
+}
+
+.boton:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .mobile_options{
