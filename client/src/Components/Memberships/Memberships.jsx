@@ -59,7 +59,7 @@ const Memberships = () => {
     <div  className={s.container_membership} >
       {userLog && userLog.country ? (
         <div>
-          <h1 className={s.h1}>
+          <h1 className={s.container_h1}>
             Remaining contacts:{" "}
             {planBought === "Premium" || userLog?.planId === 3
               ? "Unlimited"
