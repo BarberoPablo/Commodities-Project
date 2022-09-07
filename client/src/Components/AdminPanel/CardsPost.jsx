@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import s from "../Home/Card/Card.module.css";
 import { Link } from "react-router-dom";
 import { reportTo } from "../../Redux/Actions/Actions";
+import x from "./Admin.module.css"
 
 const CardsPost = ({ currentPost }) => {
   const dispatch = useDispatch();
@@ -96,7 +97,7 @@ const CardsPost = ({ currentPost }) => {
                 <b>{e.title}</b>
                 <p>{e.description}</p>
               </div>
-              <p>{e.display ? "NOT BANNED" : "BANNED"}</p>
+              <p className={e.display? x.NOTBANNED: x.BANNED }>{e.display ? "NOT BANNED" : "BANNED"}</p>
               <button onClick={() => handleDismiss(e)}>Dismiss Ban</button>
               <button onClick={() => handleBan(e)}>Ban Post</button>
             </div>

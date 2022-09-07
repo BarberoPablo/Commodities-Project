@@ -24,7 +24,7 @@ const Home = ({ currentPage, setCurrentPage, setFav, Fav }) => {
 
   //paginado
   //pagina actual
-  const [postPerPage, setPostPerPage] = useState(4); //cantidad de cards por paginas
+  const [postPerPage, setPostPerPage] = useState(6); //cantidad de cards por paginas
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
   const currentPost = posts.slice(indexOfFirstPost, indexOfLastPost);

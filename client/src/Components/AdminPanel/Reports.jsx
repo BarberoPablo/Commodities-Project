@@ -46,13 +46,14 @@ dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
   return (
     <div>
       <h2>Reports</h2>
+      <h3>Reviews reported:</h3>
       {Reviews?.map((r)=>{
         return(r.reviews.length>0 ?
           <div key={filtrado.id} >        
             {r.reviews?.map((s) => {
               return( s.idReport.length>0?
                 <div key={filtrado.id} className={x.cardR}>
-                 <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
+                  <p>reviews for {allUsers.find(u=> u.id===r.userId)?.name}</p>
             {s.score == '1' ? <strong className="me-auto"><BsStarFill/> <BsStar/> <BsStar/> <BsStar/> <BsStar/></strong> : null}
             {s.score == '2' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStar/> <BsStar/> <BsStar/></strong> : null}
             {s.score == '3' ? <strong className="me-auto"><BsStarFill/> <BsStarFill/> <BsStarFill/> <BsStar/> <BsStar/></strong> : null}
@@ -95,7 +96,7 @@ dispatch(deleteReview(userId, {display: "Erase", position: `${position}`}))
         )
       })}
       <div>
-        <h2>Reviews Reports</h2>
+        <h2>Post Reports</h2>
       </div>
       <Container fluid="md" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
         <Row style={{width:'80%'}} >
