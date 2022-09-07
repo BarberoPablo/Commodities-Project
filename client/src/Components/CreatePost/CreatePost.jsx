@@ -102,7 +102,7 @@ export default function CreatePost() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!user) {
-      alert("plaese login to create a post");
+      alert("Please login to create a post");
       return;
     }
     let val = validacion(input);
