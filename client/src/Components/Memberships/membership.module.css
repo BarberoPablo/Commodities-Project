@@ -1,4 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+
+.container_membership{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 70px - 7vh);
+}
+
+.container_membership h1 {
+  background-color: #758298;
+  padding: 10px;
+  color: #0a0d14;
+  margin-top: -10%;
+  font-family: 'Kanit', sans-serif;
+}
 
 .containerCard {
   display: flex;
@@ -7,7 +23,6 @@
   align-items: center;
   color: black;
   min-height: calc(100vh - 70px - 16vh);
-  
 }
 .card {
   background-color: #435de0;

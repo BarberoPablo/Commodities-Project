@@ -87,28 +87,28 @@ const Favorites = () => {
                   className={s.local_fav_A_btn}
                   onClick={() => handleDeleteDb(post.id)}
                 >
-                  x
+                  X
                 </button>
               </div>
-              <div>
-                <p>{post.categoryName}</p>
-                <p>
-                  Sub Category: <b>{post.subCategory}</b>
-                </p>
-              </div>
-              <div>
-                <p>{post.country}</p>
-                <p>
-                  Payment:{" "}
-                  {post.payment.map((e, i) => {
-                    return <b key={i}> {e}</b>;
-                  })}
-                </p>
-                <p>
-                  Shipping: <b>{post.shipping}</b>
-                </p>
-              </div>
-              <p>{post.description}</p>
+                <div>
+                  <p>{post.categoryName}</p>
+                  <p>
+                    Sub Category: <b>{post.subCategory}</b>
+                  </p>
+                </div>
+                <div>
+                  <p>{post.country}</p>
+                  <p>
+                    Payment:{" "}
+                    {post.payment.map((e, i) => {
+                      return <b key={i}> {e}</b>;
+                    })}
+                  </p>
+                  <p>
+                    Shipping: <b>{post.shipping}</b>
+                  </p>
+                </div>
+                <p>{post.description}</p>
             </div>
           ))
         ) : (
@@ -145,7 +145,9 @@ const Favorites = () => {
           </div>
         ))
       ) : (
-        <h1>You have no favorites</h1>
+        <div className={s.container_no_fav}>
+          <h1>You have no favorites</h1>
+        </div>
       )}
     </div>
   );
