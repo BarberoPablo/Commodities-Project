@@ -61,7 +61,7 @@ const Report = ({ match }) => {
       input.text =
         `Your report has already reached to our team and we will respond as soon as possible. 
               ||This is the explain you sent to us:    ` + input.text;
-     // dispatch(mailTous(input));
+      dispatch(mailTous(input));
       dispatch(reportTo(postId, idReview, {event:"Report"}))
       setInput({
         ...input,
