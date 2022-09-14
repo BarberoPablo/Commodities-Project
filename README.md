@@ -6,19 +6,12 @@
   <img height="200" src="./client/src/Img/LogoB2B.png" />
 </p>
 
-## Idea of the project
-
-Online B2B forum (Business to Business) for importers/exporters
-International Commodities. Users generate “posts”
-where they can offer/find products. The idea of the forum is to facilitate
-contact between buyers and sellers about the specified product,
-provide seller/buyer information through your membership
-as a user (Free, Basic, Premium).
-Users can be both buyers and sellers.
-Each membership has its particular benefits.
-International trade is handled between contracts through
-intermediaries, where the page is reserved solely for providing information on
-the parts.
+## Project description:
+Upon loggin in or registering, users can create a post offering/searching certain types of commodities. 
+Users who wants to have access to the contact information of another user, they can do that by acquiring a membership.
+Anyone can save posts as favorites and once logged in this favorites can be accesed by going to the profile button (if the user already had favorites, this new ones will be attached to the old ones).
+Users are able to send a review and giving a score to another user as long as they already made contact. This reviews can be reported if the user finds them offensive.
+The page has an administrator panel where a special user (admin), can hide reported posts, ban users, modify memberships or create new ones with certain benefits.
 
 ## Students in the project
 
